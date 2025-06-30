@@ -295,6 +295,7 @@ long VtkPosition = 0;
 int Timestepcount = 0;
 int Fluidtype;
 int FluidIndex;
+real *Coeffval;
 real Min[NFLUIDS];
 Fluid *Fluids[NFLUIDS];
 
@@ -405,6 +406,18 @@ void (*CheckMuteZ)();
 void (*SetupHook1)();
 
 void (*_collisions)(real,int,int,int,int);
+
+void (*ComputeDragCoeff)();
+void (*ComputeCBcollisions_c)(real);
+void (*_ComputeCBcollisions_cv)(real,int,int,int,Field*,Field*);
+void (*_UpdateVelcollisions)(real,int,int,int,Field*,Field*);
+
+//DragForce
+void (*DragForce_Coeff)();
+void (*DragForce_SumC)(real);
+void (*_DragForce_SumCV)(real,int,int,int,Field*,Field*);
+void (*_DragForce_UpdateVel)(real,int,int,int,Field*,Field*);
+
 void (*Floor)();
 
 void (*__WriteField)(Field*, int);

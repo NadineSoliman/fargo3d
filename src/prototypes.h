@@ -188,6 +188,15 @@ ex void Disk3d(void);
 //divrho.c Prototypes
 ex void DivideByRho_cpu(Field*);
 
+// DragForce Prototypes
+ex void DragForce(real);
+ex void DragForce_Coeff_cpu();
+ex void DragForce_SumC_cpu(real);
+ex void DragForce_SumCV(real,int);
+ex void _DragForce_SumCV_cpu(real,int,int,int,Field*,Field*);
+ex void DragForce_UpdateVel(real,int); 
+ex void _DragForce_UpdateVel_cpu(real,int,int,int,Field*,Field*);
+
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
 
@@ -564,6 +573,12 @@ ex void CheckMuteZ_gpu(void);
 ex void SetupHook1_gpu (void);
 
 ex void copy_field_gpu(Field*,Field*);
+
+// DragForce-----------------------------------------------
+ex void DragForce_Coeff_gpu();
+ex void DragForce_SumC_gpu(real);
+ex void _DragForce_SumCV_gpu(real,int,int,int,Field*,Field*);
+ex void _DragForce_UpdateVel_gpu(real,int,int,int,Field*,Field*);
 
 //DIFFUSION-----------------------------------------------
 ex void DustDiffusion_Core_gpu(real);

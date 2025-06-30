@@ -1,7 +1,7 @@
 #include "fargo3d.h"
 
-void _CondInit() {
-  
+void _CondInit(int id) {
+
   int i,j,k;
   real r, omega;
   
@@ -12,7 +12,46 @@ void _CondInit() {
   
   real rhog, rhod;
   real vk;
-  
+  real stokes_plus[NFLUIDS];
+  real stokes[NFLUIDS-1];
+  real epsilons[NFLUIDS-1];
+  real sq = SQ;
+  real slope;
+  // Stokes numbers                                                                      
+  real smax = TSMAX;
+  real smin = TSMIN;
+  real ds   = (log(smax)-log(smin))/(NFLUIDS-1);
+  for(int n=0;n<NFLUIDS;n++){
+    stokes_plus[n] = smin*exp(ds*n);
+  }
+
+  //Dust size-distribution                                                                 
+  slope = 4-sq;
+  for(int n=0; n<NFLUIDS-1; n++){
+    if(slope != 0.) {
+      epsilons[n]  = pow(stokes_plus[n+1],slope) - pow(stokes_plus[n],slope) ;
+      epsilons[n] *= EPSILON/(pow(smax, slope) - pow(smin,slope));
+    }
+    else{
+      epsilons[n]  = log(stokes_plus[n+1]/stokes_plus[n]);
+      epsilons[n] *= EPSILON/log(smax/smin);
+    }
+    stokes[n] = stokes_plus[n+1];
+    if( NFLUIDS == 2) stokes[n] = TSMAX;
+  }
+
+#ifdef DRAGFORCE
+  if(id > 0) {
+#ifdef STOKESNUMBER
+   Coeffval[0]   = 1.0/stokes[id-1];
+#endif
+#ifdef DUSTSIZE
+    Coeffval[1]   = 1.0/(stokes[id-1]*R0/R0_CGS);    
+    Coeffval[2]   = RHOSOLID/(MSTAR_CGS/(R0_CGS*R0_CGS*R0_CGS))*(MSTAR/(R0*R0*R0));
+#endif
+    if(CPU_Master) printf("Ts %1.16f \t eps %1.16f \n", stokes[id-1], epsilons[id-1]);
+  }
+#endif
   i = j = k = 0;
   
   for (k=0; k<Nz+2*NGHZ; k++) {
@@ -33,7 +72,7 @@ void _CondInit() {
 	}
 	
 	if (Fluidtype == DUST) {
-	  rho[l]  = rhod;
+	  rho[l]  = rhog*epsilons[id-1];
 	  vphi[l] = omega*r;
 	  vr[l]   = 0.0;
 	  cs[l]   = 0.0;
@@ -57,7 +96,7 @@ void CondInit() {
   SelectFluid(id_gas);
 
   //and fill its fields
-  _CondInit();
+  _CondInit(0);
 
   //We repeat the process for the dust fluids
   char dust_name[MAXNAMELENGTH];
@@ -68,16 +107,16 @@ void CondInit() {
 
     Fluids[id_dust]  = CreateFluid(dust_name, DUST);
     SelectFluid(id_dust);
-    _CondInit();
+    _CondInit(id_dust);
 
   }
 
+  #ifdef COLLISIONS
   /*We now fill the collision matrix (Feedback from dust included)
    Note: ColRate() moves the collision matrix to the device.
    If feedback=NO, gas does not feel the drag force.*/
   
   ColRate(INVSTOKES1, id_gas, 1, feedback);
   ColRate(INVSTOKES2, id_gas, 2, feedback);
-  ColRate(INVSTOKES3, id_gas, 3, feedback);
-
+  #endif
 }

@@ -129,7 +129,12 @@ void ChangeArch() {
   AmbipolarDiffusion_emfz  = AmbipolarDiffusion_emfz_cpu;
   AmbipolarDiffusion_coeff = AmbipolarDiffusion_coeff_cpu;
   // ------------------------------------------------------
-  
+  // DRAGFORCE
+  DragForce_Coeff      = DragForce_Coeff_cpu;
+  DragForce_SumC       = DragForce_SumC_cpu;
+  _DragForce_SumCV     = _DragForce_SumCV_cpu;
+  _DragForce_UpdateVel = _DragForce_UpdateVel_cpu;
+
   _collisions = _collisions_cpu;
   ComputeTotalDensity = ComputeTotalDensity_cpu;
   Floor = Floor_cpu; 
@@ -545,7 +550,15 @@ void ChangeArch() {
 	  printf("collisions runs on the GPU\n");
 	}
       }
-
+    if (strcmp(name, "dragforce") == 0) {
+	if(strval[0] == 'g'){
+	  DragForce_Coeff      =  DragForce_Coeff_gpu;
+	  DragForce_SumC       = DragForce_SumC_gpu;
+	  _DragForce_SumCV     = _DragForce_SumCV_gpu;
+	  _DragForce_UpdateVel = _DragForce_UpdateVel_gpu;
+	  masterprint("dragforce runs on the GPU\n");
+	}
+      }
 if (strcmp(name, "computetotaldensity") == 0) {
 	if(strval[0] == 'g'){
 	  ComputeTotalDensity = ComputeTotalDensity_gpu;

@@ -590,6 +590,10 @@ void SelectFluid(int n) {
   Vy0 = Fluids[n]->Vy0;
   Vz0 = Fluids[n]->Vz0;
 #endif
+#ifdef DRAGFORCE
+  Coeffval = Fluids[n]->Coeffval;
+#endif
+
 }
 
 void CreateFields() {
