@@ -362,6 +362,7 @@ void (*comm)(int);
 void (*Reset_field)(Field*);
 void (*ComputeTotalDensity)();
 void (*copy_field)(Field*,Field*);
+void (*RelaxAdia)(real);
 //DUST DIFFUSION
 void (*DustDiffusion_Core)(real);
 void (*DustDiffusion_Coefficients)();

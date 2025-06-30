@@ -368,7 +368,7 @@ MAINOBJ  = LowTasks.o psys.o main.o param.o var.o usage.o   	    \
 	   compute_jx.o compute_jy.o compute_jz.o		\
 	   mesh.o ram_advect.o ram_advect_lin.o ram_compute_ustar.o ram_plm.o \
 	   dragforce.o dragforce_sumc.o dragforce_sumcv.o       \
-	   dragforce_updatevel.o dragforce_coeff.o 
+	   dragforce_updatevel.o dragforce_coeff.o relaxadia.o
 #-----------------------#Cuda objects---------------------------------
 GPU_OBJ  =  reduction_sum_device.o reduction_min_device.o	\
 	   	lowtasks_gpu.o 
@@ -424,7 +424,7 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
 	   compute_vmed_gpu.o ram_advect_gpu.o ram_compute_ustar_gpu.o \
 	   ram_plm_gpu.o ram_advect_lin_gpu.o \
 	   dragforce_sumc_gpu.o dragforce_sumcv_gpu.o           \
-       dragforce_updatevel_gpu.o dragforce_coeff_gpu.o
+       dragforce_updatevel_gpu.o dragforce_coeff_gpu.o relaxadia_gpu.o 
 #</CUDA OBJECTS>
 #---------------------------------------------------------------------
 

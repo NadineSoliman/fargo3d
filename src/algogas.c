@@ -81,6 +81,9 @@ void Sources(real dt) {
 
 #ifdef ADIABATIC
  if(Fluidtype == GAS) FARGO_SAFE(SubStep3(dt));
+#ifdef ERELAXATION
+   if(Fluidtype == GAS) FARGO_SAFE(RelaxAdia(dt));
+#endif
 #endif
     
   GiveSpecificTime (t_Hydro);

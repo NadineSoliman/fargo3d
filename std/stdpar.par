@@ -59,6 +59,7 @@ DampingZone                1.15
 TauDamp                    0.3
 KillingBCColatitude       -0.2
 Beta                       0.0
+Ebeta                      0.001
 Tslim                      10.0
 CFL                        0.44
 Vtk                        no

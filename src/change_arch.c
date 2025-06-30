@@ -70,7 +70,8 @@ void ChangeArch() {
   addviscosity_cyl  = addviscosity_cyl_cpu;
   visctensor_sph    = visctensor_sph_cpu;
   addviscosity_sph  = addviscosity_sph_cpu;
-
+  RelaxAdia  = RelaxAdia_cpu;
+  // -----------------------------------------------------
   #include <../scripts/bound_cpu.code>
 
   Fill_GhostsX =  Fill_GhostsX_cpu;
@@ -213,7 +214,8 @@ void ChangeArch() {
       if (strcmp(name, "resetfield") == 0) {
 	if(strval[0] == 'g'){
 	  Reset_field = Reset_field_gpu;
-	  printf("resetfield on the GPU\n");
+	  RelaxAdia = RelaxAdia_gpu;
+    printf("resetfield on the GPU\n");
 	}
       }
 

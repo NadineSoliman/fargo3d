@@ -219,6 +219,8 @@ ex void split(Grid*);
 ex int  RestartSimulation(int);
 ex void RestartDat(Field*, int);
 
+ex void RelaxAdia_cpu(real);
+
 ex void compute_potential(real);
 //planet2d.c Prototypes
 ex void InitDensPlanet(void);
@@ -573,6 +575,7 @@ ex void CheckMuteZ_gpu(void);
 ex void SetupHook1_gpu (void);
 
 ex void copy_field_gpu(Field*,Field*);
+ex void RelaxAdia_cpu(real);
 
 // DragForce-----------------------------------------------
 ex void DragForce_Coeff_gpu();
