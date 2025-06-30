@@ -1,0 +1,18 @@
+#Boundaries configuration file for fargo.bound
+#----------------------------------------------
+
+Density:
+	Ymin: SIGMABC
+	Ymax: SIGMABC
+
+Vx:
+	Ymin: VXBC
+	Ymax: VXBC
+
+Vy:
+	Ymin: VYBC
+	Ymax: VYBC
+
+Energy:
+	Ymin: ENERGYBC
+	Ymax: ENERGYBC

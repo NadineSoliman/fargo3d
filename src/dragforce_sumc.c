@@ -39,6 +39,7 @@ void DragForce_SumC_cpu (real dt) {
   int ll;
   real alphak;
   real sk;
+  real omega;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -63,11 +64,18 @@ void DragForce_SumC_cpu (real dt) {
 //<#>
 	ll = l;
 
+#ifdef SHEARINGBOX
+	omega = OMEGAFRAME;
+#endif
+#ifdef CYLINDRICAL
+  omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
+#endif
+
 #ifdef STOKESNUMBER
 	alphak  = pref[ll]*invstokesnumber;
 #endif
 #ifdef DUSTSIZE
-	alphak  = max2( pref[ll]*sqrt(8./M_PI)*invparticlesize/rhosolid, sqrt(G*MSTAR/(ymed(j)*ymed(j)*ymed(j)))/tslim )  ;
+	alphak  = max2( pref[ll]*sqrt(8./M_PI)*invparticlesize/rhosolid, omega/tslim )  ;
 #endif
 	sk      = dt*alphak/(1+dt*alphak);
 
