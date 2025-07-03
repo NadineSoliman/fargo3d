@@ -49,6 +49,10 @@ FARGO_OPT += -DSTOCKHOLM
 #Floor density
 FARGO_OPT += -DFLOOR
 
+#Floor density
+FARGO_OPT += -DTHERMALACCOMODATION
+
+
 #Cuda blocks
 ifeq (${GPU}, 1)
 FARGO_OPT += -DBLOCK_X=16

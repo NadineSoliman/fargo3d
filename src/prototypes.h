@@ -197,6 +197,13 @@ ex void _DragForce_SumCV_cpu(real,int,int,int,Field*,Field*);
 ex void DragForce_UpdateVel(real,int); 
 ex void _DragForce_UpdateVel_cpu(real,int,int,int,Field*,Field*);
 
+// ThermalAccomodation Prototypes
+ex void ThermalAccomodation(real);
+ex void ThermalAccomodation_Coeff_cpu();
+ex void ThermalAccomodation_Sumrho_cpu(real);
+ex void ThermalAccomodation_Sumpressure_cpu(real);
+ex void ThermalAccomodation_UpdateEnergy_cpu(real);
+
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
 
@@ -582,6 +589,13 @@ ex void DragForce_Coeff_gpu();
 ex void DragForce_SumC_gpu(real);
 ex void _DragForce_SumCV_gpu(real,int,int,int,Field*,Field*);
 ex void _DragForce_UpdateVel_gpu(real,int,int,int,Field*,Field*);
+// ThermalAccomodation-----------------------------------------------
+ex void ThermalAccomodation_Coeff_gpu();
+ex void ThermalAccomodation_Sumrho_gpu(real);
+ex void ThermalAccomodation_Sumpressure_gpu(real);
+ex void ThermalAccomodation_UpdateEnergy_gpu(real);
+
+
 
 //DIFFUSION-----------------------------------------------
 ex void DustDiffusion_Core_gpu(real);

@@ -68,3 +68,9 @@ code.
 //#define TCMB    (30.0*(G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
 
 #define THRESHOLD_STELLAR_MASS 0.05*MSTAR //Our arbitrary threshold to consider an object as stellar.
+
+//Boltzmann constant
+#define KBOLTZ  1.38064852e-16;
+
+//Mass hydrogen atom times mean molecular weight
+#define MH      (2.4*1.6726219e-24*MSTAR/MSTAR_CGS);

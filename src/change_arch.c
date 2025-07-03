@@ -136,11 +136,17 @@ void ChangeArch() {
   _DragForce_SumCV     = _DragForce_SumCV_cpu;
   _DragForce_UpdateVel = _DragForce_UpdateVel_cpu;
 
+
   _collisions = _collisions_cpu;
   ComputeTotalDensity = ComputeTotalDensity_cpu;
   Floor = Floor_cpu; 
   Reset_field = Reset_field_cpu; 
   //-----------------------------------------------------
+  // Thermal Accomodation
+  ThermalAccomodation_Coeff = ThermalAccomodation_Coeff_cpu;
+  ThermalAccomodation_Sumrho = ThermalAccomodation_Sumrho_cpu;
+  ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_cpu;
+  ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_cpu;
 
   VanLeerX_PPA_a    = VanLeerX_PPA_a_cpu;
   VanLeerX_PPA_b    = VanLeerX_PPA_b_cpu;
@@ -559,6 +565,16 @@ void ChangeArch() {
 	  _DragForce_SumCV     = _DragForce_SumCV_gpu;
 	  _DragForce_UpdateVel = _DragForce_UpdateVel_gpu;
 	  masterprint("dragforce runs on the GPU\n");
+	}
+      }
+
+      if (strcmp(name, "thermalaccomodation") == 0) {
+	if(strval[0] == 'g'){
+    ThermalAccomodation_Coeff = ThermalAccomodation_Coeff_gpu;
+    ThermalAccomodation_Sumrho = ThermalAccomodation_Sumrho_gpu;
+    ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_gpu;
+    ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_gpu;
+	  masterprint("thermalaccomodation runs on the GPU\n");
 	}
       }
 if (strcmp(name, "computetotaldensity") == 0) {

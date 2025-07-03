@@ -418,6 +418,11 @@ void (*DragForce_Coeff)();
 void (*DragForce_SumC)(real);
 void (*_DragForce_SumCV)(real,int,int,int,Field*,Field*);
 void (*_DragForce_UpdateVel)(real,int,int,int,Field*,Field*);
+//ThermalAccomodation
+void (*ThermalAccomodation_Coeff)();
+void (*ThermalAccomodation_Sumrho)(real);
+void (*ThermalAccomodation_Sumpressure)(real);
+void (*ThermalAccomodation_UpdateEnergy)(real);
 
 void (*Floor)();
 

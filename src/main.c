@@ -416,6 +416,9 @@ if (*SPACING=='N'){
 #ifdef DRAGFORCE
       FARGO_SAFE(DragForce(dt));
 #endif
+#ifdef THERMALACCOMODATION
+      FARGO_SAFE(ThermalAccomodation(dt));
+#endif
 
 #ifdef DUSTDIFFUSION
       FARGO_SAFE(DustDiffusion_Main(dt));

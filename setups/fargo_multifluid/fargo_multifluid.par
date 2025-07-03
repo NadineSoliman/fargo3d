@@ -20,6 +20,7 @@ Invstokes1  100
 Invstokes2  1
 Tslim			1.0
 
+ThermalAccomodationCoeff 1.0 #cgs
 
 ### Planet parameters
 PlanetConfig		planets/jupiter.cfg
