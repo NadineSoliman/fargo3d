@@ -36,9 +36,8 @@ void ThermalAccomodation_Coeff_cpu () {
   int j;
   int k;
   int ll;
-  real omega;
-  real cs;
-  real tempgas;
+  // real cs;
+  real temp_gas;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -49,35 +48,23 @@ void ThermalAccomodation_Coeff_cpu () {
   
 //<MAIN_LOOP>
 
-  i = j = k = 0;
+  i = 0;
 
-#ifdef Z
-  for (k=0; k<size_z; k++) {
-#endif
-#ifdef Y
-    for (j=0; j<size_y; j++) {
-#endif
 #ifdef X
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
 	ll = l;
 
-	cs = sqrt(GAMMA*(GAMMA-1)*energy_gas[ll]/dens_gas[ll]);
+	// cs = sqrt(GAMMA*(GAMMA-1)*energy_gas[ll]/dens_gas[ll]);
 	
-  tempgas   =  (GAMMA-1.0)*e[ll]/(rho[ll]*R_MU);
+  temp_gas   =  (GAMMA-1.0)*energy_gas[ll]/(rho[ll]*R_MU);
 
-  coeff[ll] = thermalcoeff*KBOLTZ*MH..... tempgas;
+  coeff[ll] = thermalcoeff*(KBOLTZ/MH)**(3/2)* (temp_gas)**(1/2) * dens_gas[ll]/CD;
 	
 //<\#>
 #ifdef X
       }
-#endif
-#ifdef Y
-    }
-#endif
-#ifdef Z
-  }
 #endif
 //<\MAIN_LOOP>
 }

@@ -22,6 +22,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real* sumpressure = Slope->field_cpu;
   real* sumrho = DensStar->field_cpu;
   real* pref = Qs->field_cpu;
+  real* energy = =Energy->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -35,13 +36,11 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
 //<INTERNAL>
   int i;
-  int j;
-  int k;
   int ll;
-  int lm;
   real alphak;
   real sk;
   real omega;
+  real temp;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -51,21 +50,14 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
 //<MAIN_LOOP>
 
-  i = j = k = 0;
+  i = 0;
 
-#ifdef Z
-  for (k=1; k<size_z; k++) {
-#endif
-#ifdef Y
-    for (j=1; j<size_y; j++) {
-#endif
 #ifdef X
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
 	ll = l;
 
-	lm = idx*lxm + idy*lym + idz*lzm;
 #ifdef SHEARINGBOX
 	omega = OMEGAFRAME;
 #endif
@@ -81,23 +73,19 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 	sk     = dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  {
-    tempgas =    sumpressure[ll]/( sumrho[ll] );
+    temp = (GAMMA-1.0)*energy[ll]/(rho[ll]*R_MU);
+    temp=    sumpressure[ll]/( sumrho[ll] );
+    energy[ll] = (rho[ll]*R_MU) * temp/(GAMMA - 1.0) 
   }
 	else{
-    tempdust = sk*sumpressure[ll]/( sumrho[ll] ) + temdust/(1.+ dt*alphak);
+    temp = energy[ll] / (rho[ll]*CD);
+    temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
+    energy[ll] = (rho[ll]*CD) * temp; // just doing e = m c_d T for the dust for now to be updated later
   }
-
-  energy[ll] = 
 
 //<\#>
 #ifdef X
       }
-#endif
-#ifdef Y
-    }
-#endif
-#ifdef Z
-  }
 #endif
 //<\MAIN_LOOP>
 }

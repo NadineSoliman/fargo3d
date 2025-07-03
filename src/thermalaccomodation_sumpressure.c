@@ -12,17 +12,18 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 
 //<USER_DEFINED>
   INPUT(Density);
+  INPUT(Energy);
   INPUT(Qs);
-  INPUT(V);
-  INPUT(Cv);
-  OUTPUT(Cv);
+  INPUT(Slope);
+  OUTPUT(Slope);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
+  real* sumpressure = Slope->field_cpu;
+  real* sumrho = DensStar->field_cpu;
   real* dens = Density->field_cpu;
   real* pref = Qs->field_cpu;
-  real* v    = V->field_cpu;
-  real* cv   = Cv->field_cpu;
+  real* energy = =Energy->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -32,18 +33,15 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   real invstokesnumber = Coeffval[0];
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
-  real tslim           = TSLIM;
 //<\EXTERNAL>
 
 //<INTERNAL>
   int i;
-  int j;
-  int k;
   int ll;
-  int lm;
   real alphak;
   real sk;
   real omega;
+  real rhotemp; // density * temperature
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -54,20 +52,12 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 
 //<MAIN_LOOP>
 
-  i = j = k = 0;
-
-#ifdef Z
-  for (k=1; k<size_z; k++) {
-#endif
-#ifdef Y
-    for (j=1; j<size_y; j++) {
-#endif
+  i = 0;
 #ifdef X
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
 	ll = l;
-	lm = idx*lxm + idy*lym + idz*lzm;
 	
 #ifdef SHEARINGBOX
 	omega = OMEGAFRAME;
@@ -79,24 +69,19 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 	alphak  = 0.5*(pref[ll]+pref[lm])*invstokesnumber;
 #endif
 #ifdef DUSTSIZE
-	alphak  = max2( 0.5*(pref[ll]+pref[lm])*sqrt(8./M_PI)*invparticlesize/rhosolid, omega/tslim )  ;
+  alphak = pref[ll]*invparticlesize/rhosolid;
 #endif
-
-	sk      = dt*alphak/(1+dt*alphak);
-
-	if (fluidtype == GAS)  sk = 1.0;
-
-	cv[ll] += 0.5*(dens[ll]+dens[lm])*v[ll]*sk;
+	sk      = (CD/CG) *dt*alphak/(1+dt*alphak);
+  rhotemp    = energy[ll] / CD;
+	if (fluidtype == GAS)  {
+    sk = 1.0;
+    rhotemp   =  (GAMMA-1.0)*energy[ll]/(R_MU);
+  }
+	sumpressure[ll] += rhotemp *sk;
 
 //<\#>
 #ifdef X
       }
-#endif
-#ifdef Y
-    }
-#endif
-#ifdef Z
-  }
 #endif
 //<\MAIN_LOOP>
 }

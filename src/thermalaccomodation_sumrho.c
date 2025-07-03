@@ -18,7 +18,7 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 
 //<EXTERNAL>
   real* dens = Density->field_cpu;
-  real* c    = DensStar->field_cpu;
+  real* sumrho    = DensStar->field_cpu;
   real* pref = Qs->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
@@ -29,13 +29,10 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   real invstokesnumber = Coeffval[0];
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
-  real tslim           = TSLIM;
 //<\EXTERNAL>
 
 //<INTERNAL>
   int i;
-  int j;
-  int k;
   int ll;
   real alphak;
   real sk;
@@ -50,14 +47,8 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 
 //<MAIN_LOOP>
 
-  i = j = k = 0;
+  i = 0;
 
-#ifdef Z
-  for (k=0; k<size_z; k++) {
-#endif
-#ifdef Y
-    for (j=0; j<size_y; j++) {
-#endif
 #ifdef X
       for (i=0; i<size_x; i++ ) {
 #endif
@@ -75,22 +66,16 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 	alphak  = pref[ll]*invstokesnumber;
 #endif
 #ifdef DUSTSIZE
-	alphak  = max2( pref[ll]*sqrt(8./M_PI)*invparticlesize/rhosolid, omega/tslim )  ;
+	alphak  = pref[ll]*invparticlesize/rhosolid;
 #endif
-	sk      = dt*alphak/(1+dt*alphak);
+	sk      = (CD/CG) * dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  sk = 1.0;
-	c[ll] += dens[ll]*sk;
+	sumrho[ll] += dens[ll]*sk;
 
 //<\#>
 #ifdef X
       }
-#endif
-#ifdef Y
-    }
-#endif
-#ifdef Z
-  }
 #endif
 //<\MAIN_LOOP>
 }

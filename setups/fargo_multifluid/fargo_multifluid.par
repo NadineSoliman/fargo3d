@@ -19,8 +19,10 @@ Sq			4.0		slope of distribution
 Invstokes1  100
 Invstokes2  1
 Tslim			1.0
+cd              1.0         Specific heat of dust in cgs
+cg              1.0         Specific heat of gas in cgs (adding here for now)              
 
-ThermalAccomodationCoeff 1.0 #cgs
+ThermalAccomodationCoeff 1.0   #cgs
 
 ### Planet parameters
 PlanetConfig		planets/jupiter.cfg
