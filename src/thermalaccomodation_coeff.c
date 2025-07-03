@@ -19,10 +19,8 @@ void ThermalAccomodation_Coeff_cpu () {
 
 //<EXTERNAL>
   real* coeff      = Qs->field_cpu;
-#ifdef DUSTSIZE
   real* dens_gas   = Fluids[0]->Density->field_cpu;
   real* energy_gas = Fluids[0]->Energy->field_cpu; 
-#endif
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -32,9 +30,7 @@ void ThermalAccomodation_Coeff_cpu () {
 //<\EXTERNAL>
 
 //<INTERNAL>
-  int i;
-  int j;
-  int k;
+  int i, j, k;
   int ll;
   // real cs;
   real temp_gas;
@@ -48,23 +44,32 @@ void ThermalAccomodation_Coeff_cpu () {
   
 //<MAIN_LOOP>
 
-  i = 0;
+  i = j = k = 0;
 
+#ifdef Z
+  for (k=0; k<size_z; k++) {
+#endif
+#ifdef Y
+    for (j=0; j<size_y; j++) {
+#endif
 #ifdef X
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
 	ll = l;
-
-	// cs = sqrt(GAMMA*(GAMMA-1)*energy_gas[ll]/dens_gas[ll]);
 	
-  temp_gas   =  (GAMMA-1.0)*energy_gas[ll]/(rho[ll]*R_MU);
-
-  coeff[ll] = thermalcoeff*(KBOLTZ/MH)**(3/2)* (temp_gas)**(1/2) * dens_gas[ll]/CD;
+  temp_gas   =  (GAMMA-1.0)*energy_gas[ll]/(dens_gas[ll]*R_MU);
+  coeff[ll] = thermalcoeff*pow(KBOLTZ/MH, 3/2)* pow(temp_gas, 1/2) * dens_gas[ll]/CD;
 	
 //<\#>
 #ifdef X
       }
+#endif
+#ifdef Y
+    }
+#endif
+#ifdef Z
+  }
 #endif
 //<\MAIN_LOOP>
 }

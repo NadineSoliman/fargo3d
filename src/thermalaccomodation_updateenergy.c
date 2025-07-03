@@ -15,6 +15,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   INPUT(Slope);
   INPUT(Qs);
   INPUT(Energy);
+  INPUT(Density);
   OUTPUT(Energy);
 //<\USER_DEFINED>
 
@@ -22,7 +23,8 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real* sumpressure = Slope->field_cpu;
   real* sumrho = DensStar->field_cpu;
   real* pref = Qs->field_cpu;
-  real* energy = =Energy->field_cpu;
+  real* energy = Energy->field_cpu;
+  real* dens = Density->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -35,7 +37,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 //<\EXTERNAL>
 
 //<INTERNAL>
-  int i;
+  int i,j,k;
   int ll;
   real alphak;
   real sk;
@@ -50,20 +52,20 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
 //<MAIN_LOOP>
 
-  i = 0;
+  i =j= k= 0;
 
+#ifdef Z
+  for (k=0; k<size_z; k++) {
+#endif
+#ifdef Y
+    for (j=0; j<size_y; j++) {
+#endif
 #ifdef X
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
 	ll = l;
 
-#ifdef SHEARINGBOX
-	omega = OMEGAFRAME;
-#endif
-#ifdef CYLINDRICAL
-  omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
-#endif
 #ifdef STOKESNUMBER
 	alphak  = 0.5*(pref[ll]+pref[lm])*invstokesnumber;
 #endif
@@ -73,19 +75,25 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 	sk     = dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  {
-    temp = (GAMMA-1.0)*energy[ll]/(rho[ll]*R_MU);
+    temp = (GAMMA-1.0)*energy[ll]/(dens[ll]*R_MU);
     temp=    sumpressure[ll]/( sumrho[ll] );
-    energy[ll] = (rho[ll]*R_MU) * temp/(GAMMA - 1.0) 
+    energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
   }
 	else{
-    temp = energy[ll] / (rho[ll]*CD);
+    temp = energy[ll] / (dens[ll]*CD);
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
-    energy[ll] = (rho[ll]*CD) * temp; // just doing e = m c_d T for the dust for now to be updated later
+    energy[ll] = (dens[ll]*CD) * temp; // just doing e = m c_d T for the dust for now to be updated later
   }
 
 //<\#>
 #ifdef X
       }
+#endif
+#ifdef Y
+    }
+#endif
+#ifdef Z
+  }
 #endif
 //<\MAIN_LOOP>
 }

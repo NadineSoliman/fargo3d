@@ -23,7 +23,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   real* sumrho = DensStar->field_cpu;
   real* dens = Density->field_cpu;
   real* pref = Qs->field_cpu;
-  real* energy = =Energy->field_cpu;
+  real* energy = Energy->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -36,7 +36,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 //<\EXTERNAL>
 
 //<INTERNAL>
-  int i;
+  int i,j,k;
   int ll;
   real alphak;
   real sk;
@@ -52,19 +52,19 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 
 //<MAIN_LOOP>
 
-  i = 0;
+  i = j= =k =0;
+#ifdef Z
+  for (k=0; k<size_z; k++) {
+#endif
+#ifdef Y
+    for (j=0; j<size_y; j++) {
+#endif
 #ifdef X
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
 	ll = l;
 	
-#ifdef SHEARINGBOX
-	omega = OMEGAFRAME;
-#endif
-#ifdef CYLINDRICAL
-  omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
-#endif
 #ifdef STOKESNUMBER
 	alphak  = 0.5*(pref[ll]+pref[lm])*invstokesnumber;
 #endif
@@ -82,6 +82,12 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 //<\#>
 #ifdef X
       }
+#endif
+#ifdef Y
+    }
+#endif
+#ifdef Z
+  }
 #endif
 //<\MAIN_LOOP>
 }
