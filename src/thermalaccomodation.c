@@ -21,6 +21,4 @@ void ThermalAccomodation(real dt) {
   MULTIFLUID(ThermalAccomodation_Sumpressure(dt));
   
   MULTIFLUID(ThermalAccomodation_UpdateEnergy(dt)); //update velocities
-
-
 }

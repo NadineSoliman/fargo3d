@@ -26,7 +26,9 @@ void ThermalAccomodation_Coeff_cpu () {
   int size_x = Nx;
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
+  #ifdef DUSTSIZE
   real thermalcoeff = 	THERMALACCOMODATIONCOEFF;
+  #endif
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -57,10 +59,10 @@ void ThermalAccomodation_Coeff_cpu () {
 #endif
 //<#>
 	ll = l;
-	
+#ifdef DUSTSIZE
   temp_gas   =  (GAMMA-1.0)*energy_gas[ll]/(dens_gas[ll]*R_MU);
   coeff[ll] = thermalcoeff*pow(KBOLTZ/MH, 3/2)* pow(temp_gas, 1/2) * dens_gas[ll]/CD;
-	
+#endif	
 //<\#>
 #ifdef X
       }

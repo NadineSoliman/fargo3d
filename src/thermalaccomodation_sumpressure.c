@@ -36,7 +36,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 //<\EXTERNAL>
 
 //<INTERNAL>
-  int i,j,k;
+  int i, j, k;
   int ll;
   real alphak;
   real sk;
@@ -52,7 +52,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 
 //<MAIN_LOOP>
 
-  i = j= =k =0;
+  i =j =k =0;
 #ifdef Z
   for (k=0; k<size_z; k++) {
 #endif
@@ -70,7 +70,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 #endif
 #ifdef DUSTSIZE
   alphak = pref[ll]*invparticlesize/rhosolid;
-#endif
+
 	sk      = (CD/CG) *dt*alphak/(1+dt*alphak);
   rhotemp    = energy[ll] / CD;
 	if (fluidtype == GAS)  {
@@ -78,7 +78,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
     rhotemp   =  (GAMMA-1.0)*energy[ll]/(R_MU);
   }
 	sumpressure[ll] += rhotemp *sk;
-
+#endif
 //<\#>
 #ifdef X
       }
