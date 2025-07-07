@@ -65,17 +65,14 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 //<#>
 	ll = l;
 	
-#ifdef STOKESNUMBER
-	alphak  = 0.5*(pref[ll]+pref[lm])*invstokesnumber;
-#endif
 #ifdef DUSTSIZE
-  alphak = pref[ll]*invparticlesize/rhosolid;
+  alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
 
-	sk      = (CD/CG) *dt*alphak/(1+dt*alphak);
-  rhotemp    = energy[ll] / CD;
+	sk      = (CP_DUST/CP_GAS) *dt*alphak/(1+dt*alphak);
+  rhotemp    = energy[ll] / CP_DUST;
 	if (fluidtype == GAS)  {
     sk = 1.0;
-    rhotemp   =  (GAMMA-1.0)*energy[ll]/(R_MU);
+    rhotemp   =  (GAMMA-1.0)*energy[ll]/(R_MU);  
   }
 	sumpressure[ll] += rhotemp *sk;
 #endif

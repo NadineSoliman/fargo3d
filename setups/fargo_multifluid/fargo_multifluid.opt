@@ -49,7 +49,7 @@ FARGO_OPT += -DSTOCKHOLM
 #Floor density
 FARGO_OPT += -DFLOOR
 
-#Floor density
+#Thermal accomodation between the dust species and the gas
 FARGO_OPT += -DTHERMALACCOMODATION
 
 

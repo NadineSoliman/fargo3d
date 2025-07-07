@@ -69,8 +69,14 @@ code.
 
 #define THRESHOLD_STELLAR_MASS 0.05*MSTAR //Our arbitrary threshold to consider an object as stellar.
 
+#define ERGS (G/G_CGS*MSTAR/MSTAR_CGS/R0*R0_CGS) * (MSTAR/MSTAR_CGS)
+
 //Boltzmann constant
-#define KBOLTZ  1.38064852e-16 *(G/G_CGS*MSTAR/MSTAR_CGS/R0*R0_CGS) * (MSTAR/MSTAR_CGS) / (G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS) // ergs/K need to double check
+#define KBOLTZ  1.38064852e-16 *ERGS / (G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS) // ergs/K need to double check
 
 //Mass hydrogen atom times mean molecular weight
 #define MH      (2.4*1.6726219e-24*MSTAR/MSTAR_CGS)
+
+// add the heat capacity units 
+#define CP_DUST (ERGS/MSTAR * MSTAR_CGS) // erg/g/K (cp_dust is a function of Tdust)
+#define CP_GAS  (ERGS/MSTAR * MSTAR_CGS) // erg/g/K
