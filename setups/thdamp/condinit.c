@@ -10,7 +10,6 @@ void Init() {
   Coeffval[1]   = 1.0;    
   Coeffval[2]   = 1.0;
 
-  printf("LALALALALAL \n");
   for (i = 0; i<dim1; i++) {
     rho[i] = 1.0;
     v1[i]  = 0.0;
