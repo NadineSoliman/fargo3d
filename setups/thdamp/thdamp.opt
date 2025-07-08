@@ -17,14 +17,8 @@ FARGO_OPT  += -DZ
 #Coordinate System.
 FARGO_OPT  += -DCARTESIAN
 
-#Equation of State
-FARGO_OPT  += -DADIABATIC
-
-#Transport Algorithm
-FARGO_OPT += -DSTANDARD
-
-
 FARGO_OPT += -DTHERMALACCOMODATION
+FARGO_OPT += -DDUSTSIZE
 
 #Cuda blocks
 ifeq (${GPU}, 1)

@@ -4,12 +4,13 @@ void Init() {
   int i,j,k;
   real* rho = Density->field_cpu;
   real* e = Energy->field_cpu;
-  int index;
-#ifdef Z
   real* v1 = Vz->field_cpu;
   int dim1 = Nz + 2*NGHZ;
-#endif
-  
+  Coeffval[0]   = 1.0;    
+  Coeffval[1]   = 1.0;    
+  Coeffval[2]   = 1.0;
+
+  printf("LALALALALAL \n");
   for (i = 0; i<dim1; i++) {
     rho[i] = 1.0;
     v1[i]  = 0.0;

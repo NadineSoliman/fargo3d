@@ -31,7 +31,6 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
   int fluidtype = Fluidtype;
-  real invstokesnumber = Coeffval[0];
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
 //<\EXTERNAL>

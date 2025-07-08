@@ -2,14 +2,4 @@
 #             REFLECTING 1D BOX in Z
 #----------------------------------------------------
 
-Density:
-	Zmin: SYMMETRIC
-	Zmax: SYMMETRIC
 
-Energy:
-	Zmin: SYMMETRIC
-	Zmax: SYMMETRIC
-
-Vz:
-	Zmin:	ANTISYMMETRIC
-	Zmax:   ANTISYMMETRIC
