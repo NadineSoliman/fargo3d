@@ -29,8 +29,13 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
   int fluidtype = Fluidtype;
+  #ifdef CONSTANTTHERMALCOEFF
+  real invthermaltime = Coeffval[1];
+  #endif
+  #ifdef DUSTSIZE
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
+  #endif
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -62,10 +67,12 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 #endif
 //<#>
 	ll = l;
-	
+#ifdef CONSTANTTHERMALCOEFF
+        alphak = pref[ll]*invthermaltime;
+#endif
 #ifdef DUSTSIZE
   alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
-
+#endif
 	sk      = (CP_DUST/CP_GAS) *dt*alphak/(1+dt*alphak);
   rhotemp    = energy[ll] / CP_DUST;
 	if (fluidtype == GAS)  {
@@ -73,8 +80,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
     rhotemp   =  (GAMMA-1.0)*energy[ll]/(R_MU);  
   }
 	sumpressure[ll] += rhotemp *sk;
-  printf("Sumpressure: %1.16f \t sk %1.16f \t alphak %1.16f \t dt %1.16f \n", sumpressure[ll], sk, alphak, dt);
-#endif
+
 //<\#>
 #ifdef X
       }

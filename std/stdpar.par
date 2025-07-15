@@ -37,6 +37,8 @@ Sigma0                     1.0
 FlaringIndex               0.0
 Nu                         0.0
 Cs                         1.0
+Cp_dust                    1.0
+Cp_gas                     2.5
 Frame                      fixed
 OmegaFrame                 0.0
 IndirectTerm               no

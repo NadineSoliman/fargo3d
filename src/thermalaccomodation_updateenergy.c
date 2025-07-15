@@ -63,10 +63,14 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 #endif
 //<#>
 	ll = l;
-
+#ifdef CONSTANTTHERMALCOEFF
+        alphak = pref[ll]*invthermaltime;
+#endif
 #ifdef DUSTSIZE
-	alphak  = pref[ll]*invparticlesize/rhosolid/CP_DUST;
-	sk     = dt*alphak/(1+dt*alphak);
+  alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
+#endif
+
+  sk     = dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  {
     temp=    sumpressure[ll]/( sumrho[ll] );
@@ -77,7 +81,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
     energy[ll] = (dens[ll]*CP_DUST) * temp; // just doing e = m c_d T for the dust for now to be updated later
   }
-#endif
+
 //<\#>
 #ifdef X
       }

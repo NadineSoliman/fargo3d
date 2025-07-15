@@ -26,8 +26,13 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
   int fluidtype = Fluidtype;
+  #ifdef CONSTANTTHERMALCOEFF
+  real invthermaltime = Coeffval[1];
+  #endif
+  #ifdef DUSTSIZE
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
+  #endif
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -58,16 +63,18 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 #endif
 //<#>
 	ll = l;
-
+#ifdef CONSTANTTHERMALCOEFF
+        alphak = pref[ll]*invthermaltime;
+#endif
 #ifdef DUSTSIZE
-	alphak  = pref[ll]*invparticlesize/rhosolid/CP_DUST;
+  alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
+#endif
 
 	sk      = (CP_DUST/CP_GAS) * dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  sk = 1.0;
 	sumrho[ll] += dens[ll]*sk;
-  printf("Sumrho: %1.16f \t sk %1.16f alpha_k %1.16f \t dt %1.16f \n", sumrho[ll], sk,alphak,  dt);
-#endif
+
 //<\#>
 #ifdef X
       }
