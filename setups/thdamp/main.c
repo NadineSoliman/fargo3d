@@ -396,9 +396,9 @@ if (*SPACING=='N'){
       //------------------------------------------------------------------------
       
 
-      
 #ifdef THERMALACCOMODATION
       FARGO_SAFE(ThermalAccomodation(dt));
+      MULTIFLUID(comm(ENERGY)); //Very important for isothermal cases!
 #endif
 
 
@@ -410,7 +410,7 @@ if (*SPACING=='N'){
 #endif
 
       //We apply comms and boundaries at the end of the step
-      MULTIFLUID(FillGhosts(PrimitiveVariables()));
+      //MULTIFLUID(FillGhosts(PrimitiveVariables()));
 
       if(CPU_Master) {
 	if (FullArrayComms)

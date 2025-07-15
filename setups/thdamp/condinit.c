@@ -27,7 +27,7 @@ void CondInit() {
    SelectFluid(0);
    Init();
 
-    Fluids[1] = CreateFluid("gas",DUST);
+    Fluids[1] = CreateFluid("dust",DUST);
    SelectFluid(1);
    Init();
 }

@@ -78,5 +78,5 @@ code.
 #define MH      (2.4*1.6726219e-24*MSTAR/MSTAR_CGS)
 
 // add the heat capacity units 
-#define CP_DUST (ERGS/MSTAR * MSTAR_CGS) // erg/g/K (cp_dust is a function of Tdust)
-#define CP_GAS  (ERGS/MSTAR * MSTAR_CGS) // erg/g/K
+//#define CP_DUST (ERGS/MSTAR * MSTAR_CGS) // erg/g/K (cp_dust is a function of Tdust)
+//#define CP_GAS  (ERGS/MSTAR * MSTAR_CGS) // erg/g/K

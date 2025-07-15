@@ -20,7 +20,6 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 
 //<EXTERNAL>
   real* sumpressure = Slope->field_cpu;
-  real* sumrho = DensStar->field_cpu;
   real* dens = Density->field_cpu;
   real* pref = Qs->field_cpu;
   real* energy = Energy->field_cpu;
@@ -74,6 +73,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
     rhotemp   =  (GAMMA-1.0)*energy[ll]/(R_MU);  
   }
 	sumpressure[ll] += rhotemp *sk;
+  printf("Sumpressure: %1.16f \t sk %1.16f \t alphak %1.16f \t dt %1.16f \n", sumpressure[ll], sk, alphak, dt);
 #endif
 //<\#>
 #ifdef X

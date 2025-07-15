@@ -1,5 +1,5 @@
 #Boundaries configuration file for sod1d test problem
 #             REFLECTING 1D BOX in Z
 #----------------------------------------------------
-
+ENERGY:     SYMMETRIC
 

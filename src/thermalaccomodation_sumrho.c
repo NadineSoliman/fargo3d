@@ -60,12 +60,13 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 	ll = l;
 
 #ifdef DUSTSIZE
-	alphak  = pref[ll]*invparticlesize/rhosolid;
+	alphak  = pref[ll]*invparticlesize/rhosolid/CP_DUST;
 
 	sk      = (CP_DUST/CP_GAS) * dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  sk = 1.0;
 	sumrho[ll] += dens[ll]*sk;
+  printf("Sumrho: %1.16f \t sk %1.16f alpha_k %1.16f \t dt %1.16f \n", sumrho[ll], sk,alphak,  dt);
 #endif
 //<\#>
 #ifdef X
