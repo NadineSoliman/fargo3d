@@ -58,7 +58,7 @@ void ThermalAccomodation_Coeff_cpu () {
 	ll = l;
 #ifdef DUSTSIZE
   temp_gas   =  (GAMMA-1.0)*energy_gas[ll]/(dens_gas[ll]*R_MU);
-  coeff[ll] =  pow(temp_gas, 0.5) * dens_gas[ll];
+  coeff[ll]  =  pow(temp_gas, 0.5) * dens_gas[ll];
 #endif	
 //<\#>
 #ifdef X
