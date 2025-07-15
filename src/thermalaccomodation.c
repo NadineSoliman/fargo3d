@@ -16,8 +16,7 @@ void ThermalAccomodation(real dt) {
   //-------------------------------------------------------------------------------------
   Reset_field(DensStar);  
   MULTIFLUID(ThermalAccomodation_Sumrho(dt)); 
-  // WriteMerging(DensStar, 0); //write DensStar to disk
-  // exit(22);
+
   Reset_field(Slope);
   MULTIFLUID(ThermalAccomodation_Sumpressure(dt));
   
