@@ -1,0 +1,20 @@
+Setup		soundwave
+
+
+Zmin 		0.0
+Zmax 		1.0
+
+Amplitude	1.0e-4
+CS 		1.0
+
+RHOG		1.0
+DENSGR		1.0
+DENSGI		0.0
+
+DT		1.0e-1
+Ninterm	 	1
+Ntot		100
+
+PeriodicZ	Yes
+Nz		    16
+OutputDir 	outputs/soundwave

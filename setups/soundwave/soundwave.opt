@@ -1,0 +1,27 @@
+####
+
+#Dimension(s) of Simulation
+
+FLUIDS := 0 1 2 3 4
+NFLUIDS = 5
+#-----------------------------------------------------------
+
+FARGO_OPT += -DNFLUIDS=${NFLUIDS}
+
+FARGO_OPT += -DZ
+FARGO_OPT += -DCARTESIAN
+
+FARGO_OPT += -DISOTHERMAL
+FARGO_OPT += -DSTANDARD
+
+#Collision between fluids
+FARGO_OPT += -DDRAGFORCE
+FARGO_OPT += -DSTOKESNUMBER
+FARGO_OPT += -DCONSTANTSTOKESNUMBER
+
+#Cuda blocks
+ifeq (${GPU}, 1)
+FARGO_OPT += -DBLOCK_X=1
+FARGO_OPT += -DBLOCK_Y=16
+FARGO_OPT += -DBLOCK_Z=16
+endif

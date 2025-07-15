@@ -70,6 +70,9 @@ void DragForce_Coeff_cpu () {
 #ifdef SHEARINGBOX
 	omega = OMEGAFRAME;
 #endif
+#ifdef CONSTANTSTOKESNUMBER
+  omega = 1.0;
+#endif
 #ifdef CYLINDRICAL
   omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 #endif

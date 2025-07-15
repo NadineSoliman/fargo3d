@@ -82,7 +82,7 @@ void DragForce_SumC_cpu (real dt) {
 	if (fluidtype == GAS)  sk = 1.0;
 	c[ll] += dens[ll]*sk;
 
-//<\#>
+  //<\#>
 #ifdef X
       }
 #endif
