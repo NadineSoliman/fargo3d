@@ -46,6 +46,8 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real alphak;
   real sk;
   real temp;
+  real cpgas;
+  real cpdust;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -74,6 +76,8 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 #ifdef DUSTSIZE
   alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
 #endif
+  cpgas  = R_MU/(GAMMA-1.0);
+  cpdust = 0.088*cpgas;
 
   sk     = dt*alphak/(1+dt*alphak);
 
@@ -82,9 +86,9 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
     energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
   }
 	else{
-    temp = energy[ll] / (dens[ll]*CP_DUST);
+    temp = energy[ll] / (dens[ll]*cpdust);
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
-    energy[ll] = (dens[ll]*CP_DUST) * temp; // just doing e = m c_d T for the dust for now to be updated later
+    energy[ll] = (dens[ll]*cpdust) * temp; // just doing e = m c_d T for the dust for now to be updated later
   }
 
 //<\#>

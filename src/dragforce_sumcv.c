@@ -83,8 +83,12 @@ void _DragForce_SumCV_cpu(real dt, int idx, int idy, int idz, Field *V, Field *C
 	omega = OMEGAFRAME;
 #endif
 #ifdef CYLINDRICAL
-  omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
+  omega = sqrt(G*MSTAR/ymin(j)/ymin(j)/ymin(j));
 #endif
+#ifdef SPHERICAL
+  omega = sqrt(G*MSTAR/ymin(j)/ymin(j)/ymin(j));
+#endif
+
 #ifdef STOKESNUMBER
 	alphak  = 0.5*(pref[ll]+pref[lm])*invstokesnumber;
 #endif

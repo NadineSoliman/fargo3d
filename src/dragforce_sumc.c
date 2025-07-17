@@ -70,6 +70,9 @@ void DragForce_SumC_cpu (real dt) {
 #ifdef CYLINDRICAL
   omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 #endif
+#ifdef SPHERICAL
+  omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
+#endif
 
 #ifdef STOKESNUMBER
 	alphak  = pref[ll]*invstokesnumber;

@@ -46,8 +46,8 @@ void Floor_cpu() {
 #endif
 //<#>
 	ll = l;
-	if (dens[ll]<1.0e-11)
-	  dens[ll] = 1.0e-11;
+	if (dens[ll]<1.0e-9)
+	  dens[ll] = 1.0e-9;
 //<\#>
 #ifdef X
       }

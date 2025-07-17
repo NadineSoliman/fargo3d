@@ -64,7 +64,7 @@ void NewVelocity_y_cpu () {
 #ifdef Y
 	ll = l;
 	llym = lym;
-	vy[ll] = (mmy[ll]*Vol(i,j,k)+mpy[llym]*Vol(i,j-1,k))/(rho[ll]*Vol(i,j,k)+rho[llym]*Vol(i,j-1,k));
+	vy[ll] = (mmy[ll]*Vol(i,j,k)+mpy[llym]*Vol(i,j-1,k))/(1.e-30+ rho[ll]*Vol(i,j,k)+rho[llym]*Vol(i,j-1,k));
 #endif
 //<\#>
 #ifdef X

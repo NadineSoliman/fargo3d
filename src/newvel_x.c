@@ -82,7 +82,7 @@ void NewVelocity_x_cpu () {
 #endif
 #ifdef SPHERICAL
 	rcyl = ymed(j) * sin(zmed(k));
-	vx[ll] = (mmx[ll]*Vol(i,j,k) + mpx[llxm]*Vol(ixm,j,k) )/((rho[ll]*Vol(i,j,k)+rho[llxm]*Vol(ixm,j,k))*rcyl)-OMEGAFRAME*rcyl;
+	vx[ll] = (mmx[ll]*Vol(i,j,k) + mpx[llxm]*Vol(ixm,j,k) )/(1e-30+(rho[ll]*Vol(i,j,k)+rho[llxm]*Vol(ixm,j,k))*rcyl)-OMEGAFRAME*rcyl;
 #endif
 #endif
 //<\#>

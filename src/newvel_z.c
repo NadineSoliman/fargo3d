@@ -65,7 +65,7 @@ void NewVelocity_z_cpu () {
 #ifdef Z
 	ll = l;
 	llzm = lzm;
-	vz[ll] = (mmz[ll]*Vol(i,j,k)+mpz[llzm]*Vol(i,j,k-1))/(rho[ll]*Vol(i,j,k)+rho[llzm]*Vol(i,j,k-1));
+	vz[ll] = (mmz[ll]*Vol(i,j,k)+mpz[llzm]*Vol(i,j,k-1))/(1.e-30+rho[ll]*Vol(i,j,k)+rho[llzm]*Vol(i,j,k-1));
 #ifdef SPHERICAL
 	vz[ll] /= ymed(j);
 #endif
