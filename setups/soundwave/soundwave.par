@@ -10,6 +10,13 @@ CS 		1.0
 RHOG		1.0
 DENSGR		1.0
 DENSGI		0.0
+TGAS        1.0
+TDUST       1.0
+
+Gamma			1.4
+
+CP_dust         1.0
+CP_gas          2.5
 
 DT		1.0e-1
 Ninterm	 	1

@@ -11,40 +11,62 @@ void _CondInit(int index) {
   int k,m;
   
   real* rho   = Density->field_cpu;
-  real* cs    = Energy->field_cpu;
+  real* e    = Energy->field_cpu;
   real* v     = Vz->field_cpu;
   real kmode  = 2.*M_PI/(ZMAX-ZMIN);
- 
-  
+
+
   //Input parameters
   real Ts[NFLUIDS-1] = { 0.1 , 0.21544346900318834 , 0.46415888336127786 , 1.0 };
+  real Th[NFLUIDS-1] = { 0.1 , 0.21544346900318834 , 0.46415888336127786 , 1.0 };
   real eps[NFLUIDS-1] = { 0.1 , 0.23333333333333334 , 0.3666666666666667 , 0.5 };
-  double complex lambda =  0.9124135035415595 + -5.49379966793634 *I;
+  double complex lambda =  -0.548547 + -7.34385 *I; 
   
+ #ifdef CONSTANTTHERMALCOEFF
+  if(index > 0 ) Coeffval[1] = 1.0/Th[index-1];
+  #endif
+  if(index > 0 )  Coeffval[0]   = 1.0/Ts[index-1];
+
   double complex vdust[NFLUIDS-1];
   double complex rhodust[NFLUIDS-1];
+  double complex Tdust[NFLUIDS-1];
+  double complex edust[NFLUIDS-1];
   double complex delta_rhog = DENSGR;
   double complex vgas       = -I*lambda/kmode*delta_rhog/RHOG;
 
+  double complex sum=0.0;
+    for(m=0;m<NFLUIDS-1;m++){
+      sum += eps[m] / (1.0 + lambda*Ts[m]);
+  }
+  double complex delta_Tg = - (1 - (((lambda * lambda) / (CS * kmode * CS * kmode)) *(1 + sum))) * delta_rhog / RHOG;
+  double complex delta_e = (delta_rhog / RHOG) + (delta_Tg/TGAS);
+
   for(m=0;m<NFLUIDS-1;m++){
-    vdust[m]   =  -I*lambda/( kmode*(1.0-lambda*Ts[m]) ) *delta_rhog/RHOG;
-    rhodust[m] =  eps[m]/(1.0-lambda*Ts[m])*delta_rhog;
-    //printf("Dust %d: v=%.3f+%.3fi, rho=%.3f+%.3fi\n", m, creal(vdust[m]), cimag(vdust[m]), creal(rhodust[m]), cimag(rhodust[m]));
+
+    Tdust[m]   =  - 1/ (1 + lambda*Th[m]) * delta_Tg;
+    vdust[m]   = -I*lambda/(CS * kmode) / (1 + lambda *Ts[m])*  delta_rhog / RHOG;
+    rhodust[m] =  eps[m]/(1.0+lambda*Ts[m])*delta_rhog / RHOG;
+    edust[m]   = CP_DUST/CP_GAS * (rhodust[m]  + Tdust[m]);
+
   }
   
-  if(index > 0 )    Coeffval[0]   = 1.0/Ts[index-1];
+
   for (k = 0; k<Nz+2*NGHZ; k++) {
     
     if (index == 0) {
       rho[k] = RHOG + AMPLITUDE*mode( DENSGR, DENSGI, kmode, zmed(k) );
       v[k]   = AMPLITUDE*mode( creal(vgas), cimag(vgas), kmode, zmin(k) );
-      cs[k]  = CS;
+      e[k]  = (RHOG * TGAS * CP_GAS);
+      e[k] += AMPLITUDE*mode( creal(delta_e), cimag(delta_e), kmode, zmin(k) );
     }
     else {
       rho[k]  = eps[index-1]*RHOG;
       rho[k] += AMPLITUDE*mode( creal(rhodust[index-1]), cimag(rhodust[index-1]), kmode, zmed(k) );
       v[k]    = AMPLITUDE*mode( creal(vdust[index-1])  , cimag(vdust[index-1])  , kmode, zmin(k) );
-      cs[k]   = 0.0;
+      printf("v = %f \n", v[k]);
+
+      e[k]   = TDUST * CP_DUST * eps[index-1] * RHOG;
+      e[k]  += AMPLITUDE*mode( creal(edust[index-1]), cimag(edust[index-1]), kmode, zmed(k) );
     }
   }
 }
