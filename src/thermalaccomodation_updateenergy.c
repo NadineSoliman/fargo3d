@@ -76,7 +76,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 #ifdef DUSTSIZE
   alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
 #endif
-  cpgas  = R_MU/(GAMMA-1.0);
+  cpgas  = GAMMA*R_MU/(GAMMA-1.0);
   cpdust = 0.088*cpgas;
 
   sk     = dt*alphak/(1+dt*alphak);
