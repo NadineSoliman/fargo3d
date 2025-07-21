@@ -91,7 +91,7 @@ alphak = 0.0;
     energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
   }
 	else{
-    temp = energy[ll] / (dens[ll]*cpdust);
+    temp = energy[ll] / (dens[ll]*(cpdust));
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
     energy[ll] = (dens[ll]*cpdust) * temp; 
   }

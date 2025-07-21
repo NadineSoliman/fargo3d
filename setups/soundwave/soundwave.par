@@ -4,8 +4,7 @@ Setup		soundwave
 Zmin 		0.0
 Zmax 		1.0
 
-Amplitude	1.0e-4
-CS 		1.0
+Amplitude	1.0e-5
 
 RHOG		1.0
 DENSGR		1.0
@@ -15,13 +14,11 @@ TDUST       1.0
 
 Gamma			1.4
 
-CP_dust         1.0
-CP_gas          2.5
-
-DT		1.0e-1
+DT		    0.01
 Ninterm	 	1
-Ntot		100
+Ntot		500
 
 PeriodicZ	Yes
-Nz		    64
-OutputDir 	outputs/soundwave
+Nz		    512
+CFL         0.3 
+OutputDir 	outputs/soundwave_512_adi_damp
