@@ -59,6 +59,7 @@ void _DragForce_UpdateVel_cpu(real dt, int idx, int idy, int idz, Field *V, Fiel
 //<CONSTANT>
 // real xmin(Nx+2*NGHX+1);
 // real ymin(Ny+2*NGHY+1);
+// real TSLIM(1);
 //<\CONSTANT>
 
 //<MAIN_LOOP>
@@ -110,5 +111,3 @@ void _DragForce_UpdateVel_cpu(real dt, int idx, int idy, int idz, Field *V, Fiel
 #ifdef Z
   }
 #endif
-//<\MAIN_LOOP>
-}
