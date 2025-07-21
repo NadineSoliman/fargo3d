@@ -30,7 +30,6 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   int size_x = Nx;
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
-  int fluidtype = Fluidtype;
 #ifdef DUSTSIZE
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
@@ -38,10 +37,13 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 #ifdef CONSTANTTHERMALCOEFF
   real invthermaltime = Coeffval[1];
 #endif
+  int fluidtype = Fluidtype;
 //<\EXTERNAL>
 
 //<INTERNAL>
-  int i,j,k;
+  int i;
+  int j;
+  int k;
   int ll;
   real alphak;
   real sk;
@@ -53,6 +55,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 //<CONSTANT>
 // real xmin(Nx+2*NGHX+1);
 // real ymin(Ny+2*NGHY+1);
+// real GAMMA(1);
 //<\CONSTANT>
 
 //<MAIN_LOOP>
@@ -70,15 +73,17 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 #endif
 //<#>
 	ll = l;
-#ifdef CONSTANTTHERMALCOEFF
-        alphak = pref[ll]*invthermaltime;
-#endif
-#ifdef DUSTSIZE
-  alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
-#endif
+
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
   cpdust = 0.088*cpgas;
-
+alphak = 0.0;
+#ifdef CONSTANTTHERMALCOEFF
+  alphak = pref[ll]*invthermaltime;
+#endif
+#ifdef DUSTSIZE
+  alphak = pref[ll]*invparticlesize/rhosolid/cpdust;
+#endif
+  
   sk     = dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  {
@@ -88,7 +93,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 	else{
     temp = energy[ll] / (dens[ll]*cpdust);
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
-    energy[ll] = (dens[ll]*cpdust) * temp; // just doing e = m c_d T for the dust for now to be updated later
+    energy[ll] = (dens[ll]*cpdust) * temp; 
   }
 
 //<\#>

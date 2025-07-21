@@ -25,28 +25,27 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   int size_x = Nx;
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
-  int fluidtype = Fluidtype;
-  #ifdef CONSTANTTHERMALCOEFF
-  real invthermaltime = Coeffval[1];
-  #endif
-  #ifdef DUSTSIZE
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
-  #endif
+    int fluidtype = Fluidtype;
 //<\EXTERNAL>
 
 //<INTERNAL>
-  int i,j,k;
+  int i;
+  int j;
+  int k;
   int ll;
   real alphak;
   real sk;
   real cpgas;
   real cpdust;
+  real temp;
 //<\INTERNAL>
 
 //<CONSTANT>
 // real xmin(Nx+2*NGHX+1);
 // real ymin(Ny+2*NGHY+1);
+// real GAMMA(1);
 //<\CONSTANT>
 
 
@@ -65,15 +64,17 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 #endif
 //<#>
 	ll = l;
+
+
+  cpgas  = GAMMA*R_MU/(GAMMA-1.0);
+  cpdust = 0.088*cpgas;
+  alphak = 0.0;
 #ifdef CONSTANTTHERMALCOEFF
         alphak = pref[ll]*invthermaltime;
 #endif
 #ifdef DUSTSIZE
-  alphak = pref[ll]*invparticlesize/rhosolid/CP_DUST;
+  alphak = pref[ll]*invparticlesize/rhosolid/cpdust;
 #endif
-  cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-  cpdust = 0.088*cpgas;
-
 	sk      = (cpdust/cpgas) * dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  sk = 1.0;

@@ -63,7 +63,6 @@ void DragForce_SumC_cpu (real dt) {
 #endif
 //<#>
 	ll = l;
-
 #ifdef SHEARINGBOX
 	omega = OMEGAFRAME;
 #endif
@@ -73,7 +72,6 @@ void DragForce_SumC_cpu (real dt) {
 #ifdef SPHERICAL
   omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 #endif
-
 #ifdef STOKESNUMBER
 	alphak  = pref[ll]*invstokesnumber;
 #endif
@@ -85,7 +83,7 @@ void DragForce_SumC_cpu (real dt) {
 	if (fluidtype == GAS)  sk = 1.0;
 	c[ll] += dens[ll]*sk;
 
-  //<\#>
+//<\#>
 #ifdef X
       }
 #endif

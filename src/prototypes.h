@@ -582,15 +582,15 @@ ex void CheckMuteZ_gpu(void);
 ex void SetupHook1_gpu (void);
 
 ex void copy_field_gpu(Field*,Field*);
-ex void RelaxAdia_cpu(real);
+ex void RelaxAdia_gpu(real);
 
 // DragForce-----------------------------------------------
-ex void DragForce_Coeff_gpu();
+ex void DragForce_Coeff_gpu(void);
 ex void DragForce_SumC_gpu(real);
 ex void _DragForce_SumCV_gpu(real,int,int,int,Field*,Field*);
 ex void _DragForce_UpdateVel_gpu(real,int,int,int,Field*,Field*);
 // ThermalAccomodation-----------------------------------------------
-ex void ThermalAccomodation_Coeff_gpu();
+ex void ThermalAccomodation_Coeff_gpu(void);
 ex void ThermalAccomodation_Sumrho_gpu(real);
 ex void ThermalAccomodation_Sumpressure_gpu(real);
 ex void ThermalAccomodation_UpdateEnergy_gpu(real);

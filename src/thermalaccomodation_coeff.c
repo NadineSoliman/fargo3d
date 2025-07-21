@@ -29,9 +29,10 @@ void ThermalAccomodation_Coeff_cpu () {
 //<\EXTERNAL>
 
 //<INTERNAL>
-  int i, j, k;
+  int i;
+  int j;
+  int k;
   int ll;
-  // real cs;
   real temp_gas;
 //<\INTERNAL>
 
