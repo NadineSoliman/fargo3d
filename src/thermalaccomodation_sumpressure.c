@@ -72,7 +72,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 	ll = l;
       
 cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-cpdust = 0.088*cpgas;
+cpdust = 0.01* cpgas;
 alphak=0.0;
 #ifdef CONSTANTTHERMALCOEFF
         alphak = pref[ll]*invthermaltime;
@@ -81,7 +81,7 @@ alphak=0.0;
   alphak = pref[ll]*invparticlesize/rhosolid/cpdust;
 #endif
 
-	sk      = (cpdust/cpgas) *dt*alphak/(1+dt*alphak);
+	sk      = (GAMMA * cpdust/cpgas) *dt*alphak/(1+dt*alphak);
  
   rhotemp    = energy[ll] / cpdust;
 	if (fluidtype == GAS)  {

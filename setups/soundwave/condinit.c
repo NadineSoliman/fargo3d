@@ -16,13 +16,13 @@ void _CondInit(int index) {
   real kmode  = 2.*M_PI/(ZMAX-ZMIN);
   real CS = sqrt(GAMMA * R_MU * TGAS); // Speed of sound in the gas
   real cp_gas = GAMMA * R_MU / (GAMMA - 1.0); // Specific heat capacity of the gas
-  real cp_dust = 0.088 * cp_gas; // Specific heat capacity of the dust
+  real cp_dust = 0.01 * cp_gas; // Specific heat capacity of the dust
   
   //Input parameters
-  real Ts[NFLUIDS-1] = { 1e-10};//, 0.21544346900318834 , 0.46415888336127786 , 1.0 };
-  real Th[NFLUIDS-1] = { 0.4};// , 0.21544346900318834 , 0.46415888336127786 , 1.0 };
+  real Ts[NFLUIDS-1] = { 0.1 };//, 0.21544346900318834 , 0.46415888336127786 , 1.0 };
+  real Th[NFLUIDS-1] = { 0.1 };// , 0.21544346900318834 , 0.46415888336127786 , 1.0 };
   real eps[NFLUIDS-1] = { 2.24 }; //, 0.23333333333333334 , 0.3666666666666667 , 0.5 };
-  double complex lambda =-2.89846059953303170;//-0.16757341098197820 - 7.18794806155152788 * I; 
+  double complex lambda=-0.60418653999843897 - 4.14725080837136062*I;//-0.16757341098197820 - 7.18794806155152788 * I; 
   
 
  #ifdef CONSTANTTHERMALCOEFF
@@ -37,6 +37,7 @@ void _CondInit(int index) {
   double complex delta_rhog = DENSGR * RHOG;
   double complex vgas       = I* lambda/(kmode)*delta_rhog/RHOG;
 
+  printf("v_gas = %g + %gi\n", creal(vgas), cimag(vgas));
   double complex sum=0.0;
     for(m=0;m<NFLUIDS-1;m++){
       sum += eps[m] / (1.0 + lambda*Ts[m]);

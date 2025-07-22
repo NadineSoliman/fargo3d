@@ -73,7 +73,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 	ll = l;
 
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-  cpdust = 0.088*cpgas;
+  cpdust = 0.01* cpgas;
 alphak = 0.0;
 #ifdef CONSTANTTHERMALCOEFF
   alphak = pref[ll]*invthermaltime;

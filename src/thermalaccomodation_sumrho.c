@@ -70,7 +70,7 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 
 
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-  cpdust = 0.088*cpgas;
+  cpdust = 0.01* cpgas;
   alphak = 0.0;
 #ifdef CONSTANTTHERMALCOEFF
         alphak = pref[ll]*invthermaltime;
@@ -78,7 +78,7 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 #ifdef DUSTSIZE
   alphak = pref[ll]*invparticlesize/rhosolid/cpdust;
 #endif
-	sk      = (cpdust/cpgas) * dt*alphak/(1+dt*alphak);
+	sk      = (GAMMA * cpdust/cpgas) * dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  sk = 1.0;
 	sumrho[ll] += dens[ll]*sk;
