@@ -94,7 +94,7 @@ void _DragForce_UpdateVel_cpu(real dt, int idx, int idy, int idz, Field *V, Fiel
 	alphak  = 0.5*(pref[ll]+pref[lm])*invstokesnumber;
 #endif
 #ifdef DUSTSIZE
-	alphak  = max2( 0.5*(pref[ll]+pref[lm])*sqrt(8./M_PI)*invparticlesize/rhosolid, omega/tslim )  ;
+	alphak  = max2( 0.5*(pref[ll]+pref[lm])*sqrt(8./M_PI)*invparticlesize/rhosolid, omega/tslim );
 #endif
 	sk     = dt*alphak/(1+dt*alphak);
 

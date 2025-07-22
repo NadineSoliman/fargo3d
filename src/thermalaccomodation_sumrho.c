@@ -40,6 +40,9 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   real cpgas;
   real cpdust;
   real temp;
+#ifdef CONSTANTTHERMALCOEFF
+  real invthermaltime=invparticlesize;
+#endif
 //<\INTERNAL>
 
 //<CONSTANT>

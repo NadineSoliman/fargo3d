@@ -30,13 +30,8 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   int size_x = Nx;
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
-#ifdef DUSTSIZE
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
-#endif
-#ifdef CONSTANTTHERMALCOEFF
-  real invthermaltime = Coeffval[1];
-#endif
   int fluidtype = Fluidtype;
 //<\EXTERNAL>
 
@@ -50,6 +45,9 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real temp;
   real cpgas;
   real cpdust;
+#ifdef CONSTANTTHERMALCOEFF
+  real invthermaltime=invparticlesize;
+#endif
 //<\INTERNAL>
 
 //<CONSTANT>

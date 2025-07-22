@@ -44,6 +44,9 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   real rhotemp; 
   real cpgas;
   real cpdust;
+#ifdef CONSTANTTHERMALCOEFF
+  real invthermaltime=invparticlesize;
+#endif
 //<\INTERNAL>
 
 //<CONSTANT>
