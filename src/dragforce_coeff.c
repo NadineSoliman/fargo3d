@@ -76,6 +76,8 @@ void DragForce_Coeff_cpu () {
 #ifdef CYLINDRICAL
   omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 #endif
+#ifdef SPHERICAL
+  omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 	coeff[ll] = omega;
 #endif
 	

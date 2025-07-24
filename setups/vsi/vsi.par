@@ -8,6 +8,7 @@ Nu			        1.0e-9		Uniform kinematic viscosity
 SigmaSlope		    1.0		Slope of surface
 FlaringIndex		0.0
 Noise               0.01
+Gamma               1.4
 
 ### Dust parameters
 Epsilon			0.02		Total dust-to-gas mass ratio
@@ -34,4 +35,4 @@ Xmax		3.141592653589793
 Ntot			1000		Total number of time steps
 Ninterm	 		10		Time steps between outputs
 DT			    0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		@outputs/vsi_th2
+OutputDir		@outputs/vsi

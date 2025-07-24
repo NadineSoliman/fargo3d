@@ -25,6 +25,8 @@ void _CondInit(int id) {
   // Stokes numbers                                                                      
   real smax = TSMAX;
   real smin = TSMIN;
+  real cv    = 1./(GAMMA-1.0);
+  real cdust=0.088*GAMMA/(GAMMA-1.0); 
   real ds   = (log(smax)-log(smin))/(NFLUIDS-1);
   for(int n=0;n<NFLUIDS;n++){
     stokes_plus[n] = smin*exp(ds*n);
@@ -79,8 +81,17 @@ void _CondInit(int id) {
 	    exp((1.-pow(sin(Zmed(k)),-2.*FLARINGINDEX))/2./FLARINGINDEX/(h*h));
 	  }
 	
+    if(Fluidtype==DUST)       rho[l]  *= epsilons[id-1];
+
+  #ifdef ISOTHERMAL
+	  e[l] = h*sqrt(G*MSTAR/r);
+    if(Fluidtype==DUST) e[l] = 0.;
+  #else
+	  e[l] = cv*rho[l]*h*h*G*MSTAR/r;
+    if(Fluidtype==DUST) e[l]    *= 0.088*GAMMA; //Dust energy assuming  Td=Tg
+  #endif
+
   if(Fluidtype==GAS) v1[l] *= sqrt(pow(sin(Zmed(k)),-2.*FLARINGINDEX)-(beta+xi)*h*h);
-  if(Fluidtype==DUST) rho[l] *= epsilons[id-1];
 
   //Frame rotation
 	v1[l] -= OMEGAFRAME*r*sin(Zmed(k));
@@ -90,13 +101,7 @@ void _CondInit(int id) {
   v2[l]+= soundspeed*NOISE*(drand48()-.5);
   v3[l]+= soundspeed*NOISE*(drand48()-.5);
 
-#ifdef ISOTHERMAL
-	e[l] = h*sqrt(G*MSTAR/r);
-#else
-	e[l] = rho[l]*h*h*G*MSTAR/r/(GAMMA-1.0);
-#endif
 
-  if(Fluidtype==DUST) e[l] *= 0.088*epsilons[id-1]; //Dust energy assuming c_d = 0.088 c_g and Td=Tg
 
       }
     }

@@ -18,7 +18,7 @@ void DragForce_SumC_cpu (real dt) {
 
 //<EXTERNAL>
   real* dens = Density->field_cpu;
-  real* c    = DensStar->field_cpu;
+  real* csum = DensStar->field_cpu;
   real* pref = Qs->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
@@ -81,7 +81,7 @@ void DragForce_SumC_cpu (real dt) {
 	sk      = dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  sk = 1.0;
-	c[ll] += dens[ll]*sk;
+	csum[ll] += dens[ll]*sk;
 
 //<\#>
 #ifdef X
