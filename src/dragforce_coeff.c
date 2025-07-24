@@ -80,6 +80,7 @@ void DragForce_Coeff_cpu () {
   omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 	coeff[ll] = omega;
 #endif
+#endif
 	
 #ifdef DUSTSIZE
 #ifdef ADIABATIC
