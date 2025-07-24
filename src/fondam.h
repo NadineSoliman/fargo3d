@@ -25,7 +25,7 @@ code.
 
 #define      G_CGS  6.674e-8
 #define  MSTAR_CGS  1.9891e33
-#define     R0_CGS  (5.2*1.49597871e13)
+#define     R0_CGS  (30.0*1.49597871e13)
 #define   R_MU_CGS  36149835.0
 #define    MU0_CGS  12.5663706143591   //B in Gauss
 
@@ -69,10 +69,10 @@ code.
 
 #define THRESHOLD_STELLAR_MASS 0.05*MSTAR //Our arbitrary threshold to consider an object as stellar.
 
-#define ERGS (G/G_CGS*MSTAR/MSTAR_CGS/R0*R0_CGS) * (MSTAR/MSTAR_CGS)
+#define ERGS ((G/G_CGS*MSTAR/MSTAR_CGS/R0*R0_CGS) * (MSTAR/MSTAR_CGS))
 
 //Boltzmann constant
-#define KBOLTZ  1.38064852e-16 *ERGS / (G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS) // ergs/K need to double check
+#define KBOLTZ  1.38064852e-16 *ERGS / ((G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS)) // ergs/K need to double check
 
 //Mass hydrogen atom times mean molecular weight
 #define MH      (2.4*1.6726219e-24*MSTAR/MSTAR_CGS)
