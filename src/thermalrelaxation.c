@@ -13,12 +13,17 @@ void ThermalRelaxation_cpu(real dt) {
 //<USER_DEFINED>
   INPUT(Energy);
   INPUT(Density);
+  INPUT2D(Density0);  
+  INPUT2D(Density0);
   OUTPUT(Energy);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
   real* energy = Energy->field_cpu;
   real* dens = Density->field_cpu;
+  real* dens0 = Density0->field_cpu; 
+  real* energy0 = Energy0->field_cpu;
+  int pitch2d = Pitch2D;  
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -73,20 +78,20 @@ void ThermalRelaxation_cpu(real dt) {
   cpdust = cpdg* cpgas;
 	omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 
-	if (fluidtype == GAS)  {
+	//if (fluidtype == GAS)  {
     //Gas op. thin cooling time due to line cooling
-    tempgas = (tgasmid + (tgasup-tgasmid)*pow(cos(zmed(k))/0.15,8))/ymed(j);
-    trgas   = 0.1/omega;
-    temp   = ( (GAMMA-1.0)*energy[ll]/(dens[ll]*R_MU)  + tempgas*dt/trgas)/(1.+dt/trgas);
-    energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
-  }
-	else{
+    //tempgas = (tgasmid + (tgasup-tgasmid)*pow(cos(zmed(k))/0.15,8))/ymed(j);
+    //trgas   = 0.01/omega;
+    //temp   = ( (GAMMA-1.0)*energy[ll]/(dens[ll]*R_MU)  + tempgas*dt/trgas)/(1.+dt/trgas);
+    //energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
+  //}
+	//else{
     //Dust op. thin cooling time due to radiative cooling
-    tempdust = (tdustmid + (tdustup-tdustmid)*pow(cos(zmed(k))/0.15,8))/ymed(j);
-    trdust   = 0.01/omega;
+    tempdust = energy0[l2D] / (dens0[l2D]*cpdust);
+    trdust   = 1.0e-4/omega;
     temp   = ( energy[ll] / (dens[ll]*(cpdust))  + tempdust*dt/trdust)/(1.+dt/trdust);
     energy[ll] = (dens[ll]*cpdust) * temp; 
-  }
+  //}
 
 //<\#>
 #ifdef X

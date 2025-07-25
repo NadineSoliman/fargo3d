@@ -34,6 +34,15 @@ Zmax		1.748889265026094
 Xmin		-3.141592653589793
 Xmax		3.141592653589793
 
+
+
+DampingZone 1.15
+
+# Characteristic time for damping, in units of the inverse local
+# orbital frequency. Higher values means lower damping
+
+TauDamp 0.3
+
 ### Output control parameters
 
 Ntot			100		Total number of time steps

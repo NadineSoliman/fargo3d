@@ -86,15 +86,15 @@ void _CondInit(int id) {
 	  e[l] = h*sqrt(G*MSTAR/r);
     if(Fluidtype==DUST) e[l] = 0.;
   #else
-    real tgas = TGASMID + (TGASUP-TGASMID)*pow(cos(Zmed(k))/0.15,8);
-    real tdust= TDUSTMID + (TDUSTUP-TDUSTMID)*pow(cos(Zmed(k))/0.15,8);
-    tgas/=r;
-    tdust/=r;
+    real tgas = h*h*G*MSTAR/r;
 
 	  e[l] = cv*rho[l]*tgas;
     
     if(Fluidtype==DUST) rho[l]  *= epsilons[id-1];
-    if(Fluidtype==DUST) e[l] = cdust*tdust*rho[l]; //Dust energy assuming  Td=Tg
+    if(Fluidtype==DUST) {
+      real tdust = tgas/id;
+      e[l] = cdust*tdust*rho[l]; //Dust energy assuming  Td=Tg
+    }
   #endif
 
   if(Fluidtype==GAS) v1[l] *= sqrt(pow(sin(Zmed(k)),-2.*FLARINGINDEX)-(beta+xi)*h*h);
