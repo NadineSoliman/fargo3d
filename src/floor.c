@@ -26,6 +26,7 @@ void Floor_cpu() {
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
   real cpdg = CPDG;
+  int fluidtype = Fluidtype;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -65,7 +66,7 @@ void Floor_cpu() {
 	if (dens[ll]<1.0e-9)
 	  dens[ll] = 1.0e-9;
 
-  if(Fluidtype == DUST) {
+  if(fluidtype == DUST) {
   temp = energy[ll]/(dens[ll]*cpdust);
   if (temp<0.0006110667670133082) {
     energy[ll] = 0.0006110667670133082*dens[ll]*cpdust;

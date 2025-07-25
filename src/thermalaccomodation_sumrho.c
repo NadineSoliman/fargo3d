@@ -29,7 +29,7 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   real rhosolid        = Coeffval[2];
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
-  //<\EXTERNAL>
+//<\EXTERNAL>
 
 //<INTERNAL>
   int i;
