@@ -27,8 +27,9 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   int size_z = Nz+2*NGHZ;
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
-    int fluidtype = Fluidtype;
-//<\EXTERNAL>
+  int fluidtype = Fluidtype;
+  real cpdg=CPDG;
+  //<\EXTERNAL>
 
 //<INTERNAL>
   int i;
@@ -70,7 +71,7 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 
 
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-  cpdust = 0.01* cpgas;
+  cpdust = cpdg* cpgas;
   alphak = 0.0;
 #ifdef CONSTANTTHERMALCOEFF
         alphak = pref[ll]*invthermaltime;

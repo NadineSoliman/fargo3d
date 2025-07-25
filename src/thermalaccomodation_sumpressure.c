@@ -31,6 +31,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   real invparticlesize = Coeffval[1];
   real rhosolid        = Coeffval[2];
   int fluidtype = Fluidtype;
+  real cpdg=CPDG;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -72,7 +73,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 	ll = l;
       
 cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-cpdust = 0.01* cpgas;
+cpdust = cpdg* cpgas;
 alphak=0.0;
 #ifdef CONSTANTTHERMALCOEFF
         alphak = pref[ll]*invthermaltime;

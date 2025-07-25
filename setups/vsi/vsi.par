@@ -17,7 +17,7 @@ Tsmax			0.005         sizemax
 rhosolid		2.0             in g/cm3
 Sq			    3.5		slope of distribution
 Tslim			1.0
-
+CPDG            0.088
 
 ### Mesh parameters
 Nx			1		Azimuthal number of zones 
@@ -32,7 +32,7 @@ Xmax		3.141592653589793
 
 ### Output control parameters
 
-Ntot			1000		Total number of time steps
-Ninterm	 		10		Time steps between outputs
+Ntot			100		Total number of time steps
+Ninterm	 		1		Time steps between outputs
 DT			    0.314159265359	Time step length. 2PI = 1 orbit
 OutputDir		@outputs/vsi

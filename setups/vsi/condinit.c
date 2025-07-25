@@ -26,7 +26,7 @@ void _CondInit(int id) {
   real smax = TSMAX;
   real smin = TSMIN;
   real cv    = 1./(GAMMA-1.0);
-  real cdust=0.088*GAMMA/(GAMMA-1.0); 
+  real cdust=CPDG*GAMMA/(GAMMA-1.0); 
   real ds   = (log(smax)-log(smin))/(NFLUIDS-1);
   for(int n=0;n<NFLUIDS;n++){
     stokes_plus[n] = smin*exp(ds*n);
@@ -88,7 +88,7 @@ void _CondInit(int id) {
     if(Fluidtype==DUST) e[l] = 0.;
   #else
 	  e[l] = cv*rho[l]*h*h*G*MSTAR/r;
-    if(Fluidtype==DUST) e[l]    *= 0.088*GAMMA; //Dust energy assuming  Td=Tg
+    if(Fluidtype==DUST) e[l]    *= 0.1*CPDG*GAMMA; //Dust energy assuming  Td=Tg
   #endif
 
   if(Fluidtype==GAS) v1[l] *= sqrt(pow(sin(Zmed(k)),-2.*FLARINGINDEX)-(beta+xi)*h*h);

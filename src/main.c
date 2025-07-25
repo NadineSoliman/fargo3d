@@ -413,13 +413,15 @@ if (*SPACING=='N'){
 #ifdef COLLISIONS
       FARGO_SAFE(Collisions(dt, 1)); // 1 --> V_temp is used.
 #endif
-#ifdef THERMALACCOMODATION
-      FARGO_SAFE(ThermalAccomodation(dt));
-#endif
 
 #ifdef DRAGFORCE
       FARGO_SAFE(DragForce(dt));
 #endif
+
+#ifdef THERMALACCOMODATION
+      FARGO_SAFE(ThermalAccomodation(dt));
+#endif
+
 #ifdef DUSTDIFFUSION
       FARGO_SAFE(DustDiffusion_Main(dt));
 #endif
