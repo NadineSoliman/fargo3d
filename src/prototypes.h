@@ -203,6 +203,7 @@ ex void ThermalAccomodation_Coeff_cpu();
 ex void ThermalAccomodation_Sumrho_cpu(real);
 ex void ThermalAccomodation_Sumpressure_cpu(real);
 ex void ThermalAccomodation_UpdateEnergy_cpu(real);
+ex void ThermalRelaxation_cpu(real);
 
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
@@ -594,6 +595,7 @@ ex void ThermalAccomodation_Coeff_gpu(void);
 ex void ThermalAccomodation_Sumrho_gpu(real);
 ex void ThermalAccomodation_Sumpressure_gpu(real);
 ex void ThermalAccomodation_UpdateEnergy_gpu(real);
+ex void ThermalRelaxation_gpu(real);
 
 
 

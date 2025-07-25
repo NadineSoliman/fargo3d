@@ -7,17 +7,21 @@ Sigma0			    6.3661977237e-4	Surface Density at r=1
 Nu			        1.0e-9		Uniform kinematic viscosity
 SigmaSlope		    1.0		Slope of surface
 FlaringIndex		0.0
-Noise               0.01
+Noise               0.0
 Gamma               1.4
 
 ### Dust parameters
-Epsilon			0.02		Total dust-to-gas mass ratio
+Epsilon			0.01		Total dust-to-gas mass ratio
 Tsmin			0.0001      sizemin          
 Tsmax			0.005         sizemax
 rhosolid		2.0             in g/cm3
 Sq			    3.5		slope of distribution
 Tslim			1.0
 CPDG            0.088
+Tdustmid        0.000977706827221293
+Tdustup         0.007332801204159698
+Tgasmid         0.003666400602079849
+Tgasup          0.012221335340266162
 
 ### Mesh parameters
 Nx			1		Azimuthal number of zones 

@@ -423,6 +423,7 @@ void (*ThermalAccomodation_Coeff)();
 void (*ThermalAccomodation_Sumrho)(real);
 void (*ThermalAccomodation_Sumpressure)(real);
 void (*ThermalAccomodation_UpdateEnergy)(real);
+void (*ThermalRelaxation)(real);
 
 void (*Floor)();
 

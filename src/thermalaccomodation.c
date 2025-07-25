@@ -10,9 +10,11 @@
 
 void ThermalAccomodation(real dt) {
   
-  
-  // Centered drag coefficient pre-factor
-  FARGO_SAFE(ThermalAccomodation_Coeff()); //store dragcoeff in Qs
+  #ifdef THERMALRELAXATION
+  FARGO_SAFE(ThermalRelaxation(dt));
+  #endif
+  //-------------------------------------------------------------------------------------
+  FARGO_SAFE(ThermalAccomodation_Coeff());
   //-------------------------------------------------------------------------------------
   Reset_field(DensStar);  
   MULTIFLUID(ThermalAccomodation_Sumrho(dt)); 
@@ -20,5 +22,5 @@ void ThermalAccomodation(real dt) {
   Reset_field(Slope);
   MULTIFLUID(ThermalAccomodation_Sumpressure(dt));
   
-  MULTIFLUID(ThermalAccomodation_UpdateEnergy(dt)); //update velocities
+  MULTIFLUID(ThermalAccomodation_UpdateEnergy(dt)); 
 }

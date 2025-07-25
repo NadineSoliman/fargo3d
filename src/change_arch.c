@@ -146,6 +146,7 @@ void ChangeArch() {
   ThermalAccomodation_Sumrho = ThermalAccomodation_Sumrho_cpu;
   ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_cpu;
   ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_cpu;
+  ThermalRelaxation = ThermalRelaxation_cpu;
 
   VanLeerX_PPA_a    = VanLeerX_PPA_a_cpu;
   VanLeerX_PPA_b    = VanLeerX_PPA_b_cpu;
@@ -572,6 +573,7 @@ void ChangeArch() {
     ThermalAccomodation_Sumrho = ThermalAccomodation_Sumrho_gpu;
     ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_gpu;
     ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_gpu;
+    ThermalRelaxation = ThermalRelaxation_gpu;
 	  masterprint("thermalaccomodation runs on the GPU\n");
 	}
       }

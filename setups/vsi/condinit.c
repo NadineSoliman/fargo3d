@@ -81,14 +81,20 @@ void _CondInit(int id) {
 	    exp((1.-pow(sin(Zmed(k)),-2.*FLARINGINDEX))/2./FLARINGINDEX/(h*h));
 	  }
 	
-    if(Fluidtype==DUST)       rho[l]  *= epsilons[id-1];
 
   #ifdef ISOTHERMAL
 	  e[l] = h*sqrt(G*MSTAR/r);
     if(Fluidtype==DUST) e[l] = 0.;
   #else
-	  e[l] = cv*rho[l]*h*h*G*MSTAR/r;
-    if(Fluidtype==DUST) e[l]    *= 0.1*CPDG*GAMMA; //Dust energy assuming  Td=Tg
+    real tgas = TGASMID + (TGASUP-TGASMID)*pow(cos(Zmed(k))/0.15,8);
+    real tdust= TDUSTMID + (TDUSTUP-TDUSTMID)*pow(cos(Zmed(k))/0.15,8);
+    tgas/=r;
+    tdust/=r;
+
+	  e[l] = cv*rho[l]*tgas;
+    
+    if(Fluidtype==DUST) rho[l]  *= epsilons[id-1];
+    if(Fluidtype==DUST) e[l] = cdust*tdust*rho[l]; //Dust energy assuming  Td=Tg
   #endif
 
   if(Fluidtype==GAS) v1[l] *= sqrt(pow(sin(Zmed(k)),-2.*FLARINGINDEX)-(beta+xi)*h*h);

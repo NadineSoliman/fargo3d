@@ -28,6 +28,7 @@ FARGO_OPT += -DFLOOR
 
 #Thermal accomodation between the dust species and the gas
 FARGO_OPT += -DTHERMALACCOMODATION
+FARGO_OPT += -DTHERMALRELAXATION
 
 
 #Cuda blocks

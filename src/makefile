@@ -371,7 +371,7 @@ MAINOBJ  = LowTasks.o psys.o main.o param.o var.o usage.o   	    \
 	   dragforce_updatevel.o dragforce_coeff.o  \
 	   thermalaccomodation.o thermalaccomodation_coeff.o \
 	   thermalaccomodation_sumrho.o thermalaccomodation_sumpressure.o \
-	   thermalaccomodation_updateenergy.o 
+	   thermalaccomodation_updateenergy.o thermalrelaxation.o \
 #-----------------------#Cuda objects---------------------------------
 GPU_OBJ  =  reduction_sum_device.o reduction_min_device.o	\
 	   	lowtasks_gpu.o 
@@ -430,7 +430,7 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
        dragforce_updatevel_gpu.o dragforce_coeff_gpu.o  \
 	   thermalaccomodation_coeff_gpu.o \
 	   thermalaccomodation_sumrho_gpu.o thermalaccomodation_sumpressure_gpu.o \
-	   thermalaccomodation_updateenergy_gpu.o
+	   thermalaccomodation_updateenergy_gpu.o thermalrelaxation_gpu.o \
 #</CUDA OBJECTS>
 #---------------------------------------------------------------------
 
