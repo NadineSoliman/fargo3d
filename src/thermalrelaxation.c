@@ -13,7 +13,7 @@ void ThermalRelaxation_cpu(real dt) {
 //<USER_DEFINED>
   INPUT(Energy);
   INPUT(Density);
-  INPUT2D(Density0);  
+  INPUT2D(Energy0);  
   INPUT2D(Density0);
   OUTPUT(Energy);
 //<\USER_DEFINED>
@@ -89,8 +89,8 @@ void ThermalRelaxation_cpu(real dt) {
     //Dust op. thin cooling time due to radiative cooling
     tempdust = energy0[l2D] / (dens0[l2D]*cpdust);
     trdust   = 1.0e-4/omega;
-    temp   = ( energy[ll] / (dens[ll]*(cpdust))  + tempdust*dt/trdust)/(1.+dt/trdust);
-    energy[ll] = (dens[ll]*cpdust) * temp; 
+    temp   = ( energy[ll] / (dens[ll]*cpdust)  + tempdust*dt/trdust)/(1.+dt/trdust);
+    energy[ll] = dens[ll]* temp * cpdust; 
   //}
 
 //<\#>

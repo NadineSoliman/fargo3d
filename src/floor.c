@@ -68,8 +68,8 @@ void Floor_cpu() {
 
   if(fluidtype == DUST) {
   temp = energy[ll]/(dens[ll]*cpdust);
-  if (temp<0.0006110667670133082) {
-    energy[ll] = 0.0006110667670133082*dens[ll]*cpdust;
+  if (temp<2.*TCMB) {
+    energy[ll] = 2.*TCMB*dens[ll]*cpdust;
   }
 }
 
