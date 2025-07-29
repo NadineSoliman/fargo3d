@@ -47,7 +47,8 @@ void ThermalRelaxation_cpu(real dt) {
   real trgas;
   real trdust;
   real tempgas;
-  real tempdust;
+  real tempdust0;
+  real tempdustn;
   real omega;
 //<\INTERNAL>
 
@@ -79,10 +80,10 @@ void ThermalRelaxation_cpu(real dt) {
 
 
   //Dust op. thin cooling time due to radiative cooling
-  tempdust = energy0[l2D] / (dens0[l2D]*cpdust);
-  // trdust   = 1.0e-6/omega;
+  tempdust0 = energy0[l2D] / (dens0[l2D]*cpdust);
+  tempdustn = energy[ll] / (dens[ll]*cpdust);
   trdust = 3.14159265359 * 480.0 * STEFANK * KBOLTZ / (PLANCK * C0 * rhosolid * cpdust) * pow(tempdust, 4.0) ;
-  temp   = ( energy[ll] / (dens[ll]*cpdust)  + tempdust*dt/trdust)/(1.+dt/trdust);
+  temp   = ( tempdustn + tempdust*dt/trdust)/(1.+dt/trdust);
   energy[ll] = dens[ll]* temp * cpdust; 
   
 //<\#>
