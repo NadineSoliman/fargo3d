@@ -15,6 +15,7 @@ void ThermalRelaxation_cpu(real dt) {
   INPUT(Density);
   INPUT2D(Energy0);  
   INPUT2D(Density0);
+  INPUT(Qs);
   OUTPUT(Energy);
 //<\USER_DEFINED>
 
@@ -31,6 +32,8 @@ void ThermalRelaxation_cpu(real dt) {
   int size_z = Nz+2*NGHZ;
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
+  real invparticlesize = Coeffval[1];
+  real rhosolid = Coeffval[2];
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -77,7 +80,8 @@ void ThermalRelaxation_cpu(real dt) {
 
   //Dust op. thin cooling time due to radiative cooling
   tempdust = energy0[l2D] / (dens0[l2D]*cpdust);
-  trdust   = 1.0e-6/omega;
+  // trdust   = 1.0e-6/omega;
+  trdust = 3.14159265359 * 480.0 * STEFANK * KBOLTZ / (PLANCK * C * rhosolid * cpdust) * pow(tempdust, 4.0) ;
   temp   = ( energy[ll] / (dens[ll]*cpdust)  + tempdust*dt/trdust)/(1.+dt/trdust);
   energy[ll] = dens[ll]* temp * cpdust; 
   
