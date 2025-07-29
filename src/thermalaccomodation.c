@@ -10,9 +10,7 @@
 
 void ThermalAccomodation(real dt) {
   
-  #ifdef THERMALRELAXATION
-  FARGO_SAFE(ThermalRelaxation(dt));
-  #endif
+ 
   //-------------------------------------------------------------------------------------
   FARGO_SAFE(ThermalAccomodation_Coeff());
   //-------------------------------------------------------------------------------------
@@ -23,4 +21,8 @@ void ThermalAccomodation(real dt) {
   MULTIFLUID(ThermalAccomodation_Sumpressure(dt));
   
   MULTIFLUID(ThermalAccomodation_UpdateEnergy(dt)); 
+
+  #ifdef THERMALRELAXATION
+   MULTIFLUID(if(Fluidtype==DUST) ThermalRelaxation(dt));
+  #endif
 }

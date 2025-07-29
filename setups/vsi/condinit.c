@@ -93,7 +93,7 @@ void _CondInit(int id) {
     if(Fluidtype==DUST) rho[l]  *= epsilons[id-1];
     if(Fluidtype==DUST) {
       real tdust = tgas*pow(TSMIN/stokes[id-1],0.25);
-      e[l] = cdust*tdust*rho[l]; //Dust energy assuming  Td=Tg
+      e[l] = cdust*tdust*rho[l]; 
     }
   #endif
 

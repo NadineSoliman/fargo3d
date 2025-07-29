@@ -36,7 +36,7 @@ Xmax		3.141592653589793
 
 
 
-DampingZone 1.15
+DampingZone 1.1
 
 # Characteristic time for damping, in units of the inverse local
 # orbital frequency. Higher values means lower damping

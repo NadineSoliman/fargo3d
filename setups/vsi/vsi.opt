@@ -24,7 +24,7 @@ FARGO_OPT += -DPOTENTIAL
 #Drag force between species
 FARGO_OPT += -DDRAGFORCE
 FARGO_OPT += -DDUSTSIZE
-#FARGO_OPT += -DFLOOR
+FARGO_OPT += -DFLOOR
 
 #Thermal accomodation between the dust species and the gas
 FARGO_OPT += -DTHERMALACCOMODATION
