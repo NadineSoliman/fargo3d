@@ -31,10 +31,6 @@ void ThermalRelaxation_cpu(real dt) {
   int size_z = Nz+2*NGHZ;
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
-  real tgasup=TGASUP;
-  real tgasmid=TGASMID;
-  real tdustup=TDUSTUP;
-  real tdustmid=TDUSTMID;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -78,21 +74,13 @@ void ThermalRelaxation_cpu(real dt) {
   cpdust = cpdg* cpgas;
 	omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 
-	//if (fluidtype == GAS)  {
-    //Gas op. thin cooling time due to line cooling
-    //tempgas = (tgasmid + (tgasup-tgasmid)*pow(cos(zmed(k))/0.15,8))/ymed(j);
-    //trgas   = 0.01/omega;
-    //temp   = ( (GAMMA-1.0)*energy[ll]/(dens[ll]*R_MU)  + tempgas*dt/trgas)/(1.+dt/trgas);
-    //energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
-  //}
-	//else{
-    //Dust op. thin cooling time due to radiative cooling
-    tempdust = energy0[l2D] / (dens0[l2D]*cpdust);
-    trdust   = 1.0e-4/omega;
-    temp   = ( energy[ll] / (dens[ll]*cpdust)  + tempdust*dt/trdust)/(1.+dt/trdust);
-    energy[ll] = dens[ll]* temp * cpdust; 
-  //}
 
+  //Dust op. thin cooling time due to radiative cooling
+  tempdust = energy0[l2D] / (dens0[l2D]*cpdust);
+  trdust   = 1.0e-6/omega;
+  temp   = ( energy[ll] / (dens[ll]*cpdust)  + tempdust*dt/trdust)/(1.+dt/trdust);
+  energy[ll] = dens[ll]* temp * cpdust; 
+  
 //<\#>
 #ifdef X
       }

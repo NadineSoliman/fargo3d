@@ -13,7 +13,7 @@ Gamma               1.4
 ### Dust parameters
 Epsilon			0.01		Total dust-to-gas mass ratio
 Tsmin			0.0001      sizemin          
-Tsmax			0.005         sizemax
+Tsmax			0.01         sizemax
 rhosolid		2.0             in g/cm3
 Sq			    3.5		slope of distribution
 Tslim			1.0
@@ -29,8 +29,8 @@ Ny          256		Radial number of zones
 Nz			256		Number of zones in colatitude
 Ymin		0.5		Inner boundary radius
 Ymax		1.8		Outer boundary radius
-Zmin		1.392703388563699
-Zmax		1.748889265026094
+Zmin		1.4395550662850796
+Zmax		1.7020375873047136
 Xmin		-3.141592653589793
 Xmax		3.141592653589793
 
