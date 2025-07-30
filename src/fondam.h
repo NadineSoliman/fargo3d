@@ -77,4 +77,4 @@ code.
 //Mass hydrogen atom times mean molecular weight
 #define MH      (2.4*1.6726219e-24*MSTAR/MSTAR_CGS)
 
-#define PLANCK      (6.62607015 * 1e-27*ERGS * sqrt(G/G_CGS*MSTAR/MSTAR_CGS/pow(R0/R0_CGS, 3.0))) // erg s
+#define PLANCK      (6.62607015 * 1e-27*ERGS / sqrt(G/G_CGS*MSTAR/MSTAR_CGS/pow(R0/R0_CGS, 3.0))) // erg s
