@@ -25,7 +25,7 @@ void _CondInit(int id) {
   // Stokes numbers                                                                      
   real smax = TSMAX;
   real smin = TSMIN;
-  real cv    = 1./(GAMMA-1.0);
+  real cv    = R_MU/(GAMMA-1.0);  
   real cdust=CPDG*GAMMA/(GAMMA-1.0); 
   real ds   = (log(smax)-log(smin))/(NFLUIDS-1);
   for(int n=0;n<NFLUIDS;n++){

@@ -11,6 +11,7 @@ DENSGR		1.0
 DENSGI		0.0
 TGAS        1.0
 TDUST       1.0
+CPDG        0.01
 
 Gamma			1.4
 
@@ -21,4 +22,4 @@ Ntot		500
 PeriodicZ	Yes
 Nz		    1024
 CFL         0.3 
-OutputDir 	outputs/soundwave_1024_th=0.1_ts=0.1_cdg=0.01_gamma
+OutputDir 	outputs/soundwave_256_multifluid

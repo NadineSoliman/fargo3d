@@ -623,6 +623,8 @@ void CreateFields() {
   Mmz     = CreateField("Moment_Minus_Z", 0,0,0,1);
 #endif
 
+  Tcol  = CreateField("Tcol"    , 0,0,0,0);
+  Trad  = CreateField("Trad"   , 0,0,0,0);  // This field cannot
   Pot     = CreateField("potential", 0,0,0,0);
   Slope   = CreateField("Slope"    , 0,0,0,0);
   DivRho  = CreateField("DivRho"   , 0,0,0,0);  // This field cannot

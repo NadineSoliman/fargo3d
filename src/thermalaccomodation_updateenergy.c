@@ -17,6 +17,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   INPUT(Energy);
   INPUT(Density);
   OUTPUT(Energy);
+  OUTPUT(Tcol);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
@@ -25,6 +26,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real* pref = Qs->field_cpu;
   real* energy = Energy->field_cpu;
   real* dens = Density->field_cpu;
+  real* tcol = Tcol->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -88,6 +90,8 @@ alphak = 0.0;
 	if (fluidtype == GAS)  {
     temp=    sumpressure[ll]/( sumrho[ll] );
     energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
+    tcol[ll] = 1/alphak/(EPSILON *cpdust /  cpgas) ; 
+
   }
 	else{
     temp = energy[ll] / (dens[ll]*(cpdust));

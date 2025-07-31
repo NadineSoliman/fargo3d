@@ -17,6 +17,7 @@ void ThermalRelaxation_cpu(real dt) {
   INPUT2D(Density0);
   INPUT(Qs);
   OUTPUT(Energy);
+  OUTPUT(Trad);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
@@ -24,6 +25,7 @@ void ThermalRelaxation_cpu(real dt) {
   real* dens = Density->field_cpu;
   real* dens0 = Density0->field_cpu; 
   real* energy0 = Energy0->field_cpu;
+  real* trad = Trad->field_cpu;
   int pitch2d = Pitch2D;  
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
@@ -91,6 +93,7 @@ void ThermalRelaxation_cpu(real dt) {
   }
   temp   = ( tempdustn + tempdust0*dt*trdust_inv)/(1.+dt*trdust_inv);
   energy[ll] = dens[ll]* temp * cpdust; 
+  trad[ll] = 1/trdust_inv;
   
 //<\#>
 #ifdef X

@@ -102,6 +102,8 @@ Field *Vy_half;
 Field *Vz_half;
 
 Field *Slope;
+Field *Tcol;
+Field *Trad;
 
 Field *Mpx;
 Field *Mpy;

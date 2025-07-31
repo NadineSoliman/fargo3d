@@ -2,8 +2,8 @@
 
 #Dimension(s) of Simulation
 
-FLUIDS := 0 1 
-NFLUIDS = 2
+FLUIDS := 0 1 2 3 4
+NFLUIDS = 5
 #-----------------------------------------------------------
 
 FARGO_OPT += -DNFLUIDS=${NFLUIDS}

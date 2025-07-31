@@ -72,7 +72,7 @@ code.
 #define ERGS ((G/G_CGS*MSTAR/MSTAR_CGS/R0*R0_CGS) * (MSTAR/MSTAR_CGS))
 
 //Boltzmann constant
-#define KBOLTZ  1.38064852e-16 *ERGS / ((G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS)) // ergs/K need to double check
+#define KBOLTZ  (1.38064852e-16 *ERGS / ((G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))) // ergs/K need to double check
 
 //Mass hydrogen atom times mean molecular weight
 #define MH      (2.4*1.6726219e-24*MSTAR/MSTAR_CGS)
