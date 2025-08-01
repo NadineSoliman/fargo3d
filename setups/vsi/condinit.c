@@ -44,7 +44,9 @@ void _CondInit(int id) {
       epsilons[n] *= EPSILON/log(smax/smin);
     }
     stokes[n] = stokes_plus[n+1];
-    if( NFLUIDS == 2) stokes[n] = TSMAX;
+    if( NFLUIDS == 2) {
+      stokes[n] = TSMAX;
+      epsilons[n] = EPSILON;
   }
 
 #ifdef DRAGFORCE
