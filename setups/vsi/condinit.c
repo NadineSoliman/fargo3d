@@ -47,6 +47,7 @@ void _CondInit(int id) {
     if( NFLUIDS == 2) {
       stokes[n] = TSMAX;
       epsilons[n] = EPSILON;
+      }
   }
 
 #ifdef DRAGFORCE

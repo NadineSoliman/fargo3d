@@ -36,6 +36,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real rhosolid        = Coeffval[2];
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
+  real eps = EPSILON;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -90,8 +91,7 @@ alphak = 0.0;
 	if (fluidtype == GAS)  {
     temp=    sumpressure[ll]/( sumrho[ll] );
     energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
-    tcol[ll] = 1/alphak/(EPSILON *cpdust /  cpgas) ; 
-
+    tcol[ll] = 1/alphak/(eps *cpdust /  cpgas); 
   }
 	else{
     temp = energy[ll] / (dens[ll]*(cpdust));
