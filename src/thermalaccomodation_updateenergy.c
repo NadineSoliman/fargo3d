@@ -91,12 +91,12 @@ alphak = 0.0;
 	if (fluidtype == GAS)  {
     temp=    sumpressure[ll]/( sumrho[ll] );
     energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
-    tcol[ll] = 1.0/alphak/(eps *cpdust /  cpgas); 
   }
 	else{
     temp = energy[ll] / (dens[ll]*(cpdust));
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
     energy[ll] = (dens[ll]*cpdust) * temp; 
+    tcol[ll] = 1.0/alphak/(eps *cpdust /  cpgas); 
   }
 
 //<\#>
