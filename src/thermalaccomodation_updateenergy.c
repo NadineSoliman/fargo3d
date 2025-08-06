@@ -96,7 +96,7 @@ alphak = 0.0;
     temp = energy[ll] / (dens[ll]*(cpdust));
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
     energy[ll] = (dens[ll]*cpdust) * temp; 
-    tcol[ll] = 1.0/alphak/(eps *cpdust /  cpgas); 
+    tcol[ll] = 1.0/alphak/(eps *cpdust /  (cpgas/GAMMA)); 
   }
 
 //<\#>
