@@ -33,8 +33,10 @@ Zmin		1.4395550662850796
 Zmax		1.7020375873047136
 Xmin		-3.141592653589793
 Xmax		3.141592653589793
-
-
+Frame       F
+OmegaFrame  0.0
+Spacing     Log
+CFL         0.01
 
 DampingZone 1.1
 

@@ -49,6 +49,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real temp;
   real cpgas;
   real cpdust;
+  real e0;
 #ifdef CONSTANTTHERMALCOEFF
   real invthermaltime=invparticlesize;
 #endif
@@ -89,14 +90,16 @@ alphak = 0.0;
   sk     = dt*alphak/(1+dt*alphak);
 
 	if (fluidtype == GAS)  {
-    temp=    sumpressure[ll]/( sumrho[ll] );
+    temp=    sumpressure[ll]/( sumrho[ll]);
+    e0  = energy[ll];
     energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
+    tcol[ll] = e0 * dt / (energy[ll] - e0) ;
   }
 	else{
     temp = energy[ll] / (dens[ll]*(cpdust));
     temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
     energy[ll] = (dens[ll]*cpdust) * temp; 
-    tcol[ll] = 1.0/alphak/(eps *cpdust /  (cpgas/GAMMA)); 
+    // tcol[ll] = 1.0/alphak/(eps *cpdust /  (cpgas/GAMMA)); 
   }
 
 //<\#>
