@@ -419,7 +419,8 @@ if (*SPACING=='N'){
 #endif
 
 #ifdef THERMALACCOMODATION
-      FARGO_SAFE(ThermalAccomodation(dt));
+      int nsub;
+      for (nsub = 0; nsub < 10; d++) FARGO_SAFE(ThermalAccomodation(dt/nsub));
 #endif
 
 #ifdef DUSTDIFFUSION
