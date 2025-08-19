@@ -13,30 +13,30 @@ Gamma               1.4
 ### Dust parameters
 Epsilon			0.01		Total dust-to-gas mass ratio
 Tsmin			0.0001      sizemin          
-Tsmax			0.01         sizemax
+Tsmax			0.0001         sizemax
 rhosolid		2.0             in g/cm3
 Sq			    3.5		slope of distribution
 Tslim			1.0
 CPDG            0.088
-Tdustmid        0.000977706827221293
-Tdustup         0.007332801204159698
-Tgasmid         0.003666400602079849
-Tgasup          0.012221335340266162
 
 ### Mesh parameters
 Nx			1		Azimuthal number of zones 
 Ny          256		Radial number of zones
 Nz			256		Number of zones in colatitude
+
 Ymin		0.5		Inner boundary radius
 Ymax		1.8		Outer boundary radius
 Zmin		1.4395550662850796
 Zmax		1.7020375873047136
 Xmin		-3.141592653589793
 Xmax		3.141592653589793
+
+
 Frame       F
 OmegaFrame  0.0
 Spacing     Log
-CFL         0.01
+CFL         0.44
+Nsubth      6.0
 
 DampingZone 1.1
 
@@ -47,7 +47,7 @@ TauDamp 0.3
 
 ### Output control parameters
 
-Ntot			100		Total number of time steps
-Ninterm	 		1		Time steps between outputs
+Ntot			2000		Total number of time steps
+Ninterm	 		20		Time steps between outputs
 DT			    0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		@outputs/vsi
+OutputDir		@outputs/vsi_nsub
