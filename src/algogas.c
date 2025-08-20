@@ -80,8 +80,7 @@ void Sources(real dt) {
   // NOW: Vx INITIAL X VELOCITY, Vx_temp UPDATED X VELOCITY FROM SOURCE TERMS + ARTIFICIAL VISCOSITY
 
 #ifdef ADIABATIC
-      int nsub;
-      if(Fluidtype == GAS) for (nsub = 0; nsub < NSUBTH; nsub++) FARGO_SAFE(SubStep3(dt));
+      if(Fluidtype == GAS) FARGO_SAFE(SubStep3(dt));
 #endif
     
   GiveSpecificTime (t_Hydro);

@@ -408,7 +408,14 @@ if (*SPACING=='N'){
       FARGO_SAFE(Collisions(0.5*dt, 0)); // 0 --> V is used and we update v_half.
 #endif
 
-      MULTIFLUID(Sources(dt)); //v_half is used in the R.H.S
+      
+#ifdef THERMALACCOMODATION
+      int nsub;
+      for (nsub = 0; nsub < NSUBTH; nsub++) {
+        MULTIFLUID(Sources(dt/NSUBTH)); //v_half is used in the R.H.S
+        FARGO_SAFE(ThermalAccomodation(dt/NSUBTH));
+      }
+#endif
 
 #ifdef COLLISIONS
       FARGO_SAFE(Collisions(dt, 1)); // 1 --> V_temp is used.
@@ -418,10 +425,7 @@ if (*SPACING=='N'){
       FARGO_SAFE(DragForce(dt));
 #endif
 
-#ifdef THERMALACCOMODATION
-      int nsub;
-      for (nsub = 0; nsub < NSUBTH; nsub++) FARGO_SAFE(ThermalAccomodation(dt/NSUBTH));
-#endif
+
 
 #ifdef DUSTDIFFUSION
       FARGO_SAFE(DustDiffusion_Main(dt));
