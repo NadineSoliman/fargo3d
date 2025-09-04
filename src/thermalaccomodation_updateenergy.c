@@ -11,32 +11,26 @@
 void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
 //<USER_DEFINED>
-  INPUT(DensStar);
-  INPUT(Slope);
-  INPUT(Qs);
+  INPUT(Rkk1);
+  INPUT(Rkk2);
   INPUT(Energy);
   INPUT(Density);
   OUTPUT(Energy);
-  OUTPUT(Tcol);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
-  real* sumpressure = Slope->field_cpu;
-  real* sumrho = DensStar->field_cpu;
-  real* pref = Qs->field_cpu;
   real* energy = Energy->field_cpu;
   real* dens = Density->field_cpu;
-  real* tcol = Tcol->field_cpu;
+  real* rkk1 = Rkk1->field_cpu;
+  real* rkk2 = Rkk2->field_cpu;
+  real* grk  = Gammark->field_cpu; 
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
-  real invparticlesize = Coeffval[1];
-  real rhosolid        = Coeffval[2];
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
-  real eps = EPSILON;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -44,15 +38,12 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   int j;
   int k;
   int ll;
-  real alphak;
-  real sk;
-  real temp;
-  real cpgas;
   real cpdust;
-  real e0;
-#ifdef CONSTANTTHERMALCOEFF
-  real invthermaltime=invparticlesize;
-#endif
+  real cpgas;
+  real tempgas;
+  real tempdustn;
+  real tempdust;
+  real tempgasn;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -79,27 +70,17 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
   cpdust = cpdg* cpgas;
-alphak = 0.0;
-#ifdef CONSTANTTHERMALCOEFF
-  alphak = pref[ll]*invthermaltime;
-#endif
-#ifdef DUSTSIZE
-  alphak = pref[ll]*invparticlesize/rhosolid/cpdust;
-#endif
-  
-  sk     = dt*alphak/(1+dt*alphak);
 
+  
 	if (fluidtype == GAS)  {
-    temp=    sumpressure[ll]/( sumrho[ll]);
-    e0  = energy[ll];
-    energy[ll] = (dens[ll]*R_MU) * temp/(GAMMA - 1.0); 
-    tcol[ll] = e0 * dt / (energy[ll] - e0) ;
+    tempgasn   =  (GAMMA-1.0)*energy[ll]/(dens[ll]*R_MU);
+    tempgas    = tempgasn + dt*(1.0-grk[ll])*rkk1[ll] + grk[ll]*dt*rkk2[ll];
+    energy[ll] = (dens[ll]*R_MU) * tempgas/(GAMMA - 1.0); 
   }
 	else{
-    temp = energy[ll] / (dens[ll]*(cpdust));
-    temp = sk*sumpressure[ll]/( sumrho[ll] ) + temp/(1.+ dt*alphak);
-    energy[ll] = (dens[ll]*cpdust) * temp; 
-    // tcol[ll] = 1.0/alphak/(eps *cpdust /  (cpgas/GAMMA)); 
+    tempdustn = energy[ll] / (dens[ll]*cpdust);
+    tempdust  = tempdustn + dt*(1.0-grk[ll])*rkk1[ll] + grk[ll]*dt*rkk2[ll];
+    energy[ll] = (dens[ll]*cpdust) * tempdust; 
   }
 
 //<\#>

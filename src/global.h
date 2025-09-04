@@ -101,6 +101,13 @@ Field *Vx_half;
 Field *Vy_half;
 Field *Vz_half;
 
+Field *Alphacol;
+Field *Betarad;
+Field *Rkk1;
+Field *Rkk2;
+Field *Qvec;
+Field *Gammark;
+
 Field *Slope;
 Field *Tcol;
 Field *Trad;
@@ -421,10 +428,12 @@ void (*DragForce_SumC)(real);
 void (*_DragForce_SumCV)(real,int,int,int,Field*,Field*);
 void (*_DragForce_UpdateVel)(real,int,int,int,Field*,Field*);
 //ThermalAccomodation
-void (*ThermalAccomodation_Coeff)();
+void (*ThermalAccomodation_Coeff)(real);
 void (*ThermalAccomodation_Sumrho)(real);
 void (*ThermalAccomodation_Sumpressure)(real);
 void (*ThermalAccomodation_UpdateEnergy)(real);
+void (*_ThermalAccomodation_ComputeK)(real,Field*);
+void (*ThermalAccomodation_ComputeQ)(real,int);
 void (*ThermalRelaxation)(real);
 
 void (*Floor)();

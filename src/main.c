@@ -327,6 +327,9 @@ if (*SPACING=='N'){
 #if defined(MHD) && defined(DEBUG)
       FARGO_SAFE(ComputeDivergence(Bx, By, Bz));
 #endif
+#ifdef THERMALACCOMODATION
+        MULTIFLUID(ThermalAccomodation_Coeff(dt));
+#endif
       if (ThereArePlanets)
 	WritePlanetSystemFile(TimeStep, NO);
       
@@ -394,7 +397,6 @@ if (*SPACING=='N'){
       dtemp+=dt;
       if(dtemp>DT)  dt = DT - (dtemp-dt); //updating dt
       //------------------------------------------------------------------------
-      
       //------------------------------------------------------------------------
       /* We now compute the total density of the mesh. We need first
 	 reset an array and then fill it by adding the density of each
@@ -403,18 +405,16 @@ if (*SPACING=='N'){
       MULTIFLUID(ComputeTotalDensity()); 
       //------------------------------------------------------------------------
 
-      
+       
 #ifdef COLLISIONPREDICTOR
       FARGO_SAFE(Collisions(0.5*dt, 0)); // 0 --> V is used and we update v_half.
 #endif
 
-      
+    MULTIFLUID(Sources(dt)); //v_half is used in the R.H.S
+
 #ifdef THERMALACCOMODATION
       int nsub;
-      for (nsub = 0; nsub < NSUBTH; nsub++) {
-        MULTIFLUID(Sources(dt/NSUBTH)); //v_half is used in the R.H.S
-        FARGO_SAFE(ThermalAccomodation(dt/NSUBTH));
-      }
+      for (nsub = 0; nsub < NSUBTH; nsub++) FARGO_SAFE(ThermalAccomodation(dt/NSUBTH));
 #endif
 
 #ifdef COLLISIONS

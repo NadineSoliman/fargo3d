@@ -93,6 +93,17 @@ Fluid *CreateFluid(char *name, int fluidtype) {
   f->Vy0  = CreateField2D ("vy0", YZ);
   f->Vz0  = CreateField2D ("vz0", YZ);
 #endif
+#ifdef THERMALACCOMODATION
+  sprintf(fieldname,"%s%s",name,"alphacol");
+  f->Alphacol = CreateField(fieldname, 0, 0,0,0);
+  f->Rkk1 = CreateField("rkk1", 0, 0,0,0);
+  f->Rkk2 = CreateField("rkk2", 0, 0,0,0);
+  f->Qvec = CreateField("qvec", 0, 0,0,0);
+#endif
+#ifdef THERMALRELAXATION
+  sprintf(fieldname,"%s%s",name,"betarad");
+  f->Betarad = CreateField(fieldname, 0, 0,0,0);
+#endif
   int n;
   real *coeffvalues;
   coeffvalues = (real*)malloc(sizeof(real)*(3));

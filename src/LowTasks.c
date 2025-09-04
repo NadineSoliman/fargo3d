@@ -591,7 +591,15 @@ void SelectFluid(int n) {
   Vz0 = Fluids[n]->Vz0;
 #endif
   Coeffval = Fluids[n]->Coeffval;
-
+#ifdef THERMALACCOMODATION
+Alphacol = Fluids[n]->Alphacol;
+Rkk1 = Fluids[n]->Rkk1;
+Rkk2 = Fluids[n]->Rkk2;
+Qvec = Fluids[n]->Qvec;
+#endif
+#ifdef THERMALRELAXATION
+  Betarad = Fluids[n]->Betarad;
+#endif
 }
 
 void CreateFields() {
@@ -631,7 +639,9 @@ void CreateFields() {
 						// be aliased wherever
 						// reductions are
 						// needed
-  
+  #ifdef THERMALACCOMODATION
+    Gammark = CreateField("Gammark", 0,0,0,0);
+  #endif
   DensStar      = CreateField("DensStar"     , 0,0,0,0);
   Qs            = CreateField("Qs"           , 0,0,0,0);
   Pressure      = CreateField("Pressure"     , 0,0,0,0);

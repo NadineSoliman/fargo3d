@@ -199,11 +199,14 @@ ex void _DragForce_UpdateVel_cpu(real,int,int,int,Field*,Field*);
 
 // ThermalAccomodation Prototypes
 ex void ThermalAccomodation(real);
-ex void ThermalAccomodation_Coeff_cpu();
+ex void ThermalAccomodation_Coeff_cpu(real);
 ex void ThermalAccomodation_Sumrho_cpu(real);
 ex void ThermalAccomodation_Sumpressure_cpu(real);
 ex void ThermalAccomodation_UpdateEnergy_cpu(real);
 ex void ThermalRelaxation_cpu(real);
+ex void ThermalAccomodation_ComputeK(real,int);
+ex void _ThermalAccomodation_ComputeK_cpu(real,Field*);
+ex void ThermalAccomodation_ComputeQ_cpu(real,int);
 
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
@@ -591,12 +594,13 @@ ex void DragForce_SumC_gpu(real);
 ex void _DragForce_SumCV_gpu(real,int,int,int,Field*,Field*);
 ex void _DragForce_UpdateVel_gpu(real,int,int,int,Field*,Field*);
 // ThermalAccomodation-----------------------------------------------
-ex void ThermalAccomodation_Coeff_gpu(void);
+ex void ThermalAccomodation_Coeff_gpu(real);
 ex void ThermalAccomodation_Sumrho_gpu(real);
 ex void ThermalAccomodation_Sumpressure_gpu(real);
 ex void ThermalAccomodation_UpdateEnergy_gpu(real);
 ex void ThermalRelaxation_gpu(real);
-
+ex void _ThermalAccomodation_ComputeK_gpu(real,Field*);
+ex void ThermalAccomodation_ComputeQ_gpu(real,int);
 
 
 //DIFFUSION-----------------------------------------------

@@ -10,19 +10,35 @@
 
 void ThermalAccomodation(real dt) {
   
- 
+  //Module starts here
   //-------------------------------------------------------------------------------------
-  FARGO_SAFE(ThermalAccomodation_Coeff());
+  MULTIFLUID(ThermalAccomodation_Coeff(dt));
   //-------------------------------------------------------------------------------------
+
   Reset_field(DensStar);  
-  MULTIFLUID(ThermalAccomodation_Sumrho(dt)); 
-
-  Reset_field(Slope);
-  MULTIFLUID(ThermalAccomodation_Sumpressure(dt));
+  MULTIFLUID(if(Fluidtype==DUST) ThermalAccomodation_Sumrho(dt)); // Return "B" in in MDIRK method
   
-  MULTIFLUID(ThermalAccomodation_UpdateEnergy(dt)); 
+  //-------------------------------------------------------------------------------
+  // compute q1
+  MULTIFLUID(ThermalAccomodation_ComputeQ(dt,0.)); //0 means we compute q1
+  Reset_field(Slope);
+  MULTIFLUID(if(Fluidtype==DUST) ThermalAccomodation_Sumpressure(dt)); // Return "A" in in MDIRK method
+  //compute k1
+  MULTIFLUID(ThermalAccomodation_ComputeK(dt,1)); 
+  //-------------------------------------------------------------------------------
 
-  #ifdef THERMALRELAXATION
-   MULTIFLUID(if(Fluidtype==DUST) ThermalRelaxation(dt));
-  #endif
+  //-------------------------------------------------------------------------------
+  // compute q2
+  MULTIFLUID(ThermalAccomodation_ComputeQ(dt,1.)); //1 means we compute q2
+  Reset_field(Slope);
+  MULTIFLUID( if(Fluidtype==DUST) ThermalAccomodation_Sumpressure(dt)); // Return "A" in in MDIRK method  
+  //compute k2
+  MULTIFLUID(ThermalAccomodation_ComputeK(dt,2)); 
+  //-------------------------------------------------------------------------------
+  
+  //update energy
+  MULTIFLUID(ThermalAccomodation_UpdateEnergy(dt)); 
+  //Module ends here
+  //-------------------------------------------------------------------------------------
+  
 }

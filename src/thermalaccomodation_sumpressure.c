@@ -12,24 +12,30 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 
 //<USER_DEFINED>
   INPUT(Density);
-  INPUT(Energy);
-  INPUT(Qs);
+  INPUT(Alphacol);
+#ifdef THERMALRELAXATION
+  INPUT(Betarad);
+#endif
+  INPUT(Qvec);
   INPUT(Slope);
   OUTPUT(Slope);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
-  real* sumpressure = Slope->field_cpu;
+  real* gasdens = Fluids[0]->Density->field_cpu;
   real* dens = Density->field_cpu;
-  real* pref = Qs->field_cpu;
-  real* energy = Energy->field_cpu;
+  real* sumpressure = Slope->field_cpu;
+  real* q = Qvec->field_cpu;
+  real* alpha = Alphacol->field_cpu;
+  real* grk    = Gammark->field_cpu; 
+#ifdef THERMALRELAXATION
+  real* Beta  = Betarad->field_cpu;
+#endif
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
   int size_y = Ny+2*NGHY;
   int size_z = Nz+2*NGHZ;
-  real invparticlesize = Coeffval[1];
-  real rhosolid        = Coeffval[2];
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
 //<\EXTERNAL>
@@ -39,15 +45,10 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   int j;
   int k;
   int ll;
-  real alphak;
   real sk;
-  real omega;
-  real rhotemp; 
   real cpgas;
   real cpdust;
-#ifdef CONSTANTTHERMALCOEFF
-  real invthermaltime=invparticlesize;
-#endif
+  real beta;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -74,22 +75,12 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
       
 cpgas  = GAMMA*R_MU/(GAMMA-1.0);
 cpdust = cpdg* cpgas;
-alphak=0.0;
-#ifdef CONSTANTTHERMALCOEFF
-        alphak = pref[ll]*invthermaltime;
+beta=0;
+#ifdef THERMALRELAXATION
+       beta = Beta[ll];
 #endif
-#ifdef DUSTSIZE
-  alphak = pref[ll]*invparticlesize/rhosolid/cpdust;
-#endif
-
-	sk      = (GAMMA * cpdust/cpgas) *dt*alphak/(1+dt*alphak);
- 
-  rhotemp    = energy[ll] / cpdust;
-	if (fluidtype == GAS)  {
-    sk = 1.0;
-    rhotemp   =  (GAMMA-1.0)*energy[ll]/(R_MU);  
-  }
-	sumpressure[ll] += rhotemp *sk;
+	sk   =  alpha[ll]/(1+grk[ll]*dt*(alpha[ll]+beta));
+	sumpressure[ll] +=  (GAMMA * cpdust/cpgas) *dens[ll]/gasdens[ll]*sk*q[ll];
 
 //<\#>
 #ifdef X

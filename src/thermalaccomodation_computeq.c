@@ -7,27 +7,32 @@
 #include "fargo3d.h"
 //<\INCLUDES>
 
-void ThermalAccomodation_Sumrho_cpu (real dt) {
+void ThermalAccomodation_ComputeQ_cpu (real dt, int option) {
  
 //<USER_DEFINED>
+  INPUT(Energy);
   INPUT(Density);
-  INPUT(DensStar);
-  INPUT(Alphacol);
 #ifdef THERMALRELAXATION
   INPUT(Betarad);
 #endif
-  OUTPUT(DensStar);
+  INPUT(Rkk1);
+  INPUT2D(Energy0);  
+  INPUT2D(Density0);
+  OUTPUT(Qvec)
 //<\USER_DEFINED>
 
 //<EXTERNAL>
-  real* gasdens = Fluids[0]->Density->field_cpu;
+  real* energy = Energy->field_cpu;
   real* dens = Density->field_cpu;
-  real* sumrho    = DensStar->field_cpu;
-  real* alpha  = Alphacol->field_cpu;
-  real* grk    = Gammark->field_cpu; 
+  real* dens0 = Density0->field_cpu; 
+  real* energy0 = Energy0->field_cpu;
+  real* q = Qvec->field_cpu;
 #ifdef THERMALRELAXATION
-  real* Beta   = Betarad->field_cpu;
+  real* beta = Betarad->field_cpu;
 #endif
+  real* rkk1 = Rkk1->field_cpu;
+  real* grk  = Gammark->field_cpu; 
+  int pitch2d = Pitch2D;  
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -42,12 +47,10 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   int j;
   int k;
   int ll;
-  real alphak;
-  real sk;
-  real cpgas;
   real cpdust;
+  real cpgas;
   real temp;
-  real beta;
+  real temp0;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -72,18 +75,22 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 #endif
 //<#>
 	ll = l;
+    cpgas  = GAMMA*R_MU/(GAMMA-1.0);
+    cpdust = cpdg* cpgas;
 
-  cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-  cpdust = cpdg* cpgas;
+    if(fluidtype==GAS) {
+        temp=(GAMMA-1.0)*energy[ll]/(dens[ll]*R_MU);
+        temp0 = (GAMMA-1.0)*energy0[l2D] / (dens0[l2D]*R_MU);
+    }
+    else {
+        temp = energy[ll] / (dens[ll]*(cpdust));
+        temp0 = energy0[l2D] / (dens0[l2D]*cpdust);
+    }
 
-  beta=0.0;
+    q[ll] = temp  + option*(1.0-grk[ll])*dt*rkk1[ll];
 #ifdef THERMALRELAXATION
-  beta = Beta[ll];
+    q[ll] += beta[ll]*dt*temp0;
 #endif
-
-    sk      =  alpha[ll]*(1 + grk[ll]*dt*beta)/(1.+grk[ll]*dt*(alpha[ll]+beta));
-    sumrho[ll] += (GAMMA * cpdust/cpgas) * dens[ll]/gasdens[ll]*sk;
-    
 //<\#>
 #ifdef X
       }
