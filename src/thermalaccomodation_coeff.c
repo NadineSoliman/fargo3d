@@ -92,16 +92,16 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   alpha[ll]  = 0.75 *pow(KBOLTZ/MH, 1.5)* pow(tempgas, 0.5) * dens_gas[ll];
   alpha[ll] *= invparticlesize/rhosolid/cpdust;
   grk[ll]    = max2(grk[ll],gammark2);
-  if(alpha[ll]*dt>1.0) grk[ll]=0.5;
+  if(alpha[ll]*dt>1.0) grk[ll]=0.5; 
 #endif	
   }
 #ifdef THERMALRELAXATION
   if (fluidtype == GAS) beta[ll] = 0.0;
   else {
    tempdustn = energy[ll] / (dens[ll]*cpdust);
-   qlocal    = 8.0 * M_PI * 0.5  * KBOLTZ * tempdustn/ invparticlesize / PLANCK / C0;
+   qlocal    = 8.0 * M_PI   * KBOLTZ * tempdustn/ invparticlesize / PLANCK / C0;
    if (qlocal >= 1.0) beta[ll] = 12.0 * invparticlesize/ ( rhosolid * cpdust )* STEFANK * pow(tempdustn, 3.0);
-   else beta[ll] = M_PI * 0.5 * 120.0 * STEFANK * KBOLTZ / (PLANCK * C0 * rhosolid * cpdust) * pow(tempdustn, 4.0);
+   else beta[ll] = M_PI  * 120.0 * STEFANK * KBOLTZ / (PLANCK * C0 * rhosolid * cpdust) * pow(tempdustn, 4.0);
   }
 #endif
 //<\#>
