@@ -251,7 +251,7 @@ void cfl_cpu() {
 #endif
 #endif
 #ifdef THERMALACCOMODATIONTEX
-	cfl11 = alpha[ll];
+	cfl11 = MIN(alpha[ll],1.0e4);
 #endif	
 	dtime[ll] = CFL/sqrt(cfl1*cfl1 + cfl2*cfl2 + 
 			     cfl3*cfl3 + cfl4*cfl4 + 
