@@ -13,9 +13,6 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   INPUT(Density);
   INPUT(DensStar);
   INPUT(Alphacol);
-#ifdef THERMALRELAXATION
-  INPUT(Betarad);
-#endif
   OUTPUT(DensStar);
 //<\USER_DEFINED>
 
@@ -25,9 +22,6 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   real* sumrho    = DensStar->field_cpu;
   real* alpha  = Alphacol->field_cpu;
   real* grk    = Gammark->field_cpu; 
-#ifdef THERMALRELAXATION
-  real* Beta   = Betarad->field_cpu;
-#endif
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -76,12 +70,8 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
   cpdust = cpdg* cpgas;
 
-  beta=0.0;
-#ifdef THERMALRELAXATION
-  beta = Beta[ll];
-#endif
 
-    sk      =  alpha[ll]*(1 + grk[ll]*dt*beta)/(1.+grk[ll]*dt*(alpha[ll]+beta));
+    sk      =  alpha[ll]/(1.+grk[ll]*dt*alpha[ll]);
     sumrho[ll] += (GAMMA * cpdust/cpgas) * dens[ll]/gasdens[ll]*sk;
     
 //<\#>

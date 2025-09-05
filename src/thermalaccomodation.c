@@ -14,7 +14,9 @@ void ThermalAccomodation(real dt) {
   //-------------------------------------------------------------------------------------
   MULTIFLUID(ThermalAccomodation_Coeff(dt));
   //-------------------------------------------------------------------------------------
-
+   MULTIFLUID(if(Fluidtype==DUST) ThermalRelaxation(dt)); 
+  
+  
   Reset_field(DensStar);  
   MULTIFLUID(if(Fluidtype==DUST) ThermalAccomodation_Sumrho(dt)); // Return "B" in in MDIRK method
   

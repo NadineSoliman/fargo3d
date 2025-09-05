@@ -13,9 +13,6 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 //<USER_DEFINED>
   INPUT(Density);
   INPUT(Alphacol);
-#ifdef THERMALRELAXATION
-  INPUT(Betarad);
-#endif
   INPUT(Qvec);
   INPUT(Slope);
   OUTPUT(Slope);
@@ -28,9 +25,6 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   real* q = Qvec->field_cpu;
   real* alpha = Alphacol->field_cpu;
   real* grk    = Gammark->field_cpu; 
-#ifdef THERMALRELAXATION
-  real* Beta  = Betarad->field_cpu;
-#endif
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -75,11 +69,8 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
       
 cpgas  = GAMMA*R_MU/(GAMMA-1.0);
 cpdust = cpdg* cpgas;
-beta=0;
-#ifdef THERMALRELAXATION
-       beta = Beta[ll];
-#endif
-	sk   =  alpha[ll]/(1+grk[ll]*dt*(alpha[ll]+beta));
+
+	sk   =  alpha[ll]/(1+grk[ll]*dt*alpha[ll]);
 	sumpressure[ll] +=  (GAMMA * cpdust/cpgas) *dens[ll]/gasdens[ll]*sk*q[ll];
 
 //<\#>

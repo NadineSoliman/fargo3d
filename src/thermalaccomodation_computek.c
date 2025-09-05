@@ -19,9 +19,6 @@ void ThermalAccomodation_ComputeK(real dt, int option) {
 void _ThermalAccomodation_ComputeK_cpu(real dt,Field *K) {
 
 //<USER_DEFINED>
-#ifdef THERMALRELAXATION
-  INPUT(Betarad);
-#endif
   INPUT(Alphacol);
   INPUT(Qvec);
   INPUT(DensStar);
@@ -32,10 +29,6 @@ void _ThermalAccomodation_ComputeK_cpu(real dt,Field *K) {
 //<EXTERNAL>
   real* q = Qvec->field_cpu;
   real* qgas = Fluids[0]->Qvec->field_cpu;
-#ifdef THERMALRELAXATION
-  real* Betagas = Fluids[0]->Betarad->field_cpu;
-  real* Beta = Betarad->field_cpu;
-#endif
   real* alpha = Alphacol->field_cpu;
   real* rkk = K->field_cpu;
   real* Bsum = DensStar->field_cpu;
@@ -85,20 +78,12 @@ void _ThermalAccomodation_ComputeK_cpu(real dt,Field *K) {
 	ll = l;
     
 
-#ifdef THERMALRELAXATION
-    betagas = Betagas[ll];
-    beta = Beta[ll];
-#else   
-    betagas = 0.0;
-    beta = 0.0;
-#endif
-
-    k0 = (Asum[ll] - qgas[ll]*(Bsum[ll]+betagas))/(1 + grk[ll]*dt*(Bsum[ll]+betagas));
+    k0 = (Asum[ll] - qgas[ll]*Bsum[ll])/(1 + grk[ll]*dt*Bsum[ll]);
 
     if(fluidtype==GAS) rkk[ll] = k0;
     if(fluidtype==DUST) {
-        rkk[ll] =  1.0/(1+grk[ll]*dt*(alpha[ll]+beta));
-        rkk[ll] *= (alpha[ll]*qgas[ll] - (alpha[ll]+beta)*q[ll] + alpha[ll]*grk[ll]*dt*k0);
+        rkk[ll] =  1.0/(1+grk[ll]*dt*alpha[ll]);
+        rkk[ll] *= (alpha[ll]*qgas[ll] - alpha[ll]*q[ll] + alpha[ll]*grk[ll]*dt*k0);
     }
 
 

@@ -12,9 +12,6 @@ void ThermalAccomodation_ComputeQ_cpu (real dt, int option) {
 //<USER_DEFINED>
   INPUT(Energy);
   INPUT(Density);
-#ifdef THERMALRELAXATION
-  INPUT(Betarad);
-#endif
   INPUT(Rkk1);
   INPUT2D(Energy0);  
   INPUT2D(Density0);
@@ -27,9 +24,6 @@ void ThermalAccomodation_ComputeQ_cpu (real dt, int option) {
   real* dens0 = Density0->field_cpu; 
   real* energy0 = Energy0->field_cpu;
   real* q = Qvec->field_cpu;
-#ifdef THERMALRELAXATION
-  real* beta = Betarad->field_cpu;
-#endif
   real* rkk1 = Rkk1->field_cpu;
   real* grk  = Gammark->field_cpu; 
   int pitch2d = Pitch2D;  
@@ -88,9 +82,6 @@ void ThermalAccomodation_ComputeQ_cpu (real dt, int option) {
     }
 
     q[ll] = temp  + option*(1.0-grk[ll])*dt*rkk1[ll];
-#ifdef THERMALRELAXATION
-    q[ll] += beta[ll]*dt*temp0;
-#endif
 //<\#>
 #ifdef X
       }
