@@ -386,6 +386,10 @@ if (*SPACING=='N'){
       FARGO_SAFE(HallEffect_coeff());
 #endif
 #endif
+#ifdef THERMALACCOMODATION
+        MULTIFLUID(ThermalAccomodation_Coeff(dt));
+#endif
+
 
       // CFL condition is applied below ----------------------------------------
       MULTIFLUID(cfl());

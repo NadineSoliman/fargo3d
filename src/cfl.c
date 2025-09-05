@@ -37,8 +37,9 @@ void cfl_cpu() {
 #ifdef OHMICDIFFUSION
   INPUT(EtaOhm);
 #endif
-
-  
+#ifdef THERMALACCOMODATIONTEX
+  INPUT(Alphacol)
+#endif
 //<\USER_DEFINED>
 
 //<EXTERNAL>
@@ -55,6 +56,9 @@ void cfl_cpu() {
 #ifdef Z
   real* vz = Vz->field_cpu;
 #endif 
+#ifdef THERMALACCOMODATIONTEX
+  real* alpha = Alphacol->field_cpu;
+#endif
 #ifdef MHD
   real* bx = Bx->field_cpu;
   real* by = By->field_cpu;
@@ -108,6 +112,7 @@ void cfl_cpu() {
   real cfl8=0.0;
   real cfl9=0.0;
   real cfl10=0.0;
+  real cfl11=0.0;
   real b;
   real vxx, vxxp;
   real soundspeed;
@@ -245,12 +250,14 @@ void cfl_cpu() {
 	cfl10 = 4.0*etaad[ll]*pow(max3(cfl7_a,cfl7_b,cfl7_c),2);
 #endif
 #endif
-	  
+#ifdef THERMALACCOMODATIONTEX
+	cfl11 = alpha[ll];
+#endif	
 	dtime[ll] = CFL/sqrt(cfl1*cfl1 + cfl2*cfl2 + 
 			     cfl3*cfl3 + cfl4*cfl4 + 
 			     cfl5*cfl5 + cfl6*cfl6 + 
 			     cfl7*cfl7 + cfl8*cfl8 +
-			     cfl9*cfl9 + cfl10*cfl10 );
+			     cfl9*cfl9 + cfl10*cfl10 + cfl11*cfl11 );
 
 //<\#>
 #ifdef X
