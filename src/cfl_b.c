@@ -5,7 +5,7 @@ void cfl_b(){
   int i,j,k;
 
   Min[FluidIndex] = reduction_full_MIN(DensStar, NGHY, Ny+NGHY, NGHZ, Nz+NGHZ);
-
+  Mincol[FluidIndex] = reduction_full_MIN(Slope, NGHY, Ny+NGHY, NGHZ, Nz+NGHZ);
 #ifdef X
     real* vxmed = VxMed->field_cpu;
     real shearlimit;

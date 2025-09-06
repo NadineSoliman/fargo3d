@@ -397,7 +397,6 @@ if (*SPACING=='N'){
       CflFluidsMin(); /*Fills StepTime with the " global min " of the
 			cfl, computed from each fluid.*/
       dt = StepTime; //cfl works with the 'StepTime' global variable.
-
       dtemp+=dt;
       if(dtemp>DT)  dt = DT - (dtemp-dt); //updating dt
       //------------------------------------------------------------------------
@@ -417,8 +416,7 @@ if (*SPACING=='N'){
     MULTIFLUID(Sources(dt)); //v_half is used in the R.H.S
 
 #ifdef THERMALACCOMODATION
-      int nsub;
-      for (nsub = 0; nsub < NSUBTH; nsub++) FARGO_SAFE(ThermalAccomodation(dt/NSUBTH));
+     FARGO_SAFE(ThermalAccomodation(dt));
 #endif
 
 #ifdef COLLISIONS

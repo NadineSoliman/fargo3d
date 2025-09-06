@@ -73,6 +73,8 @@ Point DiskOnPrimaryAcceleration;
 Point IndirectTerm;
 
 real StepTime;
+real StepTimeCol;
+
 
 real localforce[12];
 real globalforce[12];
@@ -306,6 +308,7 @@ int Fluidtype;
 int FluidIndex;
 real *Coeffval;
 real Min[NFLUIDS];
+real Mincol[NFLUIDS];
 Fluid *Fluids[NFLUIDS];
 
 //Pointers to functions
