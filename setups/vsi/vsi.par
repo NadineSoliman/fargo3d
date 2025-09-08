@@ -31,12 +31,13 @@ Zmax		1.7020375873047136
 Xmin		-3.141592653589793
 Xmax		3.141592653589793
 
+Gammark2    0.29289321881345254
 
 Frame       F
 OmegaFrame  0.0
 Spacing     Log
 CFL         0.44
-Nsubth      6.0
+Nsubth      10   #This is not the number uf substeps!
 
 DampingZone 1.1
 
@@ -50,4 +51,4 @@ TauDamp 0.3
 Ntot			2000		Total number of time steps
 Ninterm	 		20		Time steps between outputs
 DT			    0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		@outputs/vsi_nsub
+OutputDir		@outputs/vsi_rk

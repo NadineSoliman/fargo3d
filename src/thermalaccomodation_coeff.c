@@ -92,7 +92,7 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   alpha[ll]  = 0.75 *pow(KBOLTZ/MH, 1.5)* pow(tempgas, 0.5) * dens_gas[ll];
   alpha[ll] *= invparticlesize/rhosolid/cpdust;
   grk[ll]    = max2(grk[ll],gammark2);
-  if(alpha[ll]*dt>1.0) grk[ll]=0.5; 
+  if(alpha[ll]*dt>1.0 && grk[ll] != 1.0) grk[ll]=0.5; 
 #endif	
   }
 #ifdef THERMALRELAXATION
