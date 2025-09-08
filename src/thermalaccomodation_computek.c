@@ -28,7 +28,9 @@ void _ThermalAccomodation_ComputeK_cpu(real dt,Field *K) {
 
 //<EXTERNAL>
   real* q = Qvec->field_cpu;
+  #ifdef THERMALACCOMODATION
   real* qgas = Fluids[0]->Qvec->field_cpu;
+  #endif
   real* alpha = Alphacol->field_cpu;
   real* rkk = K->field_cpu;
   real* Bsum = DensStar->field_cpu;
@@ -77,7 +79,7 @@ void _ThermalAccomodation_ComputeK_cpu(real dt,Field *K) {
 //<#>
 	ll = l;
     
-
+#ifdef THERMALACCOMODATION
     k0 = (Asum[ll] - qgas[ll]*Bsum[ll])/(1 + grk[ll]*dt*Bsum[ll]);
 
     if(fluidtype==GAS) rkk[ll] = k0;
@@ -85,7 +87,7 @@ void _ThermalAccomodation_ComputeK_cpu(real dt,Field *K) {
         rkk[ll] =  1.0/(1+grk[ll]*dt*alpha[ll]);
         rkk[ll] *= (alpha[ll]*qgas[ll] - alpha[ll]*q[ll] + alpha[ll]*grk[ll]*dt*k0);
     }
-
+#endif
 
 //<\#>
 #ifdef X
