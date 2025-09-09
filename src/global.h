@@ -368,6 +368,7 @@ void (*mon_momy)();
 void (*mon_momz)();
 void (*mon_torq)();
 void (*mon_reynolds)();
+void (*mon_kinetic)();
 void (*mon_maxwell)();
 void (*mon_bxflux)();
 void (*comm)(int);

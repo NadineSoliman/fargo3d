@@ -341,7 +341,7 @@ MAINOBJ  = LowTasks.o psys.o main.o param.o var.o usage.o   	    \
 	   addviscosity_sph.o visctensor_sph.o			\
 	   visctensor_cyl.o stretch.o 				\
 	   mon_dens.o mon_momx.o mon_momy.o mon_momz.o          \
-	   mon_torque.o comm_device.o checkmute_y.o		\
+	   mon_torque.o mon_kinetic.o comm_device.o checkmute_y.o		\
 	   checkmute_z.o mon_reynolds.o mon_maxwell.o           \
 	   mon_bxflux.o                                         \
 	   postrestarthook.o change_arch.o select_device.o	\
@@ -403,7 +403,7 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
 	   addviscosity_cart_gpu.o addviscosity_cyl_gpu.o	\
 	   visctensor_cyl_gpu.o addviscosity_sph_gpu.o		\
 	   mon_dens_gpu.o mon_momx_gpu.o mon_momy_gpu.o         \
-	   mon_momz_gpu.o mon_torque_gpu.o checkmute_y_gpu.o	\
+	   mon_momz_gpu.o mon_torque_gpu.o mon_kinetic_gpu.o checkmute_y_gpu.o	\
 	   checkmute_z_gpu.o mon_reynolds_gpu.o                 \
 	   mon_maxwell_gpu.o visctensor_sph_gpu.o               \
 	   mon_bxflux_gpu.o                   			\

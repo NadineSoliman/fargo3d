@@ -168,6 +168,7 @@ ex void mon_torq_cpu(void);
 ex void mon_reynolds_cpu(void);
 ex void mon_maxwell_cpu(void);
 ex void mon_bxflux_cpu(void);
+ex void mon_kinetic_cpu(void);
 
 //Monitoring management Prototypes
 ex void MonitorFunction (int, int, char*, int);
@@ -542,6 +543,7 @@ ex void mon_torq_gpu(void);
 ex void mon_reynolds_gpu(void);
 ex void mon_maxwell_gpu(void);
 ex void mon_bxflux_gpu(void);
+ex void mon_kinetic_gpu(void);
 
 ex void VanLeerX_a_gpu(Field*);
 ex void VanLeerX_b_gpu(real,Field*,Field*,Field*);
