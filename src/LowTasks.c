@@ -856,7 +856,7 @@ int RestartSimulation(int n) {
 #ifdef Z
   __Restart(Vz, n);
 #endif
-      if(Fluidtype != DUST) __Restart(Energy, n);
+  __Restart(Energy, n);
 #ifdef MHD
   __Restart(Bx, n);
   __Restart(By, n);
