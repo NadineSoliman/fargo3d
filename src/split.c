@@ -71,6 +71,13 @@ void repartition (int *nx, int ncpu, int *MX) {
 #endif
   Ncpu_x = MX[0];
   Ncpu_y = MX[1];
+#ifdef RTDUST
+  MX[0]  = 1;
+  MX[1]  = ncpu;
+  Ncpu_x = MX[0];
+  Ncpu_y = MX[1];
+#endif
+
 }
 
 void split(Grid *g) {

@@ -104,6 +104,14 @@ Fluid *CreateFluid(char *name, int fluidtype) {
   sprintf(fieldname,"%s%s",name,"betarad");
   f->Betarad = CreateField(fieldname, 0, 0,0,0);
 #endif
+#ifdef RTDUST
+  sprintf(fieldname,"%s%s",name,"temp");
+  f->Temperature = CreateField(fieldname, 0, 0,0,0);
+  sprintf(fieldname,"%s%s",name,"kappa");
+  f->Kappa = CreateField(fieldname, 0, 0,0,0);
+  sprintf(fieldname,"%s%s",name,"srad");
+  f->GammaRad = CreateField(fieldname, 0, 0,0,0);
+#endif
   int n;
   real *coeffvalues;
   coeffvalues = (real*)malloc(sizeof(real)*(3));

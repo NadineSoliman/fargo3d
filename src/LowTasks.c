@@ -600,6 +600,11 @@ Qvec = Fluids[n]->Qvec;
 #ifdef THERMALRELAXATION
   Betarad = Fluids[n]->Betarad;
 #endif
+#ifdef RTDUST
+  Temperature = Fluids[n]->Temperature;
+  Kappa = Fluids[n]->Kappa;
+  GammaRad= Fluids[n]->GammaRad;
+#endif
 }
 
 void CreateFields() {
@@ -655,6 +660,11 @@ void CreateFields() {
   UStarmin   = CreateField("UStarmin", 0,0,0,0);
 #endif
 
+#ifdef RTDUST
+  Tau    = CreateField("Tau", 0,0,0,0);
+  KappaP = CreateField("KappaP", 0,0,0,0);
+  Erad   = CreateField("Erad", 0,0,0,0);
+#endif
 
 #ifdef PPA_STEEPENER
   LapPPA  = CreateField("LapPPA", 0,0,0,0);

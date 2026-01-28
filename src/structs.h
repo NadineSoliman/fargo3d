@@ -124,6 +124,11 @@ struct fluid {
   struct field2D *Vy0;
   struct field2D *Vz0;
 #endif
+#ifdef RTDUST
+struct field *Temperature;
+struct field *Kappa;
+struct field *GammaRad;
+#endif
   real *Coeffval;
 };
 

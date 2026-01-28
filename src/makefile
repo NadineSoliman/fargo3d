@@ -373,6 +373,8 @@ MAINOBJ  = LowTasks.o psys.o main.o param.o var.o usage.o   	    \
 	   thermalaccomodation_sumrho.o thermalaccomodation_sumpressure.o \
 	   thermalaccomodation_updateenergy.o thermalrelaxation.o \
 	   thermalaccomodation_computek.o thermalaccomodation_computeq.o \
+	   rtd_main.o rtd_opacity.o rtd_temperature.o rtd_tau.o rtd_radialscan.o \
+	   rtd_stellarflux.o \
 #-----------------------#Cuda objects---------------------------------
 GPU_OBJ  =  reduction_sum_device.o reduction_min_device.o	\
 	   	lowtasks_gpu.o 
@@ -433,6 +435,8 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
 	   thermalaccomodation_sumrho_gpu.o thermalaccomodation_sumpressure_gpu.o \
 	   thermalaccomodation_updateenergy_gpu.o thermalrelaxation_gpu.o \
 	   thermalaccomodation_computek_gpu.o thermalaccomodation_computeq_gpu.o \
+	   rtd_opacity_gpu.o rtd_temperature_gpu.o rtd_tau_gpu.o rtd_radialscan_gpu.o \
+	   rtd_stellarflux_gpu.o \
 #</CUDA OBJECTS>
 #---------------------------------------------------------------------
 

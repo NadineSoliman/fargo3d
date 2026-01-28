@@ -150,6 +150,13 @@ void ChangeArch() {
   ThermalAccomodation_ComputeQ = ThermalAccomodation_ComputeQ_cpu;
   _ThermalAccomodation_ComputeK = _ThermalAccomodation_ComputeK_cpu;
   ThermalRelaxation = ThermalRelaxation_cpu;
+   //-----------------------------------------------------
+  //RT dust
+  RTD_Temperature = RTD_Temperature_cpu;
+  RTD_Opacity = RTD_Opacity_cpu;
+  RTD_Tau = RTD_Tau_cpu;
+  RTD_Scan = RTD_Scan_cpu;
+  RTD_StellarFlux = RTD_StellarFlux_cpu;
 
 
   VanLeerX_PPA_a    = VanLeerX_PPA_a_cpu;
@@ -582,6 +589,17 @@ void ChangeArch() {
     _ThermalAccomodation_ComputeK = _ThermalAccomodation_ComputeK_gpu;
     ThermalAccomodation_ComputeQ = ThermalAccomodation_ComputeQ_gpu;
 	  masterprint("thermalaccomodation runs on the GPU\n");
+	}
+      }
+
+          if (strcmp(name, "rtdust") == 0) {
+	if(strval[0] == 'g'){
+    RTD_Temperature = RTD_Temperature_gpu;
+    RTD_Opacity = RTD_Opacity_gpu;
+    RTD_Tau = RTD_Tau_gpu;
+    RTD_Scan = RTD_Scan_gpu;
+    RTD_StellarFlux = RTD_StellarFlux_gpu;
+	  masterprint("rtdust runs on the GPU\n");
 	}
       }
 if (strcmp(name, "computetotaldensity") == 0) {

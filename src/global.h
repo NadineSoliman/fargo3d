@@ -193,6 +193,13 @@ Field *EtaHall;
 Field *EtaAD;
 
 Field *Divergence;
+
+Field *Tau;
+Field *GammaRad;
+Field *Kappa;
+Field *Temperature;
+Field *KappaP;
+Field *Erad;
 //#endif
 
 Field2D *Density0;
@@ -439,6 +446,13 @@ void (*ThermalAccomodation_UpdateEnergy)(real);
 void (*_ThermalAccomodation_ComputeK)(real,Field*);
 void (*ThermalAccomodation_ComputeQ)(real,int);
 void (*ThermalRelaxation)(real);
+//RT dust
+void (*RTD_Temperature)();
+void (*RTD_Opacity)();
+void (*RTD_Tau)();
+void (*RTD_Scan)();
+void (*RTD_StellarFlux)();
+
 
 void (*Floor)();
 
