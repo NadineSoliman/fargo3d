@@ -452,8 +452,10 @@ void (*RTD_Opacity)();
 void (*RTD_Tau)();
 void (*RTD_Scan)();
 void (*RTD_StellarFlux)();
-
-
+void (*RTD_MatterRadiationSumA)(real);
+void (*RTD_MatterRadiationSumB)(real);
+void (*RTD_MatterRadiation_UpdateErad)();
+void (*RTD_MatterRadiation_UpdateTemp)(real);
 void (*Floor)();
 
 void (*__WriteField)(Field*, int);

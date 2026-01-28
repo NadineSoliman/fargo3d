@@ -67,14 +67,18 @@ void RTD_Opacity_cpu () {
 
 	    qeff    = MIN(1.0, tempu*size/6.0e-2 );
 	    kext    = 3./4.*qeff/(size*rhosolid);
+        // cross-section per unit mass of the dust species
         kappa[ll] = kext/(R0_CGS*R0_CGS/MSTAR_CGS)*R0*R0/MSTAR;
+        // opacity
+        kappa[ll] *= dens[ll]/totaldens[ll];
     }
     else{
         kappa[ll] = 1.0e-4/(R0_CGS*R0_CGS/MSTAR_CGS)*R0*R0/MSTAR;
+        kappa[ll] *= dens[ll]/totaldens[ll];
     }
 
     // Mass-average total opacity
-    kappaP[ll] += kappa[ll]*dens[ll]/totaldens[ll];
+    kappaP[ll] += kappa[ll];
 //<\#>
 #ifdef X
       }

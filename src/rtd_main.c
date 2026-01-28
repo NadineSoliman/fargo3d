@@ -28,11 +28,24 @@ void RTD_main(real dt) {
     //For debugging
     //MULTIFLUID(WriteMerging(GammaRad,0));
 
-    //Radiative Energy (1) Solution matter-radiation coupling
-    // Add stellar heating to dust energy equation (and viscous heating for gas)
-    // Compute radiative cooling
-    // Solve coupled quartic
 
+
+    //--------------------------------------------------------------------------------------------------------------
+    //Radiative Energy (1) Solution matter-radiation coupling
+    //summation A
+    Reset_field(DensStar); 
+    MULTIFLUID(RTD_MatterRadiationSumA(dt));
+    //summation B
+    Reset_field(Slope);
+    MULTIFLUID(RTD_MatterRadiationSumB(dt));
+
+    //Update Radiative Energy
+    FARGO_SAFE(RTD_MatterRadiation_UpdateErad());
+    //Update Temperature
+    MULTIFLUID(RTD_MatterRadiation_UpdateTemp(dt));
+
+
+    //--------------------------------------------------------------------------------------------------------------
     //Radiative Energy (2) Diffusion with limmitter and reduced speed-of-light
     //Solve diffusion equation with super-time-stepping to update radiative energy
 

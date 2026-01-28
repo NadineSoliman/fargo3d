@@ -157,7 +157,11 @@ void ChangeArch() {
   RTD_Tau = RTD_Tau_cpu;
   RTD_Scan = RTD_Scan_cpu;
   RTD_StellarFlux = RTD_StellarFlux_cpu;
-
+  RTD_MatterRadiation_UpdateErad = RTD_MatterRadiation_UpdateErad_cpu;
+  RTD_MatterRadiation_UpdateTemp = RTD_MatterRadiation_UpdateTemp_cpu;
+  RTD_MatterRadiationSumA        = RTD_MatterRadiationSumA_cpu;
+  RTD_MatterRadiationSumB        = RTD_MatterRadiationSumB_cpu;
+  
 
   VanLeerX_PPA_a    = VanLeerX_PPA_a_cpu;
   VanLeerX_PPA_b    = VanLeerX_PPA_b_cpu;
@@ -599,6 +603,10 @@ void ChangeArch() {
     RTD_Tau = RTD_Tau_gpu;
     RTD_Scan = RTD_Scan_gpu;
     RTD_StellarFlux = RTD_StellarFlux_gpu;
+    RTD_MatterRadiation_UpdateErad = RTD_MatterRadiation_UpdateErad_gpu;
+    RTD_MatterRadiation_UpdateTemp = RTD_MatterRadiation_UpdateTemp_gpu;
+    RTD_MatterRadiationSumA        = RTD_MatterRadiationSumA_gpu;
+    RTD_MatterRadiationSumB        = RTD_MatterRadiationSumB_gpu;
 	  masterprint("rtdust runs on the GPU\n");
 	}
       }

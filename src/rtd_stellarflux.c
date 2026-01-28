@@ -74,7 +74,7 @@ void RTD_StellarFlux_cpu () {
     gammarad[ll] = lum*SurfY(i,j,k)/(Vol(i,j,k)*ymin(j)*ymin(j))*(exp(-tau[lym])-exp(-tau[ll]));
 
     //Effective stellar energy flux on a given species
-	gammarad[ll] *= kappa[ll]*dens[ll]/(kappaP[ll]*totaldens[ll]);
+	gammarad[ll] *= kappa[ll]/(kappaP[ll]);
 //<\#>
 #ifdef X
       }

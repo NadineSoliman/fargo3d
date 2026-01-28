@@ -216,6 +216,10 @@ ex void RTD_Opacity_cpu(void);
 ex void RTD_Tau_cpu(void);
 ex void RTD_Scan_cpu(void);
 ex void RTD_StellarFlux_cpu(void);
+ex void RTD_MatterRadiationSumA_cpu(real);
+ex void RTD_MatterRadiationSumB_cpu(real);
+ex void RTD_MatterRadiation_UpdateErad_cpu(void);
+ex void RTD_MatterRadiation_UpdateTemp_cpu(real);
 
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
@@ -617,6 +621,10 @@ ex void RTD_Opacity_gpu(void);
 ex void RTD_Tau_gpu(void);
 ex void RTD_Scan_gpu(void);
 ex void RTD_StellarFlux_gpu(void);
+ex void RTD_MatterRadiationSumA_gpu(real);
+ex void RTD_MatterRadiationSumB_gpu(real);
+ex void RTD_MatterRadiation_UpdateErad_gpu(void);
+ex void RTD_MatterRadiation_UpdateTemp_gpu(real);
 
 //DIFFUSION-----------------------------------------------
 ex void DustDiffusion_Core_gpu(real);
