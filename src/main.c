@@ -389,7 +389,9 @@ if (*SPACING=='N'){
 #ifdef THERMALACCOMODATION
         MULTIFLUID(ThermalAccomodation_Coeff(dt));
 #endif
-
+#ifdef RTDUST
+        FARGO_SAFE(RTD_DiffusionCoeff());
+#endif
 
       // CFL condition is applied below ----------------------------------------
       MULTIFLUID(cfl());

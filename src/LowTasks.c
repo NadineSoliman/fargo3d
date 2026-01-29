@@ -664,6 +664,7 @@ void CreateFields() {
   Tau    = CreateField("Tau", 0,0,0,0);
   KappaP = CreateField("KappaP", 0,0,0,0);
   Erad   = CreateField("Erad", 0,0,0,0);
+  DiffCoef = CreateField("Diffcoef", 0,0,0,0);
 #endif
 
 #ifdef PPA_STEEPENER

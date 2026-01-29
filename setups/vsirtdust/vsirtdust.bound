@@ -2,10 +2,11 @@
 #----------------------------------------------
 
 Density:
-	Ymin: KEPLERIAN3DSPHDENSRAD
-	Ymax: KEPLERIAN3DSPHDENSRAD
-	Zmin: KEPLERIAN3DSPHDENSCOL
-	Zmax: KEPLERIAN3DSPHDENSCOL
+    Ymin: SYMMETRIC
+    Ymax: SYMMETRIC
+    Zmin: SYMMETRIC
+    Zmax: SYMMETRIC
+
 
 Vx:
 	Ymin:	KEPLERIAN3DSPHVAZIMRAD
@@ -27,7 +28,13 @@ Vz:
 
 
 Energy:
-	Ymin: KEPLERIAN3DSPHEERAD
-	Ymax: KEPLERIAN3DSPHDERAD
-	Zmin: KEPLERIAN3DSPHEECOL
-	Zmax: KEPLERIAN3DSPHEECOL
+        Ymin: SYMMETRIC
+        Ymax: SYMMETRIC
+        Zmin: SYMMETRIC
+        Zmax: SYMMETRIC
+
+Energyrad:
+        Ymin: SYMMETRIC
+        Ymax: SYMMETRIC
+        Zmin: SYMMETRIC
+        Zmax: SYMMETRIC

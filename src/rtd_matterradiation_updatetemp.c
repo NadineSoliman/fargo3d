@@ -12,6 +12,7 @@ void RTD_MatterRadiation_UpdateTemp_cpu(real dt) {
 
 //<USER_DEFINED>
   INPUT(Density);
+  INPUT(Energy);
   INPUT(DensStar);
   INPUT(Total_Density);
   INPUT(Temperature);
@@ -29,6 +30,7 @@ void RTD_MatterRadiation_UpdateTemp_cpu(real dt) {
   real* heat  = GammaRad->field_cpu;
   real* totaldens = Total_Density->field_cpu;
   real* sum  = DensStar->field_cpu;
+  real* energy = Energy->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -81,6 +83,10 @@ void RTD_MatterRadiation_UpdateTemp_cpu(real dt) {
     xi = 16.*dt*totaldens[ll]*kappa[ll]*STEFANK*pow(temp[ll],3)/(dens[ll]*cv);
 
 	temp[ll] += dt* ( heat[ll] + totaldens[ll]*kappa[ll]*(C0*erad[ll]- 4.*STEFANK*pow(temp[ll],4)))/(dens[ll]*cv*(1+xi));
+
+  //Update energy
+  energy[ll] = cv*dens[ll]*temp[ll]; 
+  
 //<\#>
 #ifdef X
       }

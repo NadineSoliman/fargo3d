@@ -74,7 +74,8 @@ Point IndirectTerm;
 
 real StepTime;
 real StepTimeCol;
-
+real StepTimeRT;
+real StepTimeSTS;
 
 real localforce[12];
 real globalforce[12];
@@ -200,6 +201,7 @@ Field *Kappa;
 Field *Temperature;
 Field *KappaP;
 Field *Erad;
+Field *DiffCoef;
 //#endif
 
 Field2D *Density0;
@@ -456,6 +458,10 @@ void (*RTD_MatterRadiationSumA)(real);
 void (*RTD_MatterRadiationSumB)(real);
 void (*RTD_MatterRadiation_UpdateErad)();
 void (*RTD_MatterRadiation_UpdateTemp)(real);
+void (*RTD_DiffusionCoeff)();
+void (*RTD_SolveDiffusion)(real);
+void (*RTD_UpdateEnergy)(void);
+
 void (*Floor)();
 
 void (*__WriteField)(Field*, int);

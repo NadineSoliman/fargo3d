@@ -7,6 +7,7 @@ void _CondInit(int id) {
   real *v3;
   real *e;
   real *rho;
+  real *erad;
   
   real omega;
   real r, r3;
@@ -16,6 +17,7 @@ void _CondInit(int id) {
   v1  = Vx->field_cpu;
   v2  = Vy->field_cpu;
   v3  = Vz->field_cpu;
+  erad = Erad->field_cpu;
 
   real stokes_plus[NFLUIDS];
   real stokes[NFLUIDS-1];
@@ -90,18 +92,20 @@ void _CondInit(int id) {
     if(Fluidtype==DUST) e[l] = 0.;
   #else
     real tgas = h*h*G*MSTAR/r;
-
+    //Initial radiative energy
+    erad[l] = 4.0*STEFANK*tgas*tgas*tgas*tgas/C0;
+ 
 	  e[l] = cv*rho[l]*tgas;
     
     if(Fluidtype==DUST) rho[l]  *= epsilons[id-1];
     if(Fluidtype==DUST) {
-      real tdust = tgas*pow(TSMIN/stokes[id-1],0.25);
+      real tdust = tgas;
       e[l] = cdust*tdust*rho[l]; 
     }
   #endif
 
   if(Fluidtype==GAS) v1[l] *= sqrt(pow(sin(Zmed(k)),-2.*FLARINGINDEX)-(beta+xi)*h*h);
-
+  
   //Frame rotation
 	v1[l] -= OMEGAFRAME*r*sin(Zmed(k));
 
@@ -110,7 +114,7 @@ void _CondInit(int id) {
   v2[l]+= soundspeed*NOISE*(drand48()-.5);
   v3[l]+= soundspeed*NOISE*(drand48()-.5);
 
-
+  
 
       }
     }
@@ -143,9 +147,9 @@ int id_gas = 0;
 
   }
 
- FARGO_SAFE(Reset_field(Total_Density)); 
+  FARGO_SAFE(Reset_field(Total_Density)); 
   MULTIFLUID(ComputeTotalDensity()); 
-  RTD_main(0.);
+  RTD_main(0.000001);
   exit(33);
 
 }

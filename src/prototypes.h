@@ -220,6 +220,9 @@ ex void RTD_MatterRadiationSumA_cpu(real);
 ex void RTD_MatterRadiationSumB_cpu(real);
 ex void RTD_MatterRadiation_UpdateErad_cpu(void);
 ex void RTD_MatterRadiation_UpdateTemp_cpu(real);
+ex void RTD_DiffusionCoeff_cpu();
+ex void RTD_SolveDiffusion_cpu(real);
+ex void RTD_UpdateEnergy_cpu(void);
 
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
@@ -625,6 +628,9 @@ ex void RTD_MatterRadiationSumA_gpu(real);
 ex void RTD_MatterRadiationSumB_gpu(real);
 ex void RTD_MatterRadiation_UpdateErad_gpu(void);
 ex void RTD_MatterRadiation_UpdateTemp_gpu(real);
+ex void RTD_DiffusionCoeff_gpu();
+ex void RTD_SolveDiffusion_gpu(real);
+ex void RTD_UpdateEnergy_gpu(void);
 
 //DIFFUSION-----------------------------------------------
 ex void DustDiffusion_Core_gpu(real);

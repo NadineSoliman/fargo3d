@@ -214,6 +214,10 @@ void comm_cpu (int options) {
     f[nvar++] = Density;
   if (options & ENERGY)
     f[nvar++] = Energy;
+#ifdef RTDUST
+    if (options & ENERGYRAD)
+    f[nvar++] = Erad;
+#endif
 #ifdef X
   if (options & VX)
     f[nvar++] = Vx;

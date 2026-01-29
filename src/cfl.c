@@ -41,6 +41,10 @@ void cfl_cpu() {
   INPUT(Alphacol)
   OUTPUT(Slope)
 #endif
+#ifdef RTDUST
+  INPUT(DiffCoef);
+  OUTPUT(Qs);
+#endif
 //<\USER_DEFINED>
 
 //<EXTERNAL>
@@ -60,6 +64,10 @@ void cfl_cpu() {
 #ifdef THERMALACCOMODATION
   real* alpha = Alphacol->field_cpu;
   real* dtimecol = Slope->field_cpu; 
+#endif
+#ifdef RTDUST
+  real* diffrt = DiffCoef->field_cpu;
+  real* dtimert = Qs->field_cpu; 
 #endif
 #ifdef MHD
   real* bx = Bx->field_cpu;
@@ -115,6 +123,7 @@ void cfl_cpu() {
   real cfl9=0.0;
   real cfl10=0.0;
   real cfl11=0.0;
+  real cfl12=0.0;
   real b;
   real vxx, vxxp;
   real soundspeed;
@@ -263,6 +272,9 @@ void cfl_cpu() {
 
 #ifdef THERMALACCOMODATION
 	dtimecol[ll] = CFL/(alpha[ll]+1.0e-19);
+#endif
+#ifdef RTDUST
+    dtimert[ll] = CFL/(diffrt[ll]+1.0e-19);
 #endif
 //<\#>
 #ifdef X
