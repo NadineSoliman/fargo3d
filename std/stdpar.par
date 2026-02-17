@@ -41,6 +41,7 @@ Cp_dust                    1.0
 Cp_gas                     2.5
 Cpdg                       0.088
 Gammark2                   1.0
+Rhosolid                   2.0
 Nsubth                     1
 Frame                      fixed
 OmegaFrame                 0.0
@@ -66,6 +67,8 @@ KillingBCColatitude       -0.2
 Beta                       0.0
 Ebeta                      0.001
 Tslim                      10.0
+Tstar                      5000.0
+Rstar                      7.0e10
 CFL                        0.44
 Vtk                        no
 RealType                   standard  #float or double
