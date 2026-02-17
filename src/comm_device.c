@@ -255,7 +255,7 @@ void comm_gpu (int options) {
     f[nvar++] = Energy;
 #ifdef RTDUST
     if (options & ENERGYRAD)
-    f[nvar++] = Erad;
+    f[nvar++] = Energyrad;
 #endif
 #ifdef X
   if (options & VX)

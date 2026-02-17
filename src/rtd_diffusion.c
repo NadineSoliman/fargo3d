@@ -10,14 +10,14 @@
 void RTD_SolveDiffusion_cpu(real dt) {
   
 //<USER_DEFINED>
-  INPUT(Erad);
+  INPUT(Energyrad);
   INPUT(DiffCoef);
-  OUTPUT(Erad);
+  OUTPUT(Energyrad);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
   real* diff  = DiffCoef->field_cpu;
-  real* erad  = Erad->field_cpu;
+  real* erad  = Energyrad->field_cpu;
   real* aux  = Pressure->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;

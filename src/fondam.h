@@ -60,7 +60,7 @@ code.
 #define STEFANK (5.6705e-5*pow(R_MU/R_MU_CGS,4.0)*pow(G/G_CGS,-2.5)*pow(MSTAR/MSTAR_CGS,-1.5)*pow(R0/R0_CGS,-0.5))
 
 // Speed of light
-#define C0      (2.99792458e3*sqrt(G/G_CGS*MSTAR/MSTAR_CGS/R0*R0_CGS))
+#define C0      (2.99792458e4*sqrt(G/G_CGS*MSTAR/MSTAR_CGS/R0*R0_CGS))
 
 // Cosmological microwave background's temperature
 #define TCMB    (8.0*(G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))

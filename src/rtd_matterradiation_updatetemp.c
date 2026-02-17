@@ -14,11 +14,10 @@ void RTD_MatterRadiation_UpdateTemp_cpu(real dt) {
   INPUT(Density);
   INPUT(Energy);
   INPUT(DensStar);
-  INPUT(Total_Density);
   INPUT(Temperature);
   INPUT(Kappa);
   INPUT(GammaRad);
-  INPUT(Erad);
+  INPUT(Energyrad);
   OUTPUT(DensStar);
 //<\USER_DEFINED>
 
@@ -26,9 +25,8 @@ void RTD_MatterRadiation_UpdateTemp_cpu(real dt) {
   real* dens = Density->field_cpu;
   real* temp = Temperature->field_cpu;
   real* kappa = Kappa->field_cpu;
-  real* erad = Erad->field_cpu;
+  real* erad = Energyrad->field_cpu;
   real* heat  = GammaRad->field_cpu;
-  real* totaldens = Total_Density->field_cpu;
   real* sum  = DensStar->field_cpu;
   real* energy = Energy->field_cpu;
   int pitch  = Pitch_cpu;
@@ -80,9 +78,9 @@ void RTD_MatterRadiation_UpdateTemp_cpu(real dt) {
     cv = cpgas/GAMMA;
     if(fluidtype==DUST) cv = cpdust;
 
-    xi = 16.*dt*totaldens[ll]*kappa[ll]*STEFANK*pow(temp[ll],3)/(dens[ll]*cv);
+    xi = 16.*dt*kappa[ll]*STEFANK*pow(temp[ll],3)/(cv);
 
-	temp[ll] += dt* ( heat[ll] + totaldens[ll]*kappa[ll]*(C0*erad[ll]- 4.*STEFANK*pow(temp[ll],4)))/(dens[ll]*cv*(1+xi));
+	temp[ll] += dt* ( heat[ll] + dens[ll]*kappa[ll]*(C0*erad[ll]- 4.*STEFANK*pow(temp[ll],4)))/(dens[ll]*cv*(1+xi));
 
   //Update energy
   energy[ll] = cv*dens[ll]*temp[ll]; 

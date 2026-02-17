@@ -32,7 +32,7 @@ Energy:
 	Zmin:	SYMMETRIC
 	Zmax:	SYMMETRIC
 
-Erad:
+Energyrad:
 	Ymin:	SYMMETRIC
 	Ymax:	SYMMETRIC
 	Zmin:	SYMMETRIC

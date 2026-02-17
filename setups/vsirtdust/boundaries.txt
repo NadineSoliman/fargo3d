@@ -108,8 +108,8 @@ KEPLERIAN3DSPHEERAD: #Approximate extrapolation in radius
 KEPLERIAN3DSPHEECOL: #Approximate extrapolation in COLatitude (Z)
 	Centered: |ds*pow(sin(Zmed(kgh))/sin(Zmed(kact)),'FLARINGINDEX'-2.-'SIGMASLOPE'+1./('ASPECTRATIO'*'ASPECTRATIO')*pow(Ymed(j)/'R0',-2.*'FLARINGINDEX'))|ds|
 
-
-
+ERADINIT:
+	Centered: |4.0*'STEFANK'*pow('TCMB',4.0)/'C0'|erad|
 
 #### Allow outflow only at inner mesh edge
 OPENINNER:

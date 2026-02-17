@@ -215,8 +215,8 @@ void comm_cpu (int options) {
   if (options & ENERGY)
     f[nvar++] = Energy;
 #ifdef RTDUST
-    if (options & ENERGYRAD)
-    f[nvar++] = Erad;
+  if (options & ENERGYRAD)
+    f[nvar++] = Energyrad;
 #endif
 #ifdef X
   if (options & VX)

@@ -11,7 +11,7 @@ void RTD_DiffusionCoeff_cpu () {
 
 //<USER_DEFINED>
   INPUT(Density);
-  INPUT(Erad);
+  INPUT(Energyrad);
   INPUT(KappaP);
   OUTPUT(DiffCoef);
 //<\USER_DEFINED>
@@ -19,7 +19,7 @@ void RTD_DiffusionCoeff_cpu () {
 
 //<EXTERNAL>
   real* dens     = Total_Density->field_cpu;
-  real* enrad    = Erad->field_cpu;
+  real* enrad    = Energyrad->field_cpu;
   real* kappaP   = KappaP->field_cpu;
   real* diffcoef = DiffCoef->field_cpu;
   int pitch      = Pitch_cpu;
@@ -65,11 +65,11 @@ void RTD_DiffusionCoeff_cpu () {
 	ll = l;
 
     if (zmed(k) < ZMIN) {
-	  //enrad[ll] = 4.0*STEFANK*pow(TCMB,4.0)/C0;
+	  enrad[ll] = 4.0*STEFANK*pow(TCMB,4.0)/C0;
 	}
 #ifndef HALFDISK
 	if (zmed(k) > ZMAX) {
-	  //enrad[ll] = 4.0*STEFANK*pow(TCMB,4.0)/C0;
+	  enrad[ll] = 4.0*STEFANK*pow(TCMB,4.0)/C0;
 	}
 #endif
 

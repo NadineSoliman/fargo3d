@@ -18,6 +18,7 @@ void Floor_cpu() {
 
 
 //<EXTERNAL>
+  real* densg = Fluids[0]->Density->field_cpu;
   real* dens = Density->field_cpu;
   real* energy = Energy->field_cpu;  
   int pitch  = Pitch_cpu;
@@ -63,15 +64,13 @@ void Floor_cpu() {
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
   cpdust = cpdg* cpgas;
 	
-	if (dens[ll]<1.0e-9)
-	  dens[ll] = 1.0e-9;
+	if (dens[ll]/densg[ll]<1.0e-6)
+	  dens[ll] = 1.0e-6*densg[ll];
 
-  if(fluidtype == DUST) {
   temp = energy[ll]/(dens[ll]*cpdust);
   if (temp<2.*TCMB) {
     energy[ll] = 2.*TCMB*dens[ll]*cpdust;
   }
-}
 
 //<\#>
 #ifdef X

@@ -17,7 +17,7 @@ void RTD_MatterRadiationSumA_cpu(real dt) {
   INPUT(Temperature);
   INPUT(Kappa);
   INPUT(GammaRad);
-  INPUT(Erad);
+  INPUT(Energyrad);
   OUTPUT(DensStar);
 //<\USER_DEFINED>
 
@@ -25,7 +25,7 @@ void RTD_MatterRadiationSumA_cpu(real dt) {
   real* dens = Density->field_cpu;
   real* temp = Temperature->field_cpu;
   real* kappa = Kappa->field_cpu;
-  real* erad = Erad->field_cpu;
+  real* erad = Energyrad->field_cpu;
   real* heat  = GammaRad->field_cpu;
   real* totaldens = Total_Density->field_cpu;
   real* sum  = DensStar->field_cpu;
@@ -78,9 +78,9 @@ void RTD_MatterRadiationSumA_cpu(real dt) {
     cv = cpgas/GAMMA;
     if(fluidtype==DUST) cv = cpdust;
 
-    xi = 16.*dt*totaldens[ll]*kappa[ll]*STEFANK*pow(temp[ll],3)/(dens[ll]*cv);
+    xi = 16.*dt*kappa[ll]*STEFANK*pow(temp[ll],3)/(cv);
 
-	sum[ll] += dt*totaldens[ll]*kappa[ll]*( 4.*STEFANK*pow(temp[ll],4) -C0*erad[ll] ) + dt*heat[ll]*xi/C0;
+	sum[ll] += (dt*dens[ll]*kappa[ll]*( 4.*STEFANK*pow(temp[ll],4) -C0*erad[ll] ) + dt*heat[ll]*xi)/(1+xi);
 
 //<\#>
 #ifdef X

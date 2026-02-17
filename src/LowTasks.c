@@ -31,7 +31,9 @@ int PrimitiveVariables () {
     var |= EMFX|EMFY|EMFZ;
   }
 #endif
-
+#ifdef RTDUST
+  var |= ENERGYRAD;
+#endif
   return var;
 }
 
@@ -663,7 +665,7 @@ void CreateFields() {
 #ifdef RTDUST
   Tau    = CreateField("Tau", 0,0,0,0);
   KappaP = CreateField("KappaP", 0,0,0,0);
-  Erad   = CreateField("Erad", 0,0,0,0);
+  Energyrad   = CreateField("Energyrad", 0,0,0,0);
   DiffCoef = CreateField("Diffcoef", 0,0,0,0);
 #endif
 

@@ -19,8 +19,10 @@ void CflFluidsMin() {
       stepcol = Mincol[i];
   }
    
-   minrt = reduction_full_MIN(Qs, NGHY, Ny+NGHY, NGHZ, Nz+NGHZ);
+#ifdef RTDUST
+   minrt = reduction_full_MIN(Tau, NGHY, Ny+NGHY, NGHZ, Nz+NGHZ);
    steprt = minrt;
+#endif
 
 #ifdef FLOAT
   MPI_Allreduce(&step, &StepTime, 1, MPI_FLOAT, MPI_MIN, MPI_COMM_WORLD);
@@ -38,17 +40,17 @@ void CflFluidsMin() {
   MPI_Allreduce(&stepcol, &StepTimeCol, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
 #endif
 
-
+#ifdef RTDUST
 #ifdef FLOAT
   MPI_Allreduce(&steprt, &StepTimeRT, 1, MPI_FLOAT, MPI_MIN, MPI_COMM_WORLD);
 #else
   MPI_Allreduce(&steprt, &StepTimeRT, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
 #endif
-
+#endif
 
 #ifdef STS
   StepTimeSTS = StepTimeRT*NSTS*NSTS/NUSTS;
   if(StepTimeSTS > StepTime) printf("STS error: Number of substeps NSTS must be reduced");
-  else: StepTime = StepTimeSTS;
+  else StepTime = StepTimeSTS;
 #endif
 }

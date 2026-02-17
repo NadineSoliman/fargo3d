@@ -200,7 +200,7 @@ Field *GammaRad;
 Field *Kappa;
 Field *Temperature;
 Field *KappaP;
-Field *Erad;
+Field *Energyrad;
 Field *DiffCoef;
 //#endif
 

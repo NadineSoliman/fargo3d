@@ -13,12 +13,12 @@ void RTD_MatterRadiation_UpdateErad_cpu() {
 //<USER_DEFINED>
   INPUT(Slope);
   INPUT(DensStar);
-  INPUT(Erad);
-  OUTPUT(Erad);
+  INPUT(Energyrad);
+  OUTPUT(Energyrad);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
-  real* erad = Erad->field_cpu;
+  real* erad = Energyrad->field_cpu;
   real* sumA  = DensStar->field_cpu;
   real* sumB  = Slope->field_cpu;
   int pitch  = Pitch_cpu;

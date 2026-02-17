@@ -167,7 +167,7 @@ void StockholmBoundary_cpu(real dt) {
   #ifdef ADIABATIC
     if(ramp>0.0) {
 	  taud = tau/ramp;
-	  e[l] = (e[l]*taud+e0[l2D]*dt)/(dt+taud);
+	  //e[l] = (e[l]*taud+e0[l2D]*dt)/(dt+taud);
     }
   #endif
 #ifdef X

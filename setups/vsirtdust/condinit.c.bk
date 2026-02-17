@@ -7,7 +7,7 @@ void _CondInit(int id) {
   real *v3;
   real *e;
   real *rho;
-  real *gas_energy = Fluids[0]->Energy->field_cpu;
+  real *erad;
   
   real omega;
   real r, r3;
@@ -17,11 +17,11 @@ void _CondInit(int id) {
   v1  = Vx->field_cpu;
   v2  = Vy->field_cpu;
   v3  = Vz->field_cpu;
+  erad = Energyrad->field_cpu;
 
   real stokes_plus[NFLUIDS];
   real stokes[NFLUIDS-1];
   real epsilons[NFLUIDS-1];
-  real denom=0;
   real sq = SQ;
   real slope;
   // Stokes numbers                                                                      
@@ -50,7 +50,6 @@ void _CondInit(int id) {
       stokes[n] = TSMAX;
       epsilons[n] = EPSILON;
       }
-    denom += epsilons[n]/(R0/R0_CGS * stokes[n]);
   }
 
 #ifdef DRAGFORCE
@@ -65,13 +64,7 @@ void _CondInit(int id) {
     if(CPU_Master) printf("Ts %1.16f \t eps %1.16f \n", stokes[id-1], epsilons[id-1]);
   }
 #endif
-if(id>0){
-#ifdef DUSTSIZE
-    Coeffval[1]   = 1.0/(stokes[id-1]*R0/R0_CGS);
-    Coeffval[2]   = RHOSOLID/(MSTAR_CGS/(R0_CGS*R0_CGS*R0_CGS))*(MSTAR/(R0*R0*R0));
-    if(CPU_Master) printf("Ts %1.16f \t eps %1.16f \n", stokes[id-1], epsilons[id-1]);
-#endif
-}
+
   for (k=0; k<Nz+2*NGHZ; k++) {
     for (j=0; j<Ny+2*NGHY; j++) {
       r = Ymed(j);
@@ -95,50 +88,33 @@ if(id>0){
 	
 
   #ifdef ISOTHERMAL
-    e[l] = h*sqrt(G*MSTAR/r);
+	  e[l] = h*sqrt(G*MSTAR/r);
     if(Fluidtype==DUST) e[l] = 0.;
   #else
-    real Tunit = (TCMB/2.73);
-    real Tatm = 80.0 * pow(r/1.0, -1)*Tunit;
-    real Tmid =  h*h*G*MSTAR/r; // 30.0;
-    real zq = 3.0;
-    real z = cos(Zmed(k))/ASPECTRATIO;
-    real teff = (Tmid + (Tatm - Tmid) * pow(cos(M_PI/2.0 * z/zq + M_PI/2.0), 4));
-    e[l] = 0;//cv*rho[l]*tgas; tgas is initialized to zero as it is set by the weighted sum of the dust components
+    real tgas = h*h*G*MSTAR/r;
+    //Initial radiative energy
+    erad[l] = 4.0*STEFANK*tgas*tgas*tgas*tgas/C0;
+ 
+	  e[l] = cv*rho[l]*tgas;
+    
     if(Fluidtype==DUST) rho[l]  *= epsilons[id-1];
     if(Fluidtype==DUST) {
-      real tdust = 0;
-      real x =  2.0*3.14159265359* stokes[id-1];
-      real lambda_irr =  0.0001;  // cm UV/optical
-      
-       if (x < lambda_irr) {
-            tdust = pow(PLANCK * C0 / (4.0 * (lambda_irr*R0/R0_CGS) * KBOLTZ), 1.0 / 5.0)* pow(teff, 4.0 / 5.0);
-        }
-        // Regime 2: intermediate grains
-        else if ((x*R0/R0_CGS) < PLANCK * C0 / (4.0 * KBOLTZ * teff)) {
-            tdust = pow(PLANCK * C0 / (8.0  * 3.14159265359 * (stokes[id-1]*R0/R0_CGS) * KBOLTZ), 1.0 / 5.0)* pow(teff, 4.0 / 5.0);
-        }
-        // Regime 3: large grains
-        else {
-            tdust = teff;
-	}
-      e[l] = cdust*tdust*rho[l];
-      real tgas = epsilons[id-1]/(stokes[id-1]*R0/R0_CGS) * tdust;
-      real rho_gas = rho[l]/epsilons[id-1];
-      gas_energy[l] += rho_gas * cv * tgas/denom;  
+      real tdust = tgas;
+      e[l] = cdust*tdust*rho[l]; 
     }
   #endif
-  if(Fluidtype==GAS) v1[l] *= sqrt(pow(sin(Zmed(k)),-2.*FLARINGINDEX)-(beta+xi)*h*h);
 
+  if(Fluidtype==GAS) v1[l] *= sqrt(pow(sin(Zmed(k)),-2.*FLARINGINDEX)-(beta+xi)*h*h);
+  
   //Frame rotation
-  v1[l] -= OMEGAFRAME*r*sin(Zmed(k));
+	v1[l] -= OMEGAFRAME*r*sin(Zmed(k));
 
   //Initial noise
   soundspeed  = h*sqrt(G*MSTAR/r);
   v2[l]+= soundspeed*NOISE*(drand48()-.5);
   v3[l]+= soundspeed*NOISE*(drand48()-.5);
 
-
+  
 
       }
     }
@@ -171,5 +147,5 @@ int id_gas = 0;
 
   }
 
-
+  
 }

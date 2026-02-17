@@ -372,7 +372,7 @@ if (*SPACING=='N'){
       /// NOW THE 2D MESH VxMed CONTAINS THE AZIMUTHAL AVERAGE OF Vx in X
       
 #ifdef FLOOR
-      MULTIFLUID(if(Fluidtype==DUST) Floor());
+      MULTIFLUID(Floor());
 #endif
 
 #ifdef MHD
@@ -410,41 +410,19 @@ if (*SPACING=='N'){
       CflFluidsMin(); /*Fills StepTime with the " global min " of the
 			cfl, computed from each fluid.*/
       dt = StepTimeRT; //cfl works with the 'StepTime' global variable.
-      printf("%f %f \n", StepTime, StepTimeRT);
+      //printf("%f %f \n", StepTime, StepTimeRT);   
       dtemp+=dt;
       if(dtemp>DT)  dt = DT - (dtemp-dt); //updating dt
       //------------------------------------------------------------------------
       //------------------------------------------------------------------------
-  
-       
-#ifdef COLLISIONPREDICTOR
-      FARGO_SAFE(Collisions(0.5*dt, 0)); // 0 --> V is used and we update v_half.
-#endif
-
-    MULTIFLUID(Sources(dt)); //v_half is used in the R.H.S
-
+ 
 #ifdef THERMALACCOMODATION
-     FARGO_SAFE(ThermalAccomodation(dt));
+     //FARGO_SAFE(ThermalAccomodation(dt));
 #endif
 #ifdef RTDUST
   FARGO_SAFE(RTD_main(dt));
 #endif
-#ifdef COLLISIONS
-      FARGO_SAFE(Collisions(dt, 1)); // 1 --> V_temp is used.
-#endif
-
-#ifdef DRAGFORCE
-      FARGO_SAFE(DragForce(dt));
-#endif
-
-
-
-#ifdef DUSTDIFFUSION
-      FARGO_SAFE(DustDiffusion_Main(dt));
-#endif
-      
-      MULTIFLUID(Transport(dt));
-
+       
 
       PhysicalTime+=dt;
       Timestepcount++;
@@ -452,11 +430,10 @@ if (*SPACING=='N'){
 #ifdef STOCKHOLM
       MULTIFLUID(StockholmBoundary(dt));
 #endif
-
       //We apply comms and boundaries at the end of the step
       MULTIFLUID(FillGhosts(PrimitiveVariables()));
 
-      if(CPU_Master) {
+   if(CPU_Master) {
 	if (FullArrayComms)
 	  printf("%s", "!");
 	else {
