@@ -327,9 +327,6 @@ if (*SPACING=='N'){
 #if defined(MHD) && defined(DEBUG)
       FARGO_SAFE(ComputeDivergence(Bx, By, Bz));
 #endif
-#ifdef THERMALACCOMODATION
-        MULTIFLUID(ThermalAccomodation_Coeff(dt));
-#endif
       if (ThereArePlanets)
 	WritePlanetSystemFile(TimeStep, NO);
       

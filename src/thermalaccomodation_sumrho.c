@@ -21,7 +21,6 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   real* dens = Density->field_cpu;
   real* sumrho    = DensStar->field_cpu;
   real* alpha  = Alphacol->field_cpu;
-  real* grk    = Gammark->field_cpu; 
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -36,12 +35,12 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
   int j;
   int k;
   int ll;
-  real alphak;
   real sk;
   real cpgas;
   real cpdust;
   real temp;
   real beta;
+  real dtl;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -69,10 +68,11 @@ void ThermalAccomodation_Sumrho_cpu (real dt) {
 
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
   cpdust = cpdg* cpgas;
+  dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];
 
-
-    sk      =  alpha[ll]/(1.+grk[ll]*dt*alpha[ll]);
-    sumrho[ll] += (GAMMA * cpdust/cpgas) * dens[ll]/gasdens[ll]*sk;
+    sk      =  dtl * alpha[ll]/(1.+dtl*alpha[ll]);
+    if (fluidtype == GAS)  sk = 1.0;
+    sumrho[ll] += dens[ll]*sk;
     
 //<\#>
 #ifdef X

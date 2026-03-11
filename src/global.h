@@ -106,10 +106,6 @@ Field *Vz_half;
 
 Field *Alphacol;
 Field *Betarad;
-Field *Rkk1;
-Field *Rkk2;
-Field *Qvec;
-Field *Gammark;
 
 Field *Slope;
 Field *Tcol;
@@ -445,8 +441,6 @@ void (*ThermalAccomodation_Coeff)(real);
 void (*ThermalAccomodation_Sumrho)(real);
 void (*ThermalAccomodation_Sumpressure)(real);
 void (*ThermalAccomodation_UpdateEnergy)(real);
-void (*_ThermalAccomodation_ComputeK)(real,Field*);
-void (*ThermalAccomodation_ComputeQ)(real,int);
 void (*ThermalRelaxation)(real);
 //RT dust
 void (*RTD_Temperature)();

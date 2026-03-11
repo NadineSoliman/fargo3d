@@ -96,9 +96,6 @@ Fluid *CreateFluid(char *name, int fluidtype) {
 #ifdef THERMALACCOMODATION
   sprintf(fieldname,"%s%s",name,"alphacol");
   f->Alphacol = CreateField(fieldname, 0, 0,0,0);
-  f->Rkk1 = CreateField("rkk1", 0, 0,0,0);
-  f->Rkk2 = CreateField("rkk2", 0, 0,0,0);
-  f->Qvec = CreateField("qvec", 0, 0,0,0);
 #endif
 #ifdef THERMALRELAXATION
   sprintf(fieldname,"%s%s",name,"betarad");

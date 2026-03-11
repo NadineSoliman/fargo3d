@@ -205,9 +205,7 @@ ex void ThermalAccomodation_Sumrho_cpu(real);
 ex void ThermalAccomodation_Sumpressure_cpu(real);
 ex void ThermalAccomodation_UpdateEnergy_cpu(real);
 ex void ThermalRelaxation_cpu(real);
-ex void ThermalAccomodation_ComputeK(real,int);
-ex void _ThermalAccomodation_ComputeK_cpu(real,Field*);
-ex void ThermalAccomodation_ComputeQ_cpu(real,int);
+
 
 // RT dust
 ex void RTD_main(real);
@@ -222,7 +220,7 @@ ex void RTD_MatterRadiation_UpdateErad_cpu(void);
 ex void RTD_MatterRadiation_UpdateTemp_cpu(real);
 ex void RTD_DiffusionCoeff_cpu();
 ex void RTD_SolveDiffusion_cpu(real);
-ex void RTD_UpdateEnergy_cpu(void);
+// ex void RTD_UpdateEnergy_cpu(void);
 
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
@@ -616,8 +614,6 @@ ex void ThermalAccomodation_Sumrho_gpu(real);
 ex void ThermalAccomodation_Sumpressure_gpu(real);
 ex void ThermalAccomodation_UpdateEnergy_gpu(real);
 ex void ThermalRelaxation_gpu(real);
-ex void _ThermalAccomodation_ComputeK_gpu(real,Field*);
-ex void ThermalAccomodation_ComputeQ_gpu(real,int);
 // RT dust
 ex void RTD_Temperature_gpu(void);
 ex void RTD_Opacity_gpu(void);
@@ -630,7 +626,7 @@ ex void RTD_MatterRadiation_UpdateErad_gpu(void);
 ex void RTD_MatterRadiation_UpdateTemp_gpu(real);
 ex void RTD_DiffusionCoeff_gpu();
 ex void RTD_SolveDiffusion_gpu(real);
-ex void RTD_UpdateEnergy_gpu(void);
+// ex void RTD_UpdateEnergy_gpu(void);
 
 //DIFFUSION-----------------------------------------------
 ex void DustDiffusion_Core_gpu(real);

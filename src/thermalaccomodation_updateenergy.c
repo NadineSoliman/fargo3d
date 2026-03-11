@@ -11,19 +11,20 @@
 void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
 //<USER_DEFINED>
-  INPUT(Rkk1);
-  INPUT(Rkk2);
+  INPUT(Alphacol);
   INPUT(Energy);
   INPUT(Density);
+  INPUT(DensStar);
+  INPUT(Slope);
   OUTPUT(Energy);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
   real* energy = Energy->field_cpu;
   real* dens = Density->field_cpu;
-  real* rkk1 = Rkk1->field_cpu;
-  real* rkk2 = Rkk2->field_cpu;
-  real* grk  = Gammark->field_cpu; 
+  real* alpha = Alphacol->field_cpu;
+  real* sumpressure = Slope->field_cpu;
+  real* sumrho = DensStar->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -44,6 +45,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real tempdustn;
   real tempdust;
   real tempgasn;
+  real dtl;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -73,13 +75,13 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
   
 	if (fluidtype == GAS)  {
-    tempgasn   =  (GAMMA-1.0)*energy[ll]/(dens[ll]*R_MU);
-    tempgas    = tempgasn + dt*(1.0-grk[ll])*rkk1[ll] + grk[ll]*dt*rkk2[ll];
+    tempgas    = sumpressure[ll]/( sumrho[ll] );
     energy[ll] = (dens[ll]*R_MU) * tempgas/(GAMMA - 1.0); 
   }
 	else{
+    dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];
     tempdustn = energy[ll] / (dens[ll]*cpdust);
-    tempdust  = tempdustn + dt*(1.0-grk[ll])*rkk1[ll] + grk[ll]*dt*rkk2[ll];
+    tempdust = (dtl*alpha[ll])/(1.+ dtl*alpha[ll])*sumpressure[ll]/( sumrho[ll] ) + tempdustn/(1.+ dtl*alpha[ll]);
     energy[ll] = (dens[ll]*cpdust) * tempdust; 
   }
 

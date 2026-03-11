@@ -147,8 +147,6 @@ void ChangeArch() {
   ThermalAccomodation_Sumrho = ThermalAccomodation_Sumrho_cpu;
   ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_cpu;
   ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_cpu;
-  ThermalAccomodation_ComputeQ = ThermalAccomodation_ComputeQ_cpu;
-  _ThermalAccomodation_ComputeK = _ThermalAccomodation_ComputeK_cpu;
   ThermalRelaxation = ThermalRelaxation_cpu;
    //-----------------------------------------------------
   //RT dust
@@ -163,7 +161,7 @@ void ChangeArch() {
   RTD_MatterRadiationSumB        = RTD_MatterRadiationSumB_cpu;
   RTD_DiffusionCoeff = RTD_DiffusionCoeff_cpu;
   RTD_SolveDiffusion = RTD_SolveDiffusion_cpu;
-  RTD_UpdateEnergy   = RTD_UpdateEnergy_cpu;
+  // RTD_UpdateEnergy   = RTD_UpdateEnergy_cpu;
 
 
   VanLeerX_PPA_a    = VanLeerX_PPA_a_cpu;
@@ -593,8 +591,6 @@ void ChangeArch() {
     ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_gpu;
     ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_gpu;
     ThermalRelaxation = ThermalRelaxation_gpu;
-    _ThermalAccomodation_ComputeK = _ThermalAccomodation_ComputeK_gpu;
-    ThermalAccomodation_ComputeQ = ThermalAccomodation_ComputeQ_gpu;
 	  masterprint("thermalaccomodation runs on the GPU\n");
 	}
       }
@@ -612,7 +608,7 @@ void ChangeArch() {
     RTD_MatterRadiationSumB        = RTD_MatterRadiationSumB_gpu;
     RTD_DiffusionCoeff = RTD_DiffusionCoeff_gpu;
     RTD_SolveDiffusion = RTD_SolveDiffusion_gpu;
-    RTD_UpdateEnergy   = RTD_UpdateEnergy_gpu;
+    // RTD_UpdateEnergy   = RTD_UpdateEnergy_gpu;
 	  masterprint("rtdust runs on the GPU\n");
 	}
       }

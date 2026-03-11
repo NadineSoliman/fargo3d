@@ -16,7 +16,6 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
 #ifdef THERMALRELAXATION
   OUTPUT(Betarad);
 #endif
-  OUTPUT(Gammark);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
@@ -28,7 +27,6 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   real* energy_gas = Fluids[0]->Energy->field_cpu; 
   real* dens = Density->field_cpu;
   real* energy = Energy->field_cpu;
-  real* grk   = Gammark->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -38,7 +36,6 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   real rhosolid        = Coeffval[2];
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
-  real gammark2=GAMMARK2;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -52,6 +49,9 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   real cpgas;
   real qlocal;  
   real omega;
+  #ifdef CONSTANTTHERMALCOEFF
+  real invthermaltime=invparticlesize;
+#endif
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -81,7 +81,6 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
 
   if (fluidtype == GAS) {
     alpha[ll] = 0.0; //gas
-    grk[ll]   = gammark2;
   }
   else {
 #ifdef CONSTANTTHERMALCOEFF
@@ -91,8 +90,6 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   tempgas    =  (GAMMA-1.0)*energy_gas[ll]/(dens_gas[ll]*R_MU);
   alpha[ll]  = 0.75 *pow(KBOLTZ/MH, 1.5)* pow(tempgas, 0.5) * dens_gas[ll];
   alpha[ll] *= invparticlesize/rhosolid/cpdust;
-  grk[ll]    = max2(grk[ll],gammark2);
-  if(alpha[ll]*dt>1.0 && grk[ll] != 1.0) grk[ll]=0.5; 
 #endif	
   }
 #ifdef THERMALRELAXATION

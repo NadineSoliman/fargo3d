@@ -40,7 +40,6 @@ Cs                         1.0
 Cp_dust                    1.0
 Cp_gas                     2.5
 Cpdg                       0.088
-Gammark2                   1.0
 Rhosolid                   2.0
 Nsubth                     1
 Frame                      fixed
