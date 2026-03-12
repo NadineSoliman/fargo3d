@@ -16,7 +16,7 @@ void _CondInit(int index) {
   real kmode  = 2.*M_PI/(ZMAX-ZMIN);
   real CS = sqrt(GAMMA * R_MU * TGAS); // Speed of sound in the gas
   real cp_gas = GAMMA * R_MU / (GAMMA - 1.0); // Specific heat capacity of the gas
-  real cp_dust = 0.01 * cp_gas; // Specific heat capacity of the dust
+  real cp_dust =  0.01 * cp_gas; // Specific heat capacity of the dust
   
   //Input parameters
   real Ts[NFLUIDS-1] = { 0.1 };//, 0.21544346900318834 , 0.46415888336127786 , 1.0 };

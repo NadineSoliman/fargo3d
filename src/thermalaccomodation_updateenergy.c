@@ -79,7 +79,8 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
     energy[ll] = (dens[ll]*R_MU) * tempgas/(GAMMA - 1.0); 
   }
 	else{
-    dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];
+    dtl = dt;//(exp(alpha[ll] * dt) - 1.0)/alpha[ll];
+
     tempdustn = energy[ll] / (dens[ll]*cpdust);
     tempdust = (dtl*alpha[ll])/(1.+ dtl*alpha[ll])*sumpressure[ll]/( sumrho[ll] ) + tempdustn/(1.+ dtl*alpha[ll]);
     energy[ll] = (dens[ll]*cpdust) * tempdust; 

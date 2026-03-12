@@ -677,6 +677,7 @@ void WriteOutputs(int type) {
   #endif
   #ifdef THERMALACCOMODATION
     __WriteField(Alphacol, TimeStep);
+    __WriteField(Energy, TimeStep);
   #endif
   #ifdef THERMALRELAXATION
     __WriteField(Betarad, TimeStep);
