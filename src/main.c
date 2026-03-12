@@ -409,8 +409,11 @@ if (*SPACING=='N'){
       
       CflFluidsMin(); /*Fills StepTime with the " global min " of the
 			cfl, computed from each fluid.*/
-      dt = StepTimeRT; //cfl works with the 'StepTime' global variable.
-      // printf("%f %f \n", StepTime, StepTimeRT);
+#ifdef RTDUST
+      dt = min(StepTimeRT, StepTime);
+#else
+      dt = StepTime;
+#endif      // printf("%f %f \n", StepTime, StepTimeRT);
       dtemp+=dt;
       if(dtemp>DT)  dt = DT - (dtemp-dt); //updating dt
       //------------------------------------------------------------------------

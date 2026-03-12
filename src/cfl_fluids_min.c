@@ -46,6 +46,8 @@ void CflFluidsMin() {
 #else
   MPI_Allreduce(&steprt, &StepTimeRT, 1, MPI_DOUBLE, MPI_MIN, MPI_COMM_WORLD);
 #endif
+#else
+  StepTimeRT = StepTime;  /* no RT: use hydro dt so main can use either */
 #endif
 
 #ifdef STS

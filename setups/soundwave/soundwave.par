@@ -15,9 +15,9 @@ CPDG        0.01
 
 Gamma			1.4
 
-DT		    0.05
+DT		    0.01
 Ninterm	 	1
-Ntot		100
+Ntot		500
 
 PeriodicZ	Yes
 Nz		    64
