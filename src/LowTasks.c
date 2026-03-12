@@ -596,6 +596,9 @@ void SelectFluid(int n) {
 #ifdef THERMALRELAXATION
   Betarad = Fluids[n]->Betarad;
 #endif
+#ifdef THERMALACCOMODATION
+  Alphacol = Fluids[n]->Alphacol;
+#endif
 #ifdef RTDUST
   Temperature = Fluids[n]->Temperature;
   Kappa = Fluids[n]->Kappa;

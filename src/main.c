@@ -359,16 +359,18 @@ if (*SPACING=='N'){
     dtemp = 0.0;
     
     while (dtemp<DT) { // DT LOOP
-      
+
       /// AT THIS STAGE Vx IS THE INITIAL TOTAL VELOCITY IN X
 #ifdef X
 #ifndef STANDARD
+
       MULTIFLUID(ComputeVmed(Vx)); // FARGO algorithm -- very important to have it here!
 #endif
 #endif
       /// NOW THE 2D MESH VxMed CONTAINS THE AZIMUTHAL AVERAGE OF Vx in X
       
 #ifdef FLOOR
+
       MULTIFLUID(if(Fluidtype==DUST) Floor());
 #endif
 
@@ -390,6 +392,7 @@ if (*SPACING=='N'){
  /* We now compute the total density of the mesh. We need first
 	 reset an array and then fill it by adding the density of each
 	 fluid */
+
       FARGO_SAFE(Reset_field(Total_Density)); 
       MULTIFLUID(ComputeTotalDensity()); 
       //------------------------------------------------------------------------
@@ -407,7 +410,7 @@ if (*SPACING=='N'){
       CflFluidsMin(); /*Fills StepTime with the " global min " of the
 			cfl, computed from each fluid.*/
       dt = StepTimeRT; //cfl works with the 'StepTime' global variable.
-      printf("%f %f \n", StepTime, StepTimeRT);
+      // printf("%f %f \n", StepTime, StepTimeRT);
       dtemp+=dt;
       if(dtemp>DT)  dt = DT - (dtemp-dt); //updating dt
       //------------------------------------------------------------------------
