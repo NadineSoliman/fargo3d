@@ -69,7 +69,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
       
 cpgas  = GAMMA*R_MU/(GAMMA-1.0);
 cpdust = cpdg* cpgas;
-  dtl = dt;//(exp(alpha[ll] * dt) - 1.0)/alpha[ll];
+  dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];
   rhotemp = energy[ll]/cpdust;
 	sk   = (GAMMA * cpdg)* dtl* alpha[ll]/(1+dtl*alpha[ll]);
   if (fluidtype == GAS) {

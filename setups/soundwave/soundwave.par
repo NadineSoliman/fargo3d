@@ -13,7 +13,7 @@ TGAS        1.0
 TDUST       1.0
 CPDG        0.01
 
-Gamma			1.4
+Gamma			1.01
 
 DT		    0.01
 Ninterm	 	1
