@@ -112,7 +112,7 @@ Fluid *CreateFluid(char *name, int fluidtype) {
   int n;
   real *coeffvalues;
   coeffvalues = (real*)malloc(sizeof(real)*(3));
-  for(n=0; n<3;n++) coeffvalues[n]=0.0;
+  for(0; n<3;n++) coeffvalues[n]=0.0;
   f->Coeffval = coeffvalues;
   //Coeffval[0] = Stokesnumber;
   //Coeffval[1] = ParticleSize;

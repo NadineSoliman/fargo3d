@@ -11,9 +11,9 @@ DENSGR		1.0
 DENSGI		0.0
 TGAS        1.0
 TDUST       1.0
-CPDG        0.01
+CPDG        1.0
 
-Gamma			1.01
+Gamma			1.4
 
 DT		    0.01
 Ninterm	 	1
