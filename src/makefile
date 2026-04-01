@@ -342,7 +342,7 @@ MAINOBJ  = LowTasks.o psys.o main.o param.o var.o usage.o   	    \
 	   visctensor_cyl.o stretch.o 				\
 	   mon_dens.o mon_momx.o mon_momy.o mon_momz.o          \
 	   mon_torque.o comm_device.o checkmute_y.o		\
-	   checkmute_z.o mon_reynolds.o mon_maxwell.o           \
+	   checkmute_z.o mon_reynolds.o mon_kinetic.o mon_maxwell.o           \
 	   mon_bxflux.o                                         \
 	   postrestarthook.o change_arch.o select_device.o	\
 	   redefoptions.o setuphook1.o				\

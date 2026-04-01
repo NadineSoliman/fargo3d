@@ -166,6 +166,7 @@ ex void mon_momy_cpu(void);
 ex void mon_momz_cpu(void);
 ex void mon_torq_cpu(void);
 ex void mon_reynolds_cpu(void);
+ex void mon_kinetic_cpu(void);
 ex void mon_maxwell_cpu(void);
 ex void mon_bxflux_cpu(void);
 
