@@ -43,7 +43,7 @@ void _CondInit(int id) {
       epsilons[n]  = log(stokes_plus[n+1]/stokes_plus[n]);
       epsilons[n] *= EPSILON/log(smax/smin);
     }
-    stokes[n] = stokes_plus[n+1];
+    stokes[n] = sqrt(stokes_plus[n]* stokes_plus[n+1]);
     if( NFLUIDS == 2) {
       stokes[n] = TSMAX;
       epsilons[n] = EPSILON;
