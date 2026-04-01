@@ -1,0 +1,18 @@
+Setup			thdamp
+
+### Mesh parameters
+Nx			1
+Ny			1
+Nz			1
+Zmin			0.0
+Zmax			1.0
+
+Ntot			100
+Ninterm	 		1
+DT			0.05
+OutputDir		@outputs/thdamp
+
+Gamma			1.4
+
+CP_dust         1.0
+CP_gas          2.5

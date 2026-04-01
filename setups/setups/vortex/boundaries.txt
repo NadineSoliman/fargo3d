@@ -1,0 +1,59 @@
+# To define the boundaries it is possible to use any variable or pure
+# macro defined in the code. For example, it's allowed to use the
+# geometrical variables/macros xmin/xmed(i), ymin/ymed(i),
+# zmin/zmax(i), and macros like zone_size_x/y/z. However, it is not
+# possible to use macros that are expanded into new macros, like
+# Surf_x/y/z nor InvVol, Vol...
+
+# It is also possible to use any variable defined in your SETUP.par.
+# All the global variables must be embedded with "'",
+# e.g. |...'global_variable'...|, with "'"!
+
+# Example:
+
+# SYMMETRIC:
+# Centered: |'OMEGAFRAME'**2+2*'FLARINGINDEX'+'MSTAR'+xmed(i)-ymed(j)+active|active|
+
+# The boundary-related files are case-insensitive, so you can also
+# define the following:
+
+# Centered: |'omegaframe'**2+2*'flaring'+'mstar'+xmed(i)-ymed(j)+active|active|
+
+# Be sure that the word "active" is not inside your variables.
+
+# Example of a wrong implementation: |'omegactive'|active|
+
+# Explanation: the parser first substitutes 'omegactive' --> 'omegavariable',
+# and then uses 'omegavariable' when applying the boundaries.
+# "varible" is a variable defined in the .bound file.
+
+
+################################################################################
+### BELOW: STANDARD BOUNDARIES
+################################################################################
+
+SYMMETRIC:
+	   Centered:	|a|a|
+	   Staggered:   |a|a|a|
+
+ANTISYMMETRIC:
+	   Staggered:	|-a|0|a|
+
+NOBOUNDARY:
+	    Centered:	|a|a|
+	    Staggered:	|a|a|a|
+
+
+
+VYBC:
+	   Staggered:	|0|0|a|
+
+VXBC:
+	    Centered:	|-'SHEARPARAM'*Ymed(jgh) +0.5*Ymed(jgh)/('GW'*'GW')*'CS'*'CS'*'GA'*exp(-0.5*Ymed(jgh)*Ymed(jgh)/'GW'/'GW')/(1+'GA'*exp(-0.5*Ymed(jgh)*Ymed(jgh)/'GW'/'GW'))|active|
+
+SIGMABC:
+	    Centered:	|'SIGMA0'*(1+'GA'*exp(-0.5*Ymed(jgh)*Ymed(jgh)/'GW'/'GW'))|active|
+
+ENERGYBC:
+	    Centered:	|(1.0/('GAMMA'-1))*'CS'*'CS'*'SIGMA0'*(1+'GA'*exp(-0.5*Ymed(jgh)*Ymed(jgh)/'GW'/'GW'))|active|
+

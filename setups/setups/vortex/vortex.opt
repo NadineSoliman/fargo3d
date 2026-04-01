@@ -1,0 +1,38 @@
+# You may enter a description between the BEGIN and END labels.
+# BEGIN
+# "vortex" setup corresponds to the setup described in Fung & Ono 2021.
+# In order to build it and run it, issue in the 'fargo3d' directory:
+# make SETUP=vortex
+# ./fargo3d setups/vortex/vortex.par
+# END
+#-------------------------------------------------------------------------
+
+FLUIDS := 0
+NFLUIDS = 1
+FARGO_OPT += -DNFLUIDS=${NFLUIDS}
+
+FARGO_OPT+=-DX
+FARGO_OPT+=-DY
+
+#Equation of State
+FARGO_OPT+=-DADIABATIC
+FARGO_OPT+=-DERELAXATION
+
+#Coordinate System.
+FARGO_OPT +=  -DCARTESIAN
+
+#Shearing box
+FARGO_OPT += -DSHEARINGBOX
+#FARGO_OPT += -DSHEARINGBC
+
+
+FARGO_OPT += -DSTOCKHOLM
+#FARGO_OPT += -DSTANDARD
+
+
+#Cuda blocks
+ifeq (${GPU}, 1)
+FARGO_OPT += -DBLOCK_X=16
+FARGO_OPT += -DBLOCK_Y=16
+FARGO_OPT += -DBLOCK_Z=1
+endif

@@ -1,0 +1,43 @@
+SetUp			vortex_multifluid
+
+### Equilibrium parameters
+GW              0.5 
+GA              0.16
+Gamma           1.4
+Cs              1.0
+H0              1.0	    
+Pert            1.0e-3
+SIGMA0          1.0
+
+Ebeta           0.01
+### Dust parameters
+Epsilon			0.01		Total dust-to-gas mass ratio
+Tsmin			0.0001          
+Tsmax			0.1		
+size			1.0		size in cm
+rhosolid		1.0             in g/cm3
+Sq			4.0		slope of distribution
+Tslim			1.0
+
+
+### Mesh parameters
+Nx              128
+Ny              128
+Xmin			-10.0        Azimuthal domain size in R0=1.0 unit
+Xmax			10.0
+Ymin			-10.0        Radial domain size in R0=1.0 unit
+Ymax			10.0
+
+PeriodicY	    No         
+ShearParam      1.5    
+OmegaFrame      1.0 
+
+DampingZone 1.5      # Set to H0
+TauDamp     0.3      # Timescale for damping at the boundaries
+
+
+### Output control parameters
+DT              0.1
+Ninterm	 		10	Time steps between outputs
+Ntot			10000		Total number of time steps
+OutputDir		@outputs/vortex_multifluid
