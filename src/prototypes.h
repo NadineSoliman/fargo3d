@@ -168,7 +168,6 @@ ex void mon_torq_cpu(void);
 ex void mon_reynolds_cpu(void);
 ex void mon_maxwell_cpu(void);
 ex void mon_bxflux_cpu(void);
-ex void mon_kinetic_cpu(void);
 
 //Monitoring management Prototypes
 ex void MonitorFunction (int, int, char*, int);
@@ -205,22 +204,6 @@ ex void ThermalAccomodation_Sumrho_cpu(real);
 ex void ThermalAccomodation_Sumpressure_cpu(real);
 ex void ThermalAccomodation_UpdateEnergy_cpu(real);
 ex void ThermalRelaxation_cpu(real);
-
-
-// RT dust
-ex void RTD_main(real);
-ex void RTD_Temperature_cpu(void);
-ex void RTD_Opacity_cpu(void);
-ex void RTD_Tau_cpu(void);
-ex void RTD_Scan_cpu(void);
-ex void RTD_StellarFlux_cpu(void);
-ex void RTD_MatterRadiationSumA_cpu(real);
-ex void RTD_MatterRadiationSumB_cpu(real);
-ex void RTD_MatterRadiation_UpdateErad_cpu(void);
-ex void RTD_MatterRadiation_UpdateTemp_cpu(real);
-ex void RTD_DiffusionCoeff_cpu();
-ex void RTD_SolveDiffusion_cpu(real);
-// ex void RTD_UpdateEnergy_cpu(void);
 
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
@@ -556,7 +539,6 @@ ex void mon_torq_gpu(void);
 ex void mon_reynolds_gpu(void);
 ex void mon_maxwell_gpu(void);
 ex void mon_bxflux_gpu(void);
-ex void mon_kinetic_gpu(void);
 
 ex void VanLeerX_a_gpu(Field*);
 ex void VanLeerX_b_gpu(real,Field*,Field*,Field*);
@@ -613,20 +595,8 @@ ex void ThermalAccomodation_Coeff_gpu(real);
 ex void ThermalAccomodation_Sumrho_gpu(real);
 ex void ThermalAccomodation_Sumpressure_gpu(real);
 ex void ThermalAccomodation_UpdateEnergy_gpu(real);
-ex void ThermalRelaxation_gpu(real);
-// RT dust
-ex void RTD_Temperature_gpu(void);
-ex void RTD_Opacity_gpu(void);
-ex void RTD_Tau_gpu(void);
-ex void RTD_Scan_gpu(void);
-ex void RTD_StellarFlux_gpu(void);
-ex void RTD_MatterRadiationSumA_gpu(real);
-ex void RTD_MatterRadiationSumB_gpu(real);
-ex void RTD_MatterRadiation_UpdateErad_gpu(void);
-ex void RTD_MatterRadiation_UpdateTemp_gpu(real);
-ex void RTD_DiffusionCoeff_gpu();
-ex void RTD_SolveDiffusion_gpu(real);
-// ex void RTD_UpdateEnergy_gpu(void);
+
+
 
 //DIFFUSION-----------------------------------------------
 ex void DustDiffusion_Core_gpu(real);

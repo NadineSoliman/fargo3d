@@ -31,9 +31,7 @@ int PrimitiveVariables () {
     var |= EMFX|EMFY|EMFZ;
   }
 #endif
-#ifdef RTDUST
-  var |= ENERGYRAD;
-#endif
+
   return var;
 }
 
@@ -592,18 +590,11 @@ void SelectFluid(int n) {
   Vy0 = Fluids[n]->Vy0;
   Vz0 = Fluids[n]->Vz0;
 #endif
-  Coeffval = Fluids[n]->Coeffval;
-#ifdef THERMALRELAXATION
-  Betarad = Fluids[n]->Betarad;
-#endif
 #ifdef THERMALACCOMODATION
   Alphacol = Fluids[n]->Alphacol;
 #endif
-#ifdef RTDUST
-  Temperature = Fluids[n]->Temperature;
-  Kappa = Fluids[n]->Kappa;
-  GammaRad= Fluids[n]->GammaRad;
-#endif
+  Coeffval = Fluids[n]->Coeffval;
+
 }
 
 void CreateFields() {
@@ -635,14 +626,13 @@ void CreateFields() {
   Mmz     = CreateField("Moment_Minus_Z", 0,0,0,1);
 #endif
 
-  Tcol  = CreateField("Tcol"    , 0,0,0,0);
-  Trad  = CreateField("Trad"   , 0,0,0,0);  // This field cannot
   Pot     = CreateField("potential", 0,0,0,0);
   Slope   = CreateField("Slope"    , 0,0,0,0);
   DivRho  = CreateField("DivRho"   , 0,0,0,0);  // This field cannot
 						// be aliased wherever
 						// reductions are
 						// needed
+  
   DensStar      = CreateField("DensStar"     , 0,0,0,0);
   Qs            = CreateField("Qs"           , 0,0,0,0);
   Pressure      = CreateField("Pressure"     , 0,0,0,0);
@@ -656,12 +646,6 @@ void CreateFields() {
   UStarmin   = CreateField("UStarmin", 0,0,0,0);
 #endif
 
-#ifdef RTDUST
-  Tau    = CreateField("Tau", 0,0,0,0);
-  KappaP = CreateField("KappaP", 0,0,0,0);
-  Energyrad   = CreateField("Energyrad", 0,0,0,0);
-  DiffCoef = CreateField("Diffcoef", 0,0,0,0);
-#endif
 
 #ifdef PPA_STEEPENER
   LapPPA  = CreateField("LapPPA", 0,0,0,0);
@@ -863,7 +847,7 @@ int RestartSimulation(int n) {
 #ifdef Z
   __Restart(Vz, n);
 #endif
-  __Restart(Energy, n);
+      if(Fluidtype != DUST) __Restart(Energy, n);
 #ifdef MHD
   __Restart(Bx, n);
   __Restart(By, n);

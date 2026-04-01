@@ -7,33 +7,33 @@
 #include "fargo3d.h"
 //<\INCLUDES>
 
-
+/*
+ * Dust radiative relaxation toward the azimuthal mean (Stockholm 2D reference),
+ * same physics as upstream fargo3d/src/thermalrelaxation.c but without a Betarad
+ * scratch field: the cooling rate beta is computed here from local dust temperature,
+ * particle size (Coeffval), and rhosolid — matching thermalaccomodation_coeff.c.
+ */
 void ThermalRelaxation_cpu(real dt) {
 
 //<USER_DEFINED>
   INPUT(Energy);
   INPUT(Density);
-  INPUT2D(Energy0);  
+  INPUT2D(Energy0);
   INPUT2D(Density0);
-  INPUT(Betarad);
   OUTPUT(Energy);
-  OUTPUT(Trad);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
-  real* energy = Energy->field_cpu;
-  real* dens = Density->field_cpu;
-  real* dens0 = Density0->field_cpu; 
-  real* energy0 = Energy0->field_cpu;
-  real* beta       = Betarad->field_cpu;
-  int pitch2d = Pitch2D;  
-  int pitch  = Pitch_cpu;
-  int stride = Stride_cpu;
+  real *energy = Energy->field_cpu;
+  real *dens = Density->field_cpu;
+  real *dens0 = Density0->field_cpu;
+  real *energy0 = Energy0->field_cpu;
   int size_x = Nx;
-  int size_y = Ny+2*NGHY;
-  int size_z = Nz+2*NGHZ;
-  int fluidtype = Fluidtype;
-  real cpdg=CPDG;
+  int size_y = Ny + 2 * NGHY;
+  int size_z = Nz + 2 * NGHZ;
+  real cpdg = CPDG;
+  real invparticlesize = Coeffval[1];
+  real rhosolid = Coeffval[2];
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -41,50 +41,49 @@ void ThermalRelaxation_cpu(real dt) {
   int j;
   int k;
   int ll;
-  real temp;
+  real beta;
   real cpdust;
   real cpgas;
-  real trgas;
-  real trdust_inv;
-  real tempgas;
+  real qlocal;
   real tempdust0;
   real tempdustn;
-  real omega;
-  real Q;
+  real temp;
 //<\INTERNAL>
-
-//<CONSTANT>
-// real xmin(Nx+2*NGHX+1);
-// real ymin(Ny+2*NGHY+1);
-// real GAMMA(1);
-//<\CONSTANT>
 
 //<MAIN_LOOP>
 
-  i =j= k= 0;
+  i = j = k = 0;
 
 #ifdef Z
-  for (k=0; k<size_z; k++) {
+  for (k = 0; k < size_z; k++) {
 #endif
 #ifdef Y
-    for (j=0; j<size_y; j++) {
+    for (j = 0; j < size_y; j++) {
 #endif
 #ifdef X
-      for (i=0; i<size_x; i++ ) {
+      for (i = 0; i < size_x; i++) {
 #endif
 //<#>
-	ll = l;
+        ll = l;
 
-  cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-  cpdust = cpdg* cpgas;
-	
-  //Dust op. thin cooling time due to radiative cooling
-  tempdust0 = energy0[l2D] / (dens0[l2D]*cpdust);
-  tempdustn = energy[ll] / (dens[ll]*cpdust);
-  
-  temp   = ( tempdustn + tempdust0*dt*beta[ll])/(1.+dt*beta[ll]);
-  energy[ll] = dens[ll]* temp * cpdust; 
-  
+        cpgas = GAMMA * R_MU / (GAMMA - 1.0);
+        cpdust = cpdg * cpgas;
+
+        /* Same beta(T_dust) as former thermalaccomodation_coeff.c THERMALRELAXATION block */
+        tempdustn = energy[ll] / (dens[ll] * cpdust);
+        qlocal = 8.0 * M_PI * KBOLTZ * tempdustn / invparticlesize / PLANCK / C0;
+        if (qlocal >= 1.0) {
+          beta = 12.0 * invparticlesize / (rhosolid * cpdust) * STEFANK *
+                 pow(tempdustn, 3.0);
+        } else {
+          beta = M_PI * 120.0 * STEFANK * KBOLTZ /
+                 (PLANCK * C0 * rhosolid * cpdust) * pow(tempdustn, 4.0);
+        }
+
+        tempdust0 = energy0[l2D] / (dens0[l2D] * cpdust);
+        temp = (tempdustn + tempdust0 * dt * beta) / (1. + dt * beta);
+        energy[ll] = dens[ll] * temp * cpdust;
+
 //<\#>
 #ifdef X
       }

@@ -1,0 +1,24 @@
+Setup		soundwave
+
+
+Zmin 		0.0
+Zmax 		1.0
+
+Amplitude	1.0e-4
+
+RHOG		1.0
+DENSGR		1.0
+DENSGI		0.0
+TGAS        1.0
+TDUST       1.0
+
+Gamma			1.4
+
+DT		    0.01
+Ninterm	 	1
+Ntot		500
+
+PeriodicZ	Yes
+Nz		    64
+CFL         0.3 
+OutputDir 	outputs/soundwave_64_passing

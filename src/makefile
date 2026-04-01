@@ -300,7 +300,7 @@ BOUNDARIES_DEP = boundparser.py boundary_template.c  \
 
 
 MPIDUMMY = mpi_dummy.o #dummy file, for sequential runs.
-EXENAME  = ../fargo3d  #Name and location of the executable file
+EXENAME  = ../fargoboth  #Name and location of the executable file
 
 
 VPATH=${SETUPSDIR}/${SETUP}:${STDDIR}:${SCRIPTSDIR}:${SRCDIR}
@@ -341,7 +341,7 @@ MAINOBJ  = LowTasks.o psys.o main.o param.o var.o usage.o   	    \
 	   addviscosity_sph.o visctensor_sph.o			\
 	   visctensor_cyl.o stretch.o 				\
 	   mon_dens.o mon_momx.o mon_momy.o mon_momz.o          \
-	   mon_torque.o mon_kinetic.o comm_device.o checkmute_y.o		\
+	   mon_torque.o comm_device.o checkmute_y.o		\
 	   checkmute_z.o mon_reynolds.o mon_maxwell.o           \
 	   mon_bxflux.o                                         \
 	   postrestarthook.o change_arch.o select_device.o	\
@@ -371,11 +371,7 @@ MAINOBJ  = LowTasks.o psys.o main.o param.o var.o usage.o   	    \
 	   dragforce_updatevel.o dragforce_coeff.o  \
 	   thermalaccomodation.o thermalaccomodation_coeff.o \
 	   thermalaccomodation_sumrho.o thermalaccomodation_sumpressure.o \
-	   thermalaccomodation_updateenergy.o thermalrelaxation.o \
-	   rtd_main.o rtd_opacity.o rtd_temperature.o rtd_tau.o rtd_radialscan.o \
-	   rtd_stellarflux.o rtd_matterradiation_updateerad.o rtd_matterradiation_updatetemp.o \
-	   rtd_matterradiationsuma.o rtd_matterradiationsumb.o \
-	   rtd_diffcoeff.o rtd_diffusion.o  \
+	   thermalaccomodation_updateenergy.o thermalrelaxation.o
 #-----------------------#Cuda objects---------------------------------
 GPU_OBJ  =  reduction_sum_device.o reduction_min_device.o	\
 	   	lowtasks_gpu.o 
@@ -406,7 +402,7 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
 	   addviscosity_cart_gpu.o addviscosity_cyl_gpu.o	\
 	   visctensor_cyl_gpu.o addviscosity_sph_gpu.o		\
 	   mon_dens_gpu.o mon_momx_gpu.o mon_momy_gpu.o         \
-	   mon_momz_gpu.o mon_torque_gpu.o mon_kinetic_gpu.o checkmute_y_gpu.o	\
+	   mon_momz_gpu.o mon_torque_gpu.o checkmute_y_gpu.o	\
 	   checkmute_z_gpu.o mon_reynolds_gpu.o                 \
 	   mon_maxwell_gpu.o visctensor_sph_gpu.o               \
 	   mon_bxflux_gpu.o                   			\
@@ -434,11 +430,7 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
        dragforce_updatevel_gpu.o dragforce_coeff_gpu.o  \
 	   thermalaccomodation_coeff_gpu.o \
 	   thermalaccomodation_sumrho_gpu.o thermalaccomodation_sumpressure_gpu.o \
-	   thermalaccomodation_updateenergy_gpu.o thermalrelaxation_gpu.o \
-	   rtd_opacity_gpu.o rtd_temperature_gpu.o rtd_tau_gpu.o rtd_radialscan_gpu.o \
-	   rtd_stellarflux_gpu.o rtd_matterradiation_updateerad_gpu.o rtd_matterradiation_updatetemp_gpu.o \
-	   rtd_matterradiationsuma_gpu.o rtd_matterradiationsumb_gpu.o \
-	   rtd_diffcoeff_gpu.o rtd_diffusion_gpu.o  \
+	   thermalaccomodation_updateenergy_gpu.o
 #</CUDA OBJECTS>
 #---------------------------------------------------------------------
 

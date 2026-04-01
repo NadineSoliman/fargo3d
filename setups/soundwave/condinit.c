@@ -1,5 +1,6 @@
 #include "fargo3d.h"
 #include <complex.h>
+#include <stdio.h>
 
 real mode(real fr, real fi, real kmode, real x) {
   return ( fr*cos(kmode*x) - fi*sin(kmode*x) );
@@ -16,14 +17,45 @@ void _CondInit(int index) {
   real kmode  = 2.*M_PI/(ZMAX-ZMIN);
   real CS = sqrt(GAMMA * R_MU * TGAS); // Speed of sound in the gas
   real cp_gas = GAMMA * R_MU / (GAMMA - 1.0); // Specific heat capacity of the gas
-  real cp_dust =  0.01 * cp_gas; // Specific heat capacity of the dust
+  real cp_dust = CPDG * cp_gas; // Specific heat capacity of the dust
   
-  //Input parameters
-  real Ts[NFLUIDS-1] = { 0.1 };//, 0.21544346900318834 , 0.46415888336127786 , 1.0 };
-  real Th[NFLUIDS-1] = { 0.1 };// , 0.21544346900318834 , 0.46415888336127786 , 1.0 };
-  real eps[NFLUIDS-1] = { 2.24 }; //, 0.23333333333333334 , 0.3666666666666667 , 0.5 };
-  double complex lambda=-0.60418653999843897 - 4.14725080837136062*I;//-0.16757341098197820 - 7.18794806155152788 * I; 
-  
+  /* Ts, Th, eps: only from par when SOUNDWAVE_USE_PAR_TS is set (e.g. for tests). Else use defaults here. Overwritten by soundwave_init.dat if present. */
+  real Ts[NFLUIDS-1];
+  real Th[NFLUIDS-1];
+  real eps[NFLUIDS-1];
+  if (SOUNDWAVE_USE_PAR_TS) {
+    for (m = 0; m < NFLUIDS-1; m++) {
+      Ts[m] = TS_SOUNDWAVE;
+      Th[m] = TH_SOUNDWAVE;
+      eps[m] = EPS_SOUNDWAVE;
+    }
+  } else {
+    for (m = 0; m < NFLUIDS-1; m++) {
+      Ts[m] = 0.01;
+      Th[m] = 0.1;
+      eps[m] = 0.5;
+    }
+  }
+  /* Eigenvalue: from parameter file if SOUNDWAVE_USE_PAR_EIGEN (REAL_EIGEN, IMAG_EIGEN), else soundwave_init.dat, else default below. */
+  double complex lambda = -0.17149106273322487 + 5.73870605564313330*I;
+  if (SOUNDWAVE_USE_PAR_EIGEN) {
+    lambda = (double)REAL_EIGEN + (double)IMAG_EIGEN * I;
+  } else {
+    FILE *fp = fopen("soundwave_init.dat", "r");
+    if (fp == NULL)
+      fp = fopen("setups/soundwave/soundwave_init.dat", "r");
+    if (fp != NULL && NFLUIDS >= 2) {
+      double lr, li, ts0, th0, eps0;
+      if (fscanf(fp, "%lf %lf %lf %lf %lf", &lr, &li, &ts0, &th0, &eps0) == 5) {
+        lambda = lr + li*I;
+        Ts[0] = (real)ts0;
+        Th[0] = (real)th0;
+        eps[0] = (real)eps0;
+      }
+      fclose(fp);
+    }
+  }
+
 
  #ifdef CONSTANTTHERMALCOEFF
   if(index > 0 ) Coeffval[1] = 1.0/Th[index-1];
@@ -39,9 +71,8 @@ void _CondInit(int index) {
 
   printf("v_gas = %g + %gi\n", creal(vgas), cimag(vgas));
   double complex sum=0.0;
-    for(m=0;m<NFLUIDS-1;m++){
-      sum += eps[m] / (1.0 + lambda*Ts[m]);
-  }
+  for(m=0;m<NFLUIDS-1;m++)
+    sum += eps[m] / (1.0 + lambda*Ts[m]);
   double complex delta_Tg = - (1.0 - ((GAMMA * (-lambda * lambda) / (CS * kmode * CS * kmode)) *(1 + sum))) * delta_rhog / RHOG * TGAS;
   double complex delta_e = (cp_gas/GAMMA) * ((delta_rhog  * TGAS) + (delta_Tg * RHOG));
 

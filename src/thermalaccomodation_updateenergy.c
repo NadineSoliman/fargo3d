@@ -76,7 +76,8 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   
 	if (fluidtype == GAS)  {
     tempgas    = sumpressure[ll]/( sumrho[ll] );
-    energy[ll] = (dens[ll]*R_MU) * tempgas/(GAMMA - 1.0); 
+    energy[ll] = (dens[ll]*R_MU) * tempgas/(GAMMA - 1.0);
+    if (ll == 0) printf("fargoboth TA gas [0]: sumpressure=%g sumrho=%g temp=%g dens=%g energy=%g\n", sumpressure[ll], sumrho[ll], tempgas, dens[ll], energy[ll]);
   }
 	else{
     dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];

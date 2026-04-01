@@ -109,10 +109,8 @@ struct fluid {
   struct field *Vx_half;
   struct field *Vy_half;
   struct field *Vz_half;
-  //thermalaccomodation
+#ifdef THERMALACCOMODATION
   struct field *Alphacol;
-#ifdef THERMALRELAXATION
-  struct field *Betarad;
 #endif
 #ifdef STOCKHOLM
   struct field2D *Density0;
@@ -120,11 +118,6 @@ struct fluid {
   struct field2D *Vx0;
   struct field2D *Vy0;
   struct field2D *Vz0;
-#endif
-#ifdef RTDUST
-struct field *Temperature;
-struct field *Kappa;
-struct field *GammaRad;
 #endif
   real *Coeffval;
 };

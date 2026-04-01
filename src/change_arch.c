@@ -81,7 +81,6 @@ void ChangeArch() {
   mon_momz = mon_momz_cpu;
   mon_torq = mon_torq_cpu;
   mon_reynolds = mon_reynolds_cpu;
-  mon_kinetic = mon_kinetic_cpu;
   mon_maxwell  = mon_maxwell_cpu;
   mon_bxflux   = mon_bxflux_cpu;
 
@@ -148,21 +147,6 @@ void ChangeArch() {
   ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_cpu;
   ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_cpu;
   ThermalRelaxation = ThermalRelaxation_cpu;
-   //-----------------------------------------------------
-  //RT dust
-  RTD_Temperature = RTD_Temperature_cpu;
-  RTD_Opacity = RTD_Opacity_cpu;
-  RTD_Tau = RTD_Tau_cpu;
-  RTD_Scan = RTD_Scan_cpu;
-  RTD_StellarFlux = RTD_StellarFlux_cpu;
-  RTD_MatterRadiation_UpdateErad = RTD_MatterRadiation_UpdateErad_cpu;
-  RTD_MatterRadiation_UpdateTemp = RTD_MatterRadiation_UpdateTemp_cpu;
-  RTD_MatterRadiationSumA        = RTD_MatterRadiationSumA_cpu;
-  RTD_MatterRadiationSumB        = RTD_MatterRadiationSumB_cpu;
-  RTD_DiffusionCoeff = RTD_DiffusionCoeff_cpu;
-  RTD_SolveDiffusion = RTD_SolveDiffusion_cpu;
-  // RTD_UpdateEnergy   = RTD_UpdateEnergy_cpu;
-
 
   VanLeerX_PPA_a    = VanLeerX_PPA_a_cpu;
   VanLeerX_PPA_b    = VanLeerX_PPA_b_cpu;
@@ -513,7 +497,6 @@ void ChangeArch() {
 	  mon_momz = mon_momz_gpu;
 	  mon_torq = mon_torq_gpu;
 	  mon_reynolds = mon_reynolds_gpu;
-	  mon_kinetic = mon_kinetic_gpu;
 	  mon_maxwell  = mon_maxwell_gpu;
 	  mon_bxflux   = mon_bxflux_gpu;
 	  printf("Monitoring runs on the GPU\n");
@@ -590,26 +573,9 @@ void ChangeArch() {
     ThermalAccomodation_Sumrho = ThermalAccomodation_Sumrho_gpu;
     ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_gpu;
     ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_gpu;
-    ThermalRelaxation = ThermalRelaxation_gpu;
+    ThermalRelaxation = ThermalRelaxation_cpu;
 	  masterprint("thermalaccomodation runs on the GPU\n");
-	}
-      }
-
-          if (strcmp(name, "rtdust") == 0) {
-	if(strval[0] == 'g'){
-    RTD_Temperature = RTD_Temperature_gpu;
-    RTD_Opacity = RTD_Opacity_gpu;
-    RTD_Tau = RTD_Tau_gpu;
-    RTD_Scan = RTD_Scan_gpu;
-    RTD_StellarFlux = RTD_StellarFlux_gpu;
-    RTD_MatterRadiation_UpdateErad = RTD_MatterRadiation_UpdateErad_gpu;
-    RTD_MatterRadiation_UpdateTemp = RTD_MatterRadiation_UpdateTemp_gpu;
-    RTD_MatterRadiationSumA        = RTD_MatterRadiationSumA_gpu;
-    RTD_MatterRadiationSumB        = RTD_MatterRadiationSumB_gpu;
-    RTD_DiffusionCoeff = RTD_DiffusionCoeff_gpu;
-    RTD_SolveDiffusion = RTD_SolveDiffusion_gpu;
-    // RTD_UpdateEnergy   = RTD_UpdateEnergy_gpu;
-	  masterprint("rtdust runs on the GPU\n");
+	  masterprint("thermalrelaxation runs on CPU (no GPU kernel)\n");
 	}
       }
 if (strcmp(name, "computetotaldensity") == 0) {

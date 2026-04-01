@@ -73,9 +73,6 @@ Point DiskOnPrimaryAcceleration;
 Point IndirectTerm;
 
 real StepTime;
-real StepTimeCol;
-real StepTimeRT;
-real StepTimeSTS;
 
 real localforce[12];
 real globalforce[12];
@@ -105,11 +102,8 @@ Field *Vy_half;
 Field *Vz_half;
 
 Field *Alphacol;
-Field *Betarad;
 
 Field *Slope;
-Field *Tcol;
-Field *Trad;
 
 Field *Mpx;
 Field *Mpy;
@@ -190,14 +184,6 @@ Field *EtaHall;
 Field *EtaAD;
 
 Field *Divergence;
-
-Field *Tau;
-Field *GammaRad;
-Field *Kappa;
-Field *Temperature;
-Field *KappaP;
-Field *Energyrad;
-Field *DiffCoef;
 //#endif
 
 Field2D *Density0;
@@ -313,7 +299,6 @@ int Fluidtype;
 int FluidIndex;
 real *Coeffval;
 real Min[NFLUIDS];
-real Mincol[NFLUIDS];
 Fluid *Fluids[NFLUIDS];
 
 //Pointers to functions
@@ -373,7 +358,6 @@ void (*mon_momy)();
 void (*mon_momz)();
 void (*mon_torq)();
 void (*mon_reynolds)();
-void (*mon_kinetic)();
 void (*mon_maxwell)();
 void (*mon_bxflux)();
 void (*comm)(int);
@@ -442,19 +426,6 @@ void (*ThermalAccomodation_Sumrho)(real);
 void (*ThermalAccomodation_Sumpressure)(real);
 void (*ThermalAccomodation_UpdateEnergy)(real);
 void (*ThermalRelaxation)(real);
-//RT dust
-void (*RTD_Temperature)();
-void (*RTD_Opacity)();
-void (*RTD_Tau)();
-void (*RTD_Scan)();
-void (*RTD_StellarFlux)();
-void (*RTD_MatterRadiationSumA)(real);
-void (*RTD_MatterRadiationSumB)(real);
-void (*RTD_MatterRadiation_UpdateErad)();
-void (*RTD_MatterRadiation_UpdateTemp)(real);
-void (*RTD_DiffusionCoeff)();
-void (*RTD_SolveDiffusion)(real);
-void (*RTD_UpdateEnergy)(void);
 
 void (*Floor)();
 

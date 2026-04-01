@@ -1,4 +1,5 @@
 *TEST/*
+setups/soundwave/par_runs/
 bin/*
 outputs/*
 fargo3d

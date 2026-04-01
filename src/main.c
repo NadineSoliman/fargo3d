@@ -359,19 +359,17 @@ if (*SPACING=='N'){
     dtemp = 0.0;
     
     while (dtemp<DT) { // DT LOOP
-
+      
       /// AT THIS STAGE Vx IS THE INITIAL TOTAL VELOCITY IN X
 #ifdef X
 #ifndef STANDARD
-
       MULTIFLUID(ComputeVmed(Vx)); // FARGO algorithm -- very important to have it here!
 #endif
 #endif
       /// NOW THE 2D MESH VxMed CONTAINS THE AZIMUTHAL AVERAGE OF Vx in X
       
 #ifdef FLOOR
-
-      MULTIFLUID(if(Fluidtype==DUST) Floor());
+      MULTIFLUID(Floor());
 #endif
 
 #ifdef MHD
@@ -389,59 +387,42 @@ if (*SPACING=='N'){
         MULTIFLUID(ThermalAccomodation_Coeff(dt));
 #endif
 
- /* We now compute the total density of the mesh. We need first
-	 reset an array and then fill it by adding the density of each
-	 fluid */
-
-      FARGO_SAFE(Reset_field(Total_Density)); 
-      MULTIFLUID(ComputeTotalDensity()); 
-      //------------------------------------------------------------------------
-
-#ifdef RTDUST
-        MULTIFLUID(RTD_Temperature());
-        Reset_field(KappaP);  
-        MULTIFLUID(RTD_Opacity());
-        FARGO_SAFE(RTD_DiffusionCoeff());
-#endif
-   
       // CFL condition is applied below ----------------------------------------
       MULTIFLUID(cfl());
       
       CflFluidsMin(); /*Fills StepTime with the " global min " of the
 			cfl, computed from each fluid.*/
-#ifdef RTDUST
-      dt = min(StepTimeRT, StepTime);
-#else
-      dt = StepTime;
-#endif      // printf("%f %f \n", StepTime, StepTimeRT);
+      dt = StepTime; //cfl works with the 'StepTime' global variable.
+
       dtemp+=dt;
       if(dtemp>DT)  dt = DT - (dtemp-dt); //updating dt
       //------------------------------------------------------------------------
+      
       //------------------------------------------------------------------------
-  
-       
+      /* We now compute the total density of the mesh. We need first
+	 reset an array and then fill it by adding the density of each
+	 fluid */
+      FARGO_SAFE(Reset_field(Total_Density)); 
+      MULTIFLUID(ComputeTotalDensity()); 
+      //------------------------------------------------------------------------
+
+      
 #ifdef COLLISIONPREDICTOR
       FARGO_SAFE(Collisions(0.5*dt, 0)); // 0 --> V is used and we update v_half.
 #endif
 
-    MULTIFLUID(Sources(dt)); //v_half is used in the R.H.S
+      MULTIFLUID(Sources(dt)); //v_half is used in the R.H.S
 
-#ifdef THERMALACCOMODATION
-     FARGO_SAFE(ThermalAccomodation(dt));
-#endif
-#ifdef RTDUST
-  FARGO_SAFE(RTD_main(dt));
-#endif
 #ifdef COLLISIONS
       FARGO_SAFE(Collisions(dt, 1)); // 1 --> V_temp is used.
+#endif
+#ifdef THERMALACCOMODATION
+      FARGO_SAFE(ThermalAccomodation(dt));
 #endif
 
 #ifdef DRAGFORCE
       FARGO_SAFE(DragForce(dt));
 #endif
-
-
-
 #ifdef DUSTDIFFUSION
       FARGO_SAFE(DustDiffusion_Main(dt));
 #endif

@@ -13,16 +13,10 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   INPUT(Density);
   INPUT(Energy);
   OUTPUT(Alphacol);
-#ifdef THERMALRELAXATION
-  OUTPUT(Betarad);
-#endif
 //<\USER_DEFINED>
 
 //<EXTERNAL>
   real* alpha      = Alphacol->field_cpu;
-#ifdef THERMALRELAXATION
-  real* beta       = Betarad->field_cpu;
-#endif
   real* dens_gas   = Fluids[0]->Density->field_cpu;
   real* energy_gas = Fluids[0]->Energy->field_cpu; 
   real* dens = Density->field_cpu;
@@ -44,10 +38,8 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   int k;
   int ll;
   real tempgas;
-  real tempdustn;
   real cpdust;
   real cpgas;
-  real qlocal;  
   real omega;
   #ifdef CONSTANTTHERMALCOEFF
   real invthermaltime=invparticlesize;
@@ -92,15 +84,7 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
   alpha[ll] *= invparticlesize/rhosolid/cpdust;
 #endif	
   }
-#ifdef THERMALRELAXATION
-  if (fluidtype == GAS) beta[ll] = 0.0;
-  else {
-   tempdustn = energy[ll] / (dens[ll]*cpdust);
-   qlocal    = 8.0 * M_PI   * KBOLTZ * tempdustn/ invparticlesize / PLANCK / C0;
-   if (qlocal >= 1.0) beta[ll] = 12.0 * invparticlesize/ ( rhosolid * cpdust )* STEFANK * pow(tempdustn, 3.0);
-   else beta[ll] = M_PI  * 120.0 * STEFANK * KBOLTZ / (PLANCK * C0 * rhosolid * cpdust) * pow(tempdustn, 4.0);
-  }
-#endif
+/* Radiative relaxation rate for dust is computed inside thermalrelaxation.c (no Betarad field). */
 //<\#>
 #ifdef X
       }

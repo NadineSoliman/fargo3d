@@ -38,13 +38,11 @@ void cfl_cpu() {
   INPUT(EtaOhm);
 #endif
 #ifdef THERMALACCOMODATION
-  INPUT(Alphacol)
-  OUTPUT(Slope)
+  INPUT(Alphacol);
+  OUTPUT(Slope);
 #endif
-#ifdef RTDUST
-  INPUT(DiffCoef);
-  OUTPUT(Tau);
-#endif
+
+  
 //<\USER_DEFINED>
 
 //<EXTERNAL>
@@ -63,11 +61,7 @@ void cfl_cpu() {
 #endif 
 #ifdef THERMALACCOMODATION
   real* alpha = Alphacol->field_cpu;
-  real* dtimecol = Slope->field_cpu; 
-#endif
-#ifdef RTDUST
-  real* diffrt = DiffCoef->field_cpu;
-  real* dtimert = Tau->field_cpu; 
+  real* dtimecol = Slope->field_cpu;
 #endif
 #ifdef MHD
   real* bx = Bx->field_cpu;
@@ -122,8 +116,6 @@ void cfl_cpu() {
   real cfl8=0.0;
   real cfl9=0.0;
   real cfl10=0.0;
-  real cfl11=0.0;
-  real cfl12=0.0;
   real b;
   real vxx, vxxp;
   real soundspeed;
@@ -261,21 +253,14 @@ void cfl_cpu() {
 	cfl10 = 4.0*etaad[ll]*pow(max3(cfl7_a,cfl7_b,cfl7_c),2);
 #endif
 #endif
-#ifdef THERMALACCOMODATIONTEX
-	cfl11 = MIN(alpha[ll],1.0e4);
-#endif	
+	  
 	dtime[ll] = CFL/sqrt(cfl1*cfl1 + cfl2*cfl2 + 
 			     cfl3*cfl3 + cfl4*cfl4 + 
 			     cfl5*cfl5 + cfl6*cfl6 + 
 			     cfl7*cfl7 + cfl8*cfl8 +
-			     cfl9*cfl9 + cfl10*cfl10 + cfl11*cfl11 );
-
+			     cfl9*cfl9 + cfl10*cfl10 );
 #ifdef THERMALACCOMODATION
 	dtimecol[ll] = CFL/(alpha[ll]+1.0e-19);
-#endif
-#ifdef RTDUST
-    cfl12 = 4.0*diffrt[ll]*pow(max3(cfl7_a,cfl7_b,cfl7_c),2);
-    dtimert[ll] = CFL/sqrt(cfl12*cfl12);
 #endif
 //<\#>
 #ifdef X

@@ -668,20 +668,10 @@ void WriteOutputs(int type) {
   if (WRITEDENSITY)
     __WriteField(Density, TimeStep);
   if (WRITEENERGY)
-    __WriteField(Tcol, TimeStep);
-    __WriteField(Trad, TimeStep);
-  #ifdef RTDUST
-  if (WRITEENERGYRAD)
-    __WriteField(Energyrad, TimeStep);
-    __WriteField(Temperature, TimeStep);
-  #endif
-  #ifdef THERMALACCOMODATION
-    __WriteField(Alphacol, TimeStep);
     __WriteField(Energy, TimeStep);
-  #endif
-  #ifdef THERMALRELAXATION
-    __WriteField(Betarad, TimeStep);
-  #endif
+#ifdef THERMALACCOMODATION
+    __WriteField(Alphacol, TimeStep);
+#endif
 #ifdef MHD //MHD is 3D.
   if(Fluidtype == GAS){
     if (WRITEDIVERGENCE)

@@ -11,9 +11,18 @@ DENSGR		1.0
 DENSGI		0.0
 TGAS        1.0
 TDUST       1.0
-CPDG        1.0
 
-Gamma			1.4
+Gamma		1.4
+CPDG		0.01
+SOUNDWAVE_USE_PAR_TS	1
+TS_SOUNDWAVE		1
+TH_SOUNDWAVE		10
+EPS_SOUNDWAVE		2.24
+
+# Linear-mode eigenvalue (condinit uses these if SOUNDWAVE_USE_PAR_EIGEN is 1 — no soundwave_init.dat needed)
+SOUNDWAVE_USE_PAR_EIGEN	1
+REAL_EIGEN		-1.0988402477744863
+IMAG_EIGEN		7.19531036614774244
 
 DT		    0.01
 Ninterm	 	1
@@ -22,4 +31,4 @@ Ntot		500
 PeriodicZ	Yes
 Nz		    64
 CFL         0.3 
-OutputDir 	outputs/soundwave_64_multifluid_new
+OutputDir  	outputs/sw_run

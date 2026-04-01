@@ -31,9 +31,9 @@ FARGO_OPT += -DFLOOR
 
 #Thermal accomodation between the dust species and the gas
 FARGO_OPT += -DTHERMALACCOMODATION
+# Dust radiative relaxation toward Stockholm azimuthal mean (rate computed in thermalrelaxation.c; no Betarad field).
 FARGO_OPT += -DTHERMALRELAXATION
-FARGO_OPT += -DTHERMALACCOMODATIONTEX
-
+# THERMALACCOMODATIONTEX (extra CFL term) not ported — omit if you need identical fargo3d CFL.
 
 #Cuda blocks
 ifeq (${GPU}, 1)

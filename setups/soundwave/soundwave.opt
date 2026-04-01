@@ -2,7 +2,7 @@
 
 #Dimension(s) of Simulation
 
-FLUIDS := 0 1
+FLUIDS := 0 1 
 NFLUIDS = 2
 #-----------------------------------------------------------
 
