@@ -7,7 +7,7 @@
 #include "fargo3d.h"
 //<\INCLUDES>
 
-void ThermalRelaxation(real dt) {
+void ThermalRelaxation_cpu(real dt) {
 
 //<USER_DEFINED>
   INPUT(Energy);
