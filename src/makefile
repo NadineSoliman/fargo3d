@@ -430,7 +430,7 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
        dragforce_updatevel_gpu.o dragforce_coeff_gpu.o  \
 	   thermalaccomodation_coeff_gpu.o \
 	   thermalaccomodation_sumrho_gpu.o thermalaccomodation_sumpressure_gpu.o \
-	   thermalaccomodation_updateenergy_gpu.o
+	   thermalaccomodation_updateenergy_gpu.o \ thermalrelaxation_gpu.o \
 #</CUDA OBJECTS>
 #---------------------------------------------------------------------
 

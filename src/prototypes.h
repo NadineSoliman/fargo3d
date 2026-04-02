@@ -596,6 +596,7 @@ ex void ThermalAccomodation_Coeff_gpu(real);
 ex void ThermalAccomodation_Sumrho_gpu(real);
 ex void ThermalAccomodation_Sumpressure_gpu(real);
 ex void ThermalAccomodation_UpdateEnergy_gpu(real);
+ex void ThermalRelaxation_gpu(real);
 
 
 

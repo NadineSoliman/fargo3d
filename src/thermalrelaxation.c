@@ -7,13 +7,7 @@
 #include "fargo3d.h"
 //<\INCLUDES>
 
-/*
- * Dust radiative relaxation toward the azimuthal mean (Stockholm 2D reference),
- * same physics as upstream fargo3d/src/thermalrelaxation.c but without a Betarad
- * scratch field: the cooling rate beta is computed here from local dust temperature,
- * particle size (Coeffval), and rhosolid — matching thermalaccomodation_coeff.c.
- */
-void ThermalRelaxation_cpu(real dt) {
+void ThermalRelaxation(real dt) {
 
 //<USER_DEFINED>
   INPUT(Energy);
@@ -24,10 +18,10 @@ void ThermalRelaxation_cpu(real dt) {
 //<\USER_DEFINED>
 
 //<EXTERNAL>
-  real *energy = Energy->field_cpu;
-  real *dens = Density->field_cpu;
-  real *dens0 = Density0->field_cpu;
-  real *energy0 = Energy0->field_cpu;
+  real* energy = Energy->field_cpu;
+  real* dens = Density->field_cpu;
+  real* dens0 = Density0->field_cpu;
+  real* energy0 = Energy0->field_cpu;
   int size_x = Nx;
   int size_y = Ny + 2 * NGHY;
   int size_z = Nz + 2 * NGHZ;
@@ -69,7 +63,6 @@ void ThermalRelaxation_cpu(real dt) {
         cpgas = GAMMA * R_MU / (GAMMA - 1.0);
         cpdust = cpdg * cpgas;
 
-        /* Same beta(T_dust) as former thermalaccomodation_coeff.c THERMALRELAXATION block */
         tempdustn = energy[ll] / (dens[ll] * cpdust);
         qlocal = 8.0 * M_PI * KBOLTZ * tempdustn / invparticlesize / PLANCK / C0;
         if (qlocal >= 1.0) {

@@ -576,7 +576,7 @@ void ChangeArch() {
     ThermalAccomodation_Sumrho = ThermalAccomodation_Sumrho_gpu;
     ThermalAccomodation_Sumpressure = ThermalAccomodation_Sumpressure_gpu;
     ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_gpu;
-    ThermalRelaxation = ThermalRelaxation_cpu;
+    ThermalRelaxation = ThermalRelaxation_gpu;
 	  masterprint("thermalaccomodation runs on the GPU\n");
 	  masterprint("thermalrelaxation runs on CPU (no GPU kernel)\n");
 	}
