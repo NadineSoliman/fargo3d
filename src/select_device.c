@@ -25,6 +25,10 @@ void SelectDevice(int myrank){
     device = myrank % 4;
     ChooseDeviceForMe = NO;
   }
+  if (strncmp(hostname, "apo", 3) == 0) {
+    device = myrank % 2;
+    ChooseDeviceForMe = NO;
+  }
   if (DeviceManualSelection >= 0) {
     ChooseDeviceForMe = NO;
     device = DeviceManualSelection;
