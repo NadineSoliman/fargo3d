@@ -84,7 +84,8 @@ void _CondInit(int id) {
 	    exp((1.-pow(sin(Zmed(k)),-2.*FLARINGINDEX))/2./FLARINGINDEX/(h*h));
 	  }
 	
-
+  if(Fluidtype==DUST) rho[l]  *= epsilons[id-1];
+  
   #ifdef ISOTHERMAL
 	  e[l] = h*sqrt(G*MSTAR/r);
     if(Fluidtype==DUST) e[l] = 0.;
@@ -93,7 +94,6 @@ void _CondInit(int id) {
 
 	  e[l] = cv*rho[l]*tgas;
     
-    if(Fluidtype==DUST) rho[l]  *= epsilons[id-1];
     if(Fluidtype==DUST) {
       real tdust = tgas*pow(TSMIN/stokes[id-1],0.25);
       e[l] = cdust*tdust*rho[l]; 

@@ -7,7 +7,7 @@
 #include "fargo3d.h"
 //<\INCLUDES>
 
-void ThermalAccomodation_Sumrho_cpu (real dt) {
+void ThermalAccomodation_Sumrho_cpu(real dt) {
  
 //<USER_DEFINED>
   INPUT(Density);
