@@ -12,19 +12,28 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
 //<USER_DEFINED>
   INPUT(Alphacol);
+  INPUT(Betarad);
   INPUT(Energy);
+  INPUT2D(Energy0);
+  INPUT2D(Density0);
   INPUT(Density);
   INPUT(DensStar);
   INPUT(Slope);
   OUTPUT(Energy);
+  OUTPUT(Tcol);
 //<\USER_DEFINED>
 
 //<EXTERNAL>
   real* energy = Energy->field_cpu;
+  real* energy0   = Energy0->field_cpu;
   real* dens = Density->field_cpu;
+  real* dens0 = Density0->field_cpu;
   real* alpha = Alphacol->field_cpu;
+  real* beta = Betarad->field_cpu;
   real* sumpressure = Slope->field_cpu;
   real* sumrho = DensStar->field_cpu;
+  real* tcol = Tcol->field_cpu;
+  real* alpha_dust = Fluids[1]->Alphacol->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -43,8 +52,12 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real cpgas;
   real tempgas;
   real tempdustn;
+  real tempi;
   real tempdust;
-  real tempgasn;
+  real temp0;
+  real tempn;
+  // real tempgasn;
+  real energyn;
   real dtl;
 //<\INTERNAL>
 
@@ -72,17 +85,26 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
   cpgas  = GAMMA*R_MU/(GAMMA-1.0);
   cpdust = cpdg* cpgas;
-
   
 	if (fluidtype == GAS)  {
-    tempgas    = sumpressure[ll]/( sumrho[ll] );
-    energy[ll] = (dens[ll]*R_MU) * tempgas/(GAMMA - 1.0);
+    tempn =energy[ll]/dens[ll]/cpgas;
+    tempgas = sumpressure[ll]/ sumrho[ll];
+    energy[ll] = (dens[ll]* tempgas * cpgas);
+    temp0 =energy0[l2D]/dens0[l2D]/cpgas;
+    // printf("eff = %g\n", alpha_dust[ll] * cpdg * 0.01);
+    // tempgas = tempn * exp(-1.0 * 0.01* alpha_dust[ll]*cpdg*dt) + temp0 *(1.0 - exp(-1.0 * 0.01* alpha_dust[ll]*cpdg*dt) );
+    tcol[ll] = 1/(log((tempgas - temp0)/(tempn - temp0))/dt);
+    // printf("tcol * alpha=%g, tcol = %g \n", tcol[ll] * alpha_dust[ll] * 0.01 * cpdg, tcol);
+
   }
 	else{
-    dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];
-
+    // dtl = (exp( 1.0* alpha[ll] * dt) -1.0)/alpha[ll];
+    dtl = dt;//(1.0 - exp( -1.0* alpha[ll] * dt));
     tempdustn = energy[ll] / (dens[ll]*cpdust);
-    tempdust = (dtl*alpha[ll])/(1.+ dtl*alpha[ll])*sumpressure[ll]/( sumrho[ll] ) + tempdustn/(1.+ dtl*alpha[ll]);
+    temp0 = energy0[l2D]/dens0[l2D]/cpdust;
+    tempdust = tempdustn  + (beta[ll] * dtl* temp0) + (alpha[ll] * dtl * sumpressure[ll]/sumrho[ll]);
+    tempdust /= (1 + dtl * (alpha[ll] + beta[ll]));
+    // tempdust = (dtl*alpha[ll])/(1.+ dtl*alpha[ll])*sumpressure[ll]/( sumrho[ll] ) + tempdustn/(1.+ dtl*alpha[ll]);
     energy[ll] = (dens[ll]*cpdust) * tempdust; 
   }
 

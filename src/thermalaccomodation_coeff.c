@@ -66,10 +66,10 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
-	ll = l;
-	 omega     = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
+	 ll = l;
+	 omega      = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
    cpgas      = GAMMA*R_MU/(GAMMA-1.0);
-   cpdust    = cpdg* cpgas;
+   cpdust     = cpdg* cpgas;
 
   if (fluidtype == GAS) {
     alpha[ll] = 0.0; //gas
@@ -79,9 +79,9 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
       alpha[ll] = 1.0*invthermaltime;
 #endif
 #ifdef DUSTSIZE
-  tempgas    =  (GAMMA-1.0)*energy_gas[ll]/(dens_gas[ll]*R_MU);
+  tempgas    = energy_gas[ll]/(dens_gas[ll]*cpgas);
   alpha[ll]  = 0.75 *pow(KBOLTZ/MH, 1.5)* pow(tempgas, 0.5) * dens_gas[ll];
-  alpha[ll] *= invparticlesize/rhosolid/cpdust;
+  alpha[ll]  *= invparticlesize/(rhosolid*cpdust);
 #endif	
   }
 /* Radiative relaxation rate for dust is computed inside thermalrelaxation.c (no Betarad field). */

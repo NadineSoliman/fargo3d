@@ -671,6 +671,9 @@ void WriteOutputs(int type) {
     __WriteField(Energy, TimeStep);
 #ifdef THERMALACCOMODATION
     __WriteField(Alphacol, TimeStep);
+    if(Fluidtype == GAS){
+      __WriteField(Tcol, TimeStep);
+    }  
 #endif
 #ifdef MHD //MHD is 3D.
   if(Fluidtype == GAS){

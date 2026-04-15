@@ -25,8 +25,8 @@ void _CondInit(int id) {
   // Stokes numbers                                                                      
   real smax = TSMAX;
   real smin = TSMIN;
-  real cv    = R_MU/(GAMMA-1.0);  
-  real cdust=CPDG*GAMMA/(GAMMA-1.0); 
+  real cv    = GAMMA * R_MU / (GAMMA - 1.0);  
+  real cdust=CPDG*cv; 
   real ds   = (log(smax)-log(smin))/(NFLUIDS-1);
   for(int n=0;n<NFLUIDS;n++){
     stokes_plus[n] = smin*exp(ds*n);
@@ -91,11 +91,10 @@ void _CondInit(int id) {
     if(Fluidtype==DUST) e[l] = 0.;
   #else
     real tgas = h*h*G*MSTAR/r;
-
 	  e[l] = cv*rho[l]*tgas;
     
     if(Fluidtype==DUST) {
-      real tdust = tgas*pow(TSMIN/stokes[id-1],0.25);
+      real tdust = tgas;
       e[l] = cdust*tdust*rho[l]; 
     }
   #endif

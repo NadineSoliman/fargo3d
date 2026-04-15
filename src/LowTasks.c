@@ -593,6 +593,9 @@ void SelectFluid(int n) {
 #ifdef THERMALACCOMODATION
   Alphacol = Fluids[n]->Alphacol;
 #endif
+#ifdef THERMALRELAXATION
+  Betarad = Fluids[n]->Betarad;
+#endif
   Coeffval = Fluids[n]->Coeffval;
 
 }
@@ -641,6 +644,9 @@ void CreateFields() {
   QL      = CREATEFIELDALIAS("QLeft", Pressure, 0);
   QR      = CreateField("QRight", 0,0,0,0);
 
+#ifdef THERMALACCOMODATION
+  Tcol  = CreateField("Tcol"    , 0,0,0,0);
+#endif
 #ifdef RAM  
   PhiStarmin = CreateField("PhiStarmin", 0,0,0,0);
   UStarmin   = CreateField("UStarmin", 0,0,0,0);

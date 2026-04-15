@@ -111,6 +111,10 @@ struct fluid {
   struct field *Vz_half;
 #ifdef THERMALACCOMODATION
   struct field *Alphacol;
+  struct field *Tcol;
+#endif
+#ifdef THERMALRELAXATION
+  struct field *Betarad;
 #endif
 #ifdef STOCKHOLM
   struct field2D *Density0;

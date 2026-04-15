@@ -102,6 +102,8 @@ Field *Vy_half;
 Field *Vz_half;
 
 Field *Alphacol;
+Field *Betarad;
+Field *Tcol;
 
 Field *Slope;
 

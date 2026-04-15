@@ -15,7 +15,7 @@ void ThermalAccomodation(real dt) {
   MULTIFLUID(ThermalAccomodation_Coeff(dt));
   //-------------------------------------------------------------------------------------
 #ifdef THERMALRELAXATION
-  MULTIFLUID(if(Fluidtype==DUST) ThermalRelaxation(dt)); 
+  MULTIFLUID(ThermalRelaxation(dt)); 
 #endif  
   //-------------------------------------------------------------------------------
   Reset_field(DensStar);  

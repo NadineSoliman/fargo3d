@@ -14,6 +14,9 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   INPUT(Density);
   INPUT(Energy);
   INPUT(Alphacol);
+  INPUT(Betarad);
+  INPUT2D(Density0);
+  INPUT2D(Energy0);
   INPUT(Slope);
   OUTPUT(Slope);
 //<\USER_DEFINED>
@@ -24,6 +27,10 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   real* energy = Energy->field_cpu;
   real* sumpressure = Slope->field_cpu;
   real* alpha = Alphacol->field_cpu;
+  real* beta = Betarad->field_cpu;
+  real* dens0 = Density0->field_cpu;
+  real* energy0 = Energy0->field_cpu;
+  
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -39,9 +46,11 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   int k;
   int ll;
   real sk;
-  real cpgas;
-  real cpdust;
+  real cpgas = GAMMA*R_MU/(GAMMA-1.0);
+  real cpdust = cpdg* cpgas;
   real rhotemp;
+  real temp0;
+  real tempn;
   real dtl;
 //<\INTERNAL>
 
@@ -67,16 +76,18 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 //<#>
 	ll = l;
       
-cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-cpdust = cpdg* cpgas;
-  dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];
+  // dtl = (exp(  alpha[ll] * dt)  - 1.0)/alpha[ll];
+  dtl = dt;
   rhotemp = energy[ll]/cpdust;
-	sk   = (GAMMA * cpdg)* dtl* alpha[ll]/(1+dtl*alpha[ll]);
+  temp0 = energy0[l2D]/cpdust/dens0[l2D];
+  tempn = energy[ll]/cpdust/dens[ll];
+	sk   =  cpdg* dtl* alpha[ll]*(1 + temp0/tempn * beta[ll]*dtl)  /(1+dtl*(alpha[ll] + beta[ll]));
+
   if (fluidtype == GAS) {
     sk = 1.0;
-    rhotemp = (GAMMA-1.0)* energy[ll]/(R_MU);
+    rhotemp = energy[ll]/cpgas;
   }
-	  sumpressure[ll] +=  rhotemp *sk;
+  sumpressure[ll] +=  rhotemp *sk;
 
 //<\#>
 #ifdef X

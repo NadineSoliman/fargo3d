@@ -7,13 +7,13 @@ Sigma0			    6.3661977237e-4	Surface Density at r=1
 Nu			        1.0e-9		Uniform kinematic viscosity
 SigmaSlope		    1.0		Slope of surface
 FlaringIndex		0.0
-Noise               0.0
+Noise               0.001
 Gamma               1.4
 
 ### Dust parameters
 Epsilon			0.01		Total dust-to-gas mass ratio
-Tsmin			0.0001      sizemin          
-Tsmax			0.0001         sizemax
+Tsmin			0.00001      sizemin          
+Tsmax			0.00001         sizemax
 rhosolid		2.0             in g/cm3
 Sq			    3.5		slope of distribution
 Tslim			1.0
@@ -21,8 +21,8 @@ CPDG            0.088
 
 ### Mesh parameters
 Nx			1		Azimuthal number of zones 
-Ny          256		Radial number of zones
-Nz			256		Number of zones in colatitude
+Ny          128		Radial number of zones
+Nz			128		Number of zones in colatitude
 
 Ymin		0.5		Inner boundary radius
 Ymax		1.8		Outer boundary radius
@@ -48,4 +48,4 @@ TauDamp 0.3
 Ntot			2000		Total number of time steps
 Ninterm	 		20		Time steps between outputs
 DT			    0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		@outputs/vsi_rk
+OutputDir		@outputs/vsi_128_new

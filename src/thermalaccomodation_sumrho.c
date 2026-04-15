@@ -13,6 +13,7 @@ void ThermalAccomodation_Sumrho_cpu(real dt) {
   INPUT(Density);
   INPUT(DensStar);
   INPUT(Alphacol);
+  INPUT(Betarad);
   OUTPUT(DensStar);
 //<\USER_DEFINED>
 
@@ -21,6 +22,7 @@ void ThermalAccomodation_Sumrho_cpu(real dt) {
   real* dens = Density->field_cpu;
   real* sumrho    = DensStar->field_cpu;
   real* alpha  = Alphacol->field_cpu;
+  real* beta  = Betarad->field_cpu;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -36,10 +38,9 @@ void ThermalAccomodation_Sumrho_cpu(real dt) {
   int k;
   int ll;
   real sk;
-  real cpgas;
-  real cpdust;
+  real cpgas = GAMMA*R_MU/(GAMMA-1.0);
+  real cpdust = cpdg* cpgas;
   real temp;
-  real beta;
   real dtl;
 //<\INTERNAL>
 
@@ -64,18 +65,16 @@ void ThermalAccomodation_Sumrho_cpu(real dt) {
       for (i=0; i<size_x; i++ ) {
 #endif
 //<#>
-	ll = l;
+        ll = l;
+        dtl = dt;
+        // printf("alpha = %g, beta = %g \n", alpha[ll], beta[ll]);
+        sk   =  cpdg* dtl* alpha[ll]*(1 + beta[ll]*dtl)  /(1+dtl*(alpha[ll] + beta[ll]));
 
-  cpgas  = GAMMA*R_MU/(GAMMA-1.0);
-  cpdust = cpdg* cpgas;
-  dtl = (exp(alpha[ll] * dt) - 1.0)/alpha[ll];
+        if (fluidtype == GAS) {
+          sk = 1.0;
+        }
+        sumrho[ll] +=  dens[ll] *sk;
 
-    sk      =  GAMMA * cpdg * dtl * alpha[ll]/(1.+dtl*alpha[ll]);
-    if (fluidtype == GAS)  {
-      sk = 1.0;
-    }
-      sumrho[ll] += dens[ll]*sk;
-      
 //<\#>
 #ifdef X
       }
