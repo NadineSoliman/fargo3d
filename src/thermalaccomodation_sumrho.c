@@ -38,7 +38,7 @@ void ThermalAccomodation_Sumrho_cpu(real dt) {
   int k;
   int ll;
   real sk;
-  real cpgas = GAMMA*R_MU/(GAMMA-1.0);
+  real cpgas = R_MU/(GAMMA-1.0);
   real cpdust = cpdg* cpgas;
   real temp;
   real dtl;
@@ -67,7 +67,7 @@ void ThermalAccomodation_Sumrho_cpu(real dt) {
 //<#>
         ll = l;
         dtl = dt;
-        // printf("alpha = %g, beta = %g \n", alpha[ll], beta[ll]);
+
         sk   =  cpdg* dtl* alpha[ll]*(1 + beta[ll]*dtl)  /(1+dtl*(alpha[ll] + beta[ll]));
 
         if (fluidtype == GAS) {

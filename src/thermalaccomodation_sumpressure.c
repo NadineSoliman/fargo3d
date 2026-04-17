@@ -46,7 +46,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   int k;
   int ll;
   real sk;
-  real cpgas = GAMMA*R_MU/(GAMMA-1.0);
+  real cpgas =R_MU/(GAMMA-1.0);
   real cpdust = cpdg* cpgas;
   real rhotemp;
   real temp0;

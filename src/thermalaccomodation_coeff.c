@@ -68,7 +68,7 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
 //<#>
 	 ll = l;
 	 omega      = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
-   cpgas      = GAMMA*R_MU/(GAMMA-1.0);
+   cpgas      = R_MU/(GAMMA-1.0);
    cpdust     = cpdg* cpgas;
 
   if (fluidtype == GAS) {

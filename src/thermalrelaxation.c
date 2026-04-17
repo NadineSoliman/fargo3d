@@ -20,8 +20,6 @@ void ThermalRelaxation_cpu(real dt) {
 //<EXTERNAL>
   real* energy = Energy->field_cpu;
   real* dens = Density->field_cpu;
-  // real* dens0 = Density0->field_cpu;
-  // real* energy0 = Energy0->field_cpu;
   real* beta = Betarad->field_cpu;
   int size_x = Nx;
   int size_y = Ny + 2 * NGHY;
@@ -64,7 +62,7 @@ void ThermalRelaxation_cpu(real dt) {
           beta[ll] = 0.0; //gas
         }
         else{
-          cpgas = GAMMA * R_MU / (GAMMA - 1.0);
+          cpgas = R_MU / (GAMMA - 1.0);
           cpdust = cpdg * cpgas;
 
           tempdustn = energy[ll] / (dens[ll] * cpdust);

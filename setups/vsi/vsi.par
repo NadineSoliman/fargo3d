@@ -12,8 +12,8 @@ Gamma               1.4
 
 ### Dust parameters
 Epsilon			0.01		Total dust-to-gas mass ratio
-Tsmin			0.00001      sizemin          
-Tsmax			0.00001         sizemax
+Tsmin			0.000001      sizemin          
+Tsmax			0.0001         sizemax
 rhosolid		2.0             in g/cm3
 Sq			    3.5		slope of distribution
 Tslim			1.0
@@ -48,4 +48,4 @@ TauDamp 0.3
 Ntot			2000		Total number of time steps
 Ninterm	 		20		Time steps between outputs
 DT			    0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		@outputs/vsi_128_new
+OutputDir		@outputs/vsi_sametemp

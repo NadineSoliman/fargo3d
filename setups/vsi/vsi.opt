@@ -3,8 +3,8 @@
 # END
 #-------------------------------------------------------------------------
 
-FLUIDS := 0 1 
-NFLUIDS = 2
+FLUIDS := 0 1 2
+NFLUIDS = 3
 FARGO_OPT += -DNFLUIDS=${NFLUIDS}
 
 MONITOR_Y_RAW = REYNOLDS | KINETIC
@@ -20,11 +20,12 @@ FARGO_OPT +=  -DSPHERICAL
 #Equation of State
 FARGO_OPT +=  -DADIABATIC
 
-#FARGO_OPT +=  -DISOTHERMAL
+#FARGO_OPT +=  -DISOTHERMAL 
 
 FARGO_OPT += -DSTOCKHOLM
 FARGO_OPT += -DVISCOSITY
 FARGO_OPT += -DPOTENTIAL
+FARGO_OPT += -DSAMETEMP -DDIFFTEMP
 
 #Drag force between species
 FARGO_OPT += -DDRAGFORCE
