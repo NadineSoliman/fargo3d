@@ -27,7 +27,7 @@ static real get_radiation_temperature(real r, int k) {
 static real get_dust_temperature(real teff, real stokes_val) {
 #ifdef DIFFTEMP
     real x = 2.0 * M_PI * stokes_val;
-    real lambda_irr =0.001;//PLANCK * C0 / (4.0 * (teff) * KBOLTZ * R0 / R0_CGS); // cm UV/optical
+    real lambda_irr =0.01;//PLANCK * C0 / (4.0 * (teff) * KBOLTZ * R0 / R0_CGS); // cm UV/optical
     real grain_size_cgs = stokes_val * R0 / R0_CGS;
     printf("l=%g, g = %g \n", lambda_irr, x);
     // Regime 1: Small grains
@@ -77,6 +77,7 @@ void _CondInit(int id) {
     real *rho = Density->field_cpu;
     real *e = Energy->field_cpu;
     real *gas_energy = Fluids[0]->Energy->field_cpu;
+    real *gas_dens = Fluids[0]->Density->field_cpu;
 
     real omega, r, r3, soundspeed;
     real stokes_plus[NFLUIDS];
@@ -104,7 +105,7 @@ void _CondInit(int id) {
             stokes[n] = TSMAX;
             epsilons[n] = EPSILON;
         }
-        denom += epsilons[n] / (R0 / R0_CGS * stokes[n]);
+        denom += epsilons[n] / (stokes[n]);
     }
 
 #ifdef DRAGFORCE
@@ -120,7 +121,6 @@ void _CondInit(int id) {
     }
 #endif
 
-    // 2. Main Grid Loop
     for (k = 0; k < Nz + 2 * NGHZ; k++) {
         for (j = 0; j < Ny + 2 * NGHY; j++) {
             r = Ymed(j);
@@ -150,13 +150,14 @@ void _CondInit(int id) {
                     e[ll] = (Fluidtype == GAS) ? h * sqrt(G * MSTAR / r) : 0.0;
                 #else
                     if (Fluidtype == DUST) {
-                        real tdust = get_dust_temperature(trad, stokes[id-1]);
-                        e[ll] = cdust * tdust * rho[ll];
                         #ifdef DIFFTEMP
-                        // Feedback: add dust thermal contribution to the gas energy field
-                        real t_contrib = (epsilons[id-1] / (stokes[id-1] * R0 / R0_CGS)) * tdust;
-                        gas_energy[ll] += (rho[ll] / epsilons[id-1]) * cv * (t_contrib / denom);
+                        real tdust = get_dust_temperature(trad, stokes[id-1]);
+                        real t_contrib = (epsilons[id-1] / (stokes[id-1])) * tdust;
+                        gas_energy[ll] += (gas_dens[ll]) * cv * (t_contrib / denom);
+                        #else
+                        real tdust = trad;
                         #endif
+                        e[ll] = cdust * tdust * rho[ll];
                     } else {
                       #ifndef DIFFTEMP
                         e[ll] = cv * rho[ll] * trad;
