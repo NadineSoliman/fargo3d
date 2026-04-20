@@ -48,8 +48,8 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   int j;
   int k;
   int ll;
-  real cpdust;
   real cpgas;
+  real cpdust;
   real tempgas;
   real tempdustn;
   real tempi;
@@ -84,7 +84,6 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
 
   cpgas  = R_MU/(GAMMA-1.0);
   cpdust = cpdg* cpgas;
-  
 	if (fluidtype == GAS)  {
     tempn =energy[ll]/dens[ll]/cpgas;
     tempgas = sumpressure[ll]/ sumrho[ll];

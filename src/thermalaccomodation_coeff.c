@@ -67,7 +67,6 @@ void ThermalAccomodation_Coeff_cpu(real dt) {
 #endif
 //<#>
 	 ll = l;
-	 omega      = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
    cpgas      = R_MU/(GAMMA-1.0);
    cpdust     = cpdg* cpgas;
 

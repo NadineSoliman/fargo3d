@@ -35,11 +35,17 @@ void ThermalRelaxation_cpu(real dt) {
   int j;
   int k;
   int ll;
-  real cpdust;
-  real cpgas;
   real qlocal;
   real tempdustn;
+  real cpgas;
+  real cpdust;
 //<\INTERNAL>
+
+//<CONSTANT>
+// real xmin(Nx+2*NGHX+1);
+// real ymin(Ny+2*NGHY+1);
+// real GAMMA(1);
+//<\CONSTANT>
 
 //<MAIN_LOOP>
 
@@ -56,13 +62,12 @@ void ThermalRelaxation_cpu(real dt) {
 #endif
 //<#>
         ll = l;
+        cpgas      = R_MU/(GAMMA-1.0);
+        cpdust     = cpdg* cpgas;
         if (fluidtype == GAS) {
           beta[ll] = 0.0; 
         }
         else{
-          cpgas = R_MU / (GAMMA - 1.0);
-          cpdust = cpdg * cpgas;
-
           tempdustn = energy[ll] / (dens[ll] * cpdust);
           qlocal = 8.0 * M_PI * KBOLTZ * tempdustn / invparticlesize / PLANCK / C0;
           if (qlocal >= 1.0) {
