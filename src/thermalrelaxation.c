@@ -12,8 +12,6 @@ void ThermalRelaxation_cpu(real dt) {
 //<USER_DEFINED>
   INPUT(Energy);
   INPUT(Density);
-  INPUT2D(Energy0);
-  INPUT2D(Density0);
   OUTPUT(Betarad);
 //<\USER_DEFINED>
 
@@ -24,6 +22,8 @@ void ThermalRelaxation_cpu(real dt) {
   int size_x = Nx;
   int size_y = Ny + 2 * NGHY;
   int size_z = Nz + 2 * NGHZ;
+  int pitch  = Pitch_cpu;
+  int stride = Stride_cpu;
   real cpdg = CPDG;
   real invparticlesize = Coeffval[1];
   real rhosolid = Coeffval[2];
