@@ -9,7 +9,7 @@ static real get_radiation_temperature(real r, int k) {
 #ifdef TEMPGRAD
     real h = ASPECTRATIO * pow(r / R0, FLARINGINDEX);
     real Tunit = (TCMB / 2.73);
-    real Tatm = 100.0 * pow(r, -1) * Tunit;
+    real Tatm = 80.0 * pow(r, -1) * Tunit;
     real Tmid = h * h * G * MSTAR / r;
     real zq = 3.0;
     real z = cos(Zmed(k)) / ASPECTRATIO;

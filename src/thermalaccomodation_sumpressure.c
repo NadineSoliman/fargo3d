@@ -30,7 +30,6 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   real* beta = Betarad->field_cpu;
   real* dens0 = Density0->field_cpu;
   real* energy0 = Energy0->field_cpu;
-  
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = Nx;
@@ -46,7 +45,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   int k;
   int ll;
   real sk;
-  real cpgas =R_MU/(GAMMA-1.0);
+  real cpgas = R_MU/(GAMMA-1.0);
   real cpdust = cpdg* cpgas;
   real rhotemp;
   real temp0;
@@ -76,7 +75,6 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
 //<#>
 	ll = l;
       
-  // dtl = (exp(  alpha[ll] * dt)  - 1.0)/alpha[ll];
   dtl = dt;
   rhotemp = energy[ll]/cpdust;
   temp0 = energy0[l2D]/cpdust/dens0[l2D];
