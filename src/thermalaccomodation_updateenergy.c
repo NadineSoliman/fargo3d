@@ -34,6 +34,7 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real* sumrho = DensStar->field_cpu;
   real* tcol = Tcol->field_cpu;
   int pitch  = Pitch_cpu;
+  int pitch2d = Pitch2D;
   int stride = Stride_cpu;
   int size_x = Nx;
   int size_y = Ny+2*NGHY;
@@ -55,7 +56,6 @@ void ThermalAccomodation_UpdateEnergy_cpu(real dt) {
   real tempdust;
   real temp0;
   real tempn;
-  // real tempgasn;
   real energyn;
   real dtl;
 //<\INTERNAL>

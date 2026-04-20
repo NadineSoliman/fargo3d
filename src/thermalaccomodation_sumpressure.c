@@ -37,6 +37,7 @@ void ThermalAccomodation_Sumpressure_cpu(real dt) {
   int size_z = Nz+2*NGHZ;
   int fluidtype = Fluidtype;
   real cpdg=CPDG;
+  int pitch2d = Pitch2D;
 //<\EXTERNAL>
 
 //<INTERNAL>
