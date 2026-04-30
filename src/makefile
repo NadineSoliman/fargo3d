@@ -405,7 +405,7 @@ GPU_OBJBLOCKS =  CompPresIso_gpu.o CompPresAd_gpu.o 		\
 	   mon_momz_gpu.o mon_torque_gpu.o checkmute_y_gpu.o	\
 	   checkmute_z_gpu.o mon_reynolds_gpu.o                 \
 	   mon_maxwell_gpu.o visctensor_sph_gpu.o               \
-	   mon_bxflux_gpu.o                   			\
+	   mon_bxflux_gpu.o mon_kinetic_gpu.o                  			\
 	   fargo_ppa_steep_gpu.o setuphook1_gpu.o		\
            fill_ghostsx_gpu.o collisions_gpu.o                  \
            totaldens_gpu.o floor_gpu.o		                \

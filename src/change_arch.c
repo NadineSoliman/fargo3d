@@ -498,11 +498,10 @@ void ChangeArch() {
 	  mon_momz = mon_momz_gpu;
 	  mon_torq = mon_torq_gpu;
 	  mon_reynolds = mon_reynolds_gpu;
-	  mon_kinetic = mon_kinetic_cpu;
+	  mon_kinetic = mon_kinetic_gpu;
 	  mon_maxwell  = mon_maxwell_gpu;
 	  mon_bxflux   = mon_bxflux_gpu;
 	  printf("Monitoring runs on the GPU\n");
-	  printf("mon_kinetic runs on CPU (no GPU kernel in this tree)\n");
 	}
       }
       if (strcmp(name, "dustdiffusion") == 0) {

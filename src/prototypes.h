@@ -539,6 +539,7 @@ ex void mon_momz_gpu(void);
 ex void mon_torq_gpu(void);
 ex void mon_reynolds_gpu(void);
 ex void mon_maxwell_gpu(void);
+ex void mon_kinetic_gpu(void);
 ex void mon_bxflux_gpu(void);
 
 ex void VanLeerX_a_gpu(Field*);
