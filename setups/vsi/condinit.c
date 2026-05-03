@@ -9,7 +9,7 @@ static real get_radiation_temperature(real r, int k) {
 #ifdef TEMPGRAD
     real h = ASPECTRATIO * pow(r / R0, FLARINGINDEX);
     real Tunit = (TCMB / 2.73);
-    real Tatm = 80.0 * pow(r, -1) * Tunit;
+    real Tatm = 100.0 * pow(r, -1) * Tunit;
     real Tmid = h * h * G * MSTAR / r;
     real zq = 3.0;
     real z = cos(Zmed(k)) / ASPECTRATIO;
@@ -27,9 +27,8 @@ static real get_radiation_temperature(real r, int k) {
 static real get_dust_temperature(real teff, real stokes_val) {
 #ifdef DIFFTEMP
     real x = 2.0 * M_PI * stokes_val;
-    real lambda_irr =0.01;//PLANCK * C0 / (4.0 * (teff) * KBOLTZ * R0 / R0_CGS); // cm UV/optical
+    real lambda_irr =1.0e-5;//PLANCK * C0 / (4.0 * (teff) * KBOLTZ * R0 / R0_CGS); // cm UV/optical
     real grain_size_cgs = stokes_val * R0 / R0_CGS;
-    printf("l=%g, g = %g \n", lambda_irr, x);
     // Regime 1: Small grains
     if (x < lambda_irr) {
         return pow(PLANCK * C0 / (4.0 * (lambda_irr * R0 / R0_CGS) * KBOLTZ), 0.2) * pow(teff, 0.8);
