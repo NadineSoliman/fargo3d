@@ -72,10 +72,10 @@ void ThermalRelaxation_cpu(real dt) {
           qlocal = 8.0 * M_PI * KBOLTZ * tempdustn / invparticlesize / PLANCK / C0;
           if (qlocal >= 1.0) {
             beta[ll] = 12.0 * invparticlesize / (rhosolid * cpdust) * STEFANK *
-                  pow(tempdustn, 3.0);
+                  pow(tempdustn, 3.0)/10.0;
           } else {
             beta[ll] = M_PI * 120.0 * STEFANK * KBOLTZ /
-                  (PLANCK * C0 * rhosolid * cpdust) * pow(tempdustn, 4.0);
+                  (PLANCK * C0 * rhosolid * cpdust) * pow(tempdustn, 4.0)/10.0;
           }
         }
 

@@ -3,7 +3,7 @@ Setup			vsi
 ### Disk parameters
 
 AspectRatio     	0.06            Thickness over Radius in the disc
-Sigma0			    6.3661977237e-4	Surface Density at r=1
+Sigma0			    1.2e-3	       Surface Density at r=1.  (6.3661977237e-4)
 Nu			        1.0e-9		Uniform kinematic viscosity
 SigmaSlope		    1.0		Slope of surface
 FlaringIndex		0.0
@@ -13,7 +13,7 @@ Gamma               1.4
 ### Dust parameters
 Epsilon			0.01		Total dust-to-gas mass ratio
 Tsmin			0.00001      sizemin          
-Tsmax			0.001         sizemax
+Tsmax			0.00001         sizemax
 rhosolid		2.0             in g/cm3
 Sq			    3.5		slope of distribution
 Tslim			1.0
@@ -21,11 +21,11 @@ CPDG            0.088
 
 ### Mesh parameters
 Nx			1		Azimuthal number of zones 
-Ny          1024		Radial number of zones
-Nz			512		Number of zones in colatitude
+Ny          128		Radial number of zones
+Nz			128		Number of zones in colatitude
 
 Ymin		0.5		Inner boundary radius
-Ymax		1.8		Outer boundary radius
+Ymax		1.5		Outer boundary radius
 Zmin		1.4395550662850796
 Zmax		1.7020375873047136
 Xmin		-3.141592653589793
@@ -45,7 +45,7 @@ TauDamp 0.3
 
 ### Output control parameters
 
-Ntot			2000		Total number of time steps
+Ntot			2000	Total number of time steps
 Ninterm	 		20		Time steps between outputs
 DT			    0.314159265359	Time step length. 2PI = 1 orbit
-OutputDir		@outputs/vsi_diffT_new
+OutputDir		@outputs/vsi_60

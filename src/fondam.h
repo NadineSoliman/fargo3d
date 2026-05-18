@@ -25,7 +25,7 @@ code.
 
 #define      G_CGS  6.674e-8
 #define  MSTAR_CGS  1.9891e33
-#define     R0_CGS  (30.0*1.49597871e13)
+#define     R0_CGS  (60.0*1.49597871e13)
 #define   R_MU_CGS  (1.38064852e-16/ (2.4 * 1.67262192369e-24))
 #define    MU0_CGS  12.5663706143591   //B in Gauss
 

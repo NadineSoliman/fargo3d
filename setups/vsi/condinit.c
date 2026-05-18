@@ -135,7 +135,8 @@ void _CondInit(int id) {
                 real xi = SIGMASLOPE + 1. + FLARINGINDEX;
                 real beta = 1. - 2 * FLARINGINDEX;
                 if (FLARINGINDEX == 0.0) {
-                    rho[ll] = SIGMA0 / sqrt(2.0 * M_PI) / (R0 * ASPECTRATIO) * pow(r / R0, -xi) *
+                    rho[ll] = SIGMA0 / sqrt(2.0 * M_PI) / (R0 * ASPECTRATIO) * pow(r / R0, -xi) * pow(R0_CGS / (60.0*1.49597871e13), 3.0-xi) *
+                    
                              pow(sin(Zmed(k)), -beta - xi + 1. / (h * h));
                 } else {
                     rho[ll] = SIGMA0 / sqrt(2.0 * M_PI) / (R0 * ASPECTRATIO) * pow(r / R0, -xi) *
