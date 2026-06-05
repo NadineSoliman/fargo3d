@@ -3,12 +3,12 @@
 # END
 #-------------------------------------------------------------------------
 
-FLUIDS := 0 1
-NFLUIDS = 2
+FLUIDS := 0 1 2 3 4
+NFLUIDS = 5
 FARGO_OPT += -DNFLUIDS=${NFLUIDS}
 
-#MONITOR_Y_RAW = REYNOLDS | KINETIC
-#MONITOR_2D = KINETICs
+MONITOR_Y_RAW = REYNOLDS | KINETIC
+MONITOR_2D = REYNOLDS | KINETIC 
 
 FARGO_OPT +=  -DX
 FARGO_OPT +=  -DY
