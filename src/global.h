@@ -231,6 +231,10 @@ real shift_buffer[MAX1D];
 //GPU GLOBAL LIGHT ARRAYS
 real *Alpha;
 real *Alpha_d;
+real *Dsharp;
+real *Dsharp_d;
+real *Temp_Table;
+real *Temp_Table_d;
 real *Xmin_d;
 real *Ymin_d;
 real *Zmin_d;

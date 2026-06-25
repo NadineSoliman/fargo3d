@@ -201,7 +201,9 @@
 #define zmed(i) Zmed[(i)]
 
 #define alpha(i) Alpha[(i)]
-  
+#define desharp(i) Dsharp[(i)]
+#define temp_table(i) Temp_Table[(i)]
+
 #else // #ifdef __GPU
 
 #ifndef BIGMEM
@@ -223,6 +225,8 @@
 #define Zmed(i) Zmed[(i)]
 
 #define alpha(i) Alpha[(i)]
+#define desharp(i) Dsharp[(i)]
+#define temp_table(i) Temp_Table[(i)]
 
 #ifndef __GPU
 

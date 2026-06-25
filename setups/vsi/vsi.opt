@@ -38,6 +38,8 @@ FARGO_OPT += -DTHERMALACCOMODATION
 FARGO_OPT += -DTHERMALRELAXATION
 # THERMALACCOMODATIONTEX (extra CFL term) not ported — omit if you need identical fargo3d CFL.
 
+FARGO_OPT += -DDSHARP
+
 #Cuda blocks
 ifeq (${GPU}, 1)
 FARGO_OPT += -DBLOCK_X=16

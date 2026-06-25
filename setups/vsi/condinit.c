@@ -1,4 +1,8 @@
 #include "fargo3d.h"
+#define TUNITS ((G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
+
+void  BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid);
+real Interpolate_FT(real T, real *T_tab, real *FT_tab, int n_tab);
 
 // --- TEMPERATURE PROVIDER FUNCTIONS ---
 
@@ -66,6 +70,7 @@ static void sync_dust_energy_to_gas(void) {
     }
 }
 
+
 // --- CORE INITIALIZATION ---
 
 void _CondInit(int id) {
@@ -77,6 +82,7 @@ void _CondInit(int id) {
     real *e = Energy->field_cpu;
     real *gas_energy = Fluids[0]->Energy->field_cpu;
     real *gas_dens = Fluids[0]->Density->field_cpu;
+    real *betarad = Betarad->field_cpu;
 
     real omega, r, r3, soundspeed;
     real stokes_plus[NFLUIDS];
@@ -106,6 +112,10 @@ void _CondInit(int id) {
         }
         denom += epsilons[n] / (stokes[n]);
     }
+
+// 2. Build the multi-fluid cooling table if we are in a gas-dust setup
+if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, NFLUIDS-1, RHOSOLID);
+
 
 #ifdef DRAGFORCE
     if (id > 0) {
@@ -158,6 +168,13 @@ void _CondInit(int id) {
                         real tdust = trad;
                         #endif
                         e[ll] = cdust * tdust * rho[ll];
+
+                        ////
+                        tdust = tdust / TUNITS;
+                        betarad[ll] =  Interpolate_FT(tdust, Temp_Table, Dsharp, 256)*pow(TUNITS,3.0);
+                        betarad[ll] *= 3*STEFANK*Coeffval[1]/(Coeffval[2]*cdust);
+
+                       
                     } else {
                       #ifndef DIFFTEMP
                         e[ll] = cv * rho[ll] * trad;
@@ -199,4 +216,7 @@ void CondInit() {
 #ifdef SAMETEMP
     sync_dust_energy_to_gas();
 #endif
+
+
+
 }

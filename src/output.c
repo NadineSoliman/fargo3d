@@ -671,6 +671,7 @@ void WriteOutputs(int type) {
     __WriteField(Energy, TimeStep);
 #ifdef THERMALACCOMODATION
     __WriteField(Alphacol, TimeStep);
+    __WriteField(Betarad, TimeStep);
     if(Fluidtype == GAS){
       __WriteField(Tcol, TimeStep);
     }  
