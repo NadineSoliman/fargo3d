@@ -7,8 +7,6 @@
 
 // --- Global variables  ---
 // Add this to your globals
-real *Temp_Table;
-real *FT_Table_Multi; // Size will be NFLUIDS-1 * NTABLE
 real *kappa_1d_slice;
 real *nu_data;
 real *s_data;
@@ -194,7 +192,7 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid
     real T_min = 8.0, T_max = 1700.0;
     real dlog_T = (log10(T_max) - log10(T_min)) / (NTABLE - 1);
     for (int i = 0; i < NTABLE; i++) {
-        Temp_Table[i] = pow(10.0, log10(T_min) + i * dlog_T);
+        TempTable[i] = pow(10.0, log10(T_min) + i * dlog_T);
     }
 
 
@@ -220,7 +218,7 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid
 
         // 2. Loop over Temperature
         for (int i = 0; i < NTABLE; i++) {
-            real T = Temp_Table[i];
+            real T = TempTable[i];
             
             real sum_Bnu = 0.0, sum_dBnu_dT = 0.0;
             real sum_Bnu_Q = 0.0, sum_dBnu_dT_Q = 0.0;
@@ -261,7 +259,7 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid
 
 #ifdef GPU
   DevMemcpyH2D(Dsharp_d,Dsharp,sizeof(real)*(NFLUIDS-1)*NTABLE);
-  DevMemcpyH2D(Temp_Table_d,Temp_Table,sizeof(real)*NTABLE);
+  DevMemcpyH2D(TempTable_d,TempTable,sizeof(real)*NTABLE);
 #endif
 }
 

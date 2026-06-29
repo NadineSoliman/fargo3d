@@ -577,7 +577,7 @@ void ChangeArch() {
     ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_gpu;
     ThermalRelaxation = ThermalRelaxation_gpu;
 	  masterprint("thermalaccomodation runs on the GPU\n");
-	  masterprint("thermalrelaxation runs on CPU (no GPU kernel)\n");
+	  masterprint("thermalrelaxation runs on GPU \n");
 	}
       }
 if (strcmp(name, "computetotaldensity") == 0) {

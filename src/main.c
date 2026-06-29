@@ -310,6 +310,13 @@ if (*SPACING=='N'){
   
   MULTIFLUID(FillGhosts(PrimitiveVariables()));
 
+#ifdef THERMALACCOMODATION
+        MULTIFLUID(ThermalAccomodation_Coeff(0.0));
+#endif
+#ifdef THERMALRELAXATION
+  MULTIFLUID(ThermalRelaxation(0.0)); 
+#endif  
+
   
 #ifdef STOCKHOLM 
   FARGO_SAFE(init_stockholm()); //ALREADY IMPLEMENTED MULTIFLUID COMPATIBILITY

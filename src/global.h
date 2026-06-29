@@ -233,8 +233,8 @@ real *Alpha;
 real *Alpha_d;
 real *Dsharp;
 real *Dsharp_d;
-real *Temp_Table;
-real *Temp_Table_d;
+real *TempTable;
+real *TempTable_d;
 real *Xmin_d;
 real *Ymin_d;
 real *Zmin_d;
@@ -297,7 +297,7 @@ real OMEGAFRAME0;
 
 int Fscan;
 
-int NTABLE = 256;
+int NTABLE = 32;
 
 long VtkPosition = 0; 
 

@@ -114,8 +114,9 @@ void _CondInit(int id) {
     }
 
 // 2. Build the multi-fluid cooling table if we are in a gas-dust setup
-if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, NFLUIDS-1, RHOSOLID);
-
+#ifdef DSHARP
+    if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, NFLUIDS-1, RHOSOLID);
+#endif
 
 #ifdef DRAGFORCE
     if (id > 0) {
@@ -171,10 +172,6 @@ if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, NFLUIDS-1, RHOSOLID);
                         #endif
                         e[ll] = cdust * tdust * rho[ll];
 
-                        ////
-                        tdust = tdust *TUNITS;
-                        betarad[ll] =  Interpolate_FT(tdust, Temp_Table, Dsharp, NTABLE, id-1)/pow(TUNITS,3.0);
-                        betarad[ll] *= 3.*STEFANK*Coeffval[1]/(Coeffval[2]*cdust);
 			
                     } else {
                       #ifndef DIFFTEMP
