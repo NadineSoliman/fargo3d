@@ -1,8 +1,8 @@
 #include "fargo3d.h"
-#define TUNITS ((G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
+#define TUNITS ((G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
 
-void  BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid);
-real Interpolate_FT(real T, real *T_tab, real *FT_tab, int n_tab);
+void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid);
+real Interpolate_FT(real T, real *T_tab, real *FT_tab, int n_tab, int ndust);
 
 // --- TEMPERATURE PROVIDER FUNCTIONS ---
 
@@ -126,10 +126,12 @@ if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, NFLUIDS-1, RHOSOLID);
         Coeffval[1] = 1.0 / (stokes[id-1] * R0 / R0_CGS);
         Coeffval[2] = RHOSOLID / (MSTAR_CGS / (R0_CGS * R0_CGS * R0_CGS)) * (MSTAR / (R0 * R0 * R0));
         #endif
-        if (CPU_Master) printf("Fluid ID %d: Ts %f, eps %f\n", id, stokes[id-1], epsilons[id-1]);
+        if (CPU_Master) printf("Fluid ID %d: Ts %g, eps %f\n", id, stokes[id-1], epsilons[id-1]);
     }
 #endif
 
+
+    
     for (k = 0; k < Nz + 2 * NGHZ; k++) {
         for (j = 0; j < Ny + 2 * NGHY; j++) {
             r = Ymed(j);
@@ -170,11 +172,10 @@ if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, NFLUIDS-1, RHOSOLID);
                         e[ll] = cdust * tdust * rho[ll];
 
                         ////
-                        tdust = tdust / TUNITS;
-                        betarad[ll] =  Interpolate_FT(tdust, Temp_Table, Dsharp, 256)*pow(TUNITS,3.0);
-                        betarad[ll] *= 3*STEFANK*Coeffval[1]/(Coeffval[2]*cdust);
-
-                       
+                        tdust = tdust *TUNITS;
+                        betarad[ll] =  Interpolate_FT(tdust, Temp_Table, Dsharp, NTABLE, id-1)/pow(TUNITS,3.0);
+                        betarad[ll] *= 3.*STEFANK*Coeffval[1]/(Coeffval[2]*cdust);
+			
                     } else {
                       #ifndef DIFFTEMP
                         e[ll] = cv * rho[ll] * trad;

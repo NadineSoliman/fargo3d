@@ -205,15 +205,15 @@ void split(Grid *g) {
 
   DevMalloc(&Alpha_d,sizeof(real)*NFLUIDS*NFLUIDS);
 #ifdef DSHARP
-  DevMalloc(&Dsharp_d,sizeof(real)*(NFLUIDS-1)*256);
-  DevMalloc(&Temp_Table_d,sizeof(real)*256);
+  DevMalloc(&Dsharp_d,sizeof(real)*(NFLUIDS-1)*NTABLE);
+  DevMalloc(&Temp_Table_d,sizeof(real)*NTABLE);
 #endif
 #endif  
 
   //We allocate and initialize the memory of the collision matrix
   Alpha = (real*) calloc(NFLUIDS*NFLUIDS,sizeof(real));
 #ifdef DSHARP
-   Dsharp = (real *)malloc((NFLUIDS-1)* 256 * sizeof(real)); //Temp table size must be 256
+   Dsharp = (real *)malloc((NFLUIDS-1)* NTABLE * sizeof(real));
   Temp_Table = (real *)malloc(256* sizeof(real));
 #endif
 }

@@ -297,6 +297,8 @@ real OMEGAFRAME0;
 
 int Fscan;
 
+int NTABLE = 256;
+
 long VtkPosition = 0; 
 
 //Multifluid variables
