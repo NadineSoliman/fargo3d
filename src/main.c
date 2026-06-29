@@ -310,9 +310,6 @@ if (*SPACING=='N'){
   
   MULTIFLUID(FillGhosts(PrimitiveVariables()));
 
-#ifdef THERMALACCOMODATION
-  // save coefficientes but not update energy MULTIFLUID(ThermalAccomodation(0.0));
-#endif  
 
   
 #ifdef STOCKHOLM 
@@ -331,6 +328,10 @@ if (*SPACING=='N'){
 #if defined(MHD) && defined(DEBUG)
       FARGO_SAFE(ComputeDivergence(Bx, By, Bz));
 #endif
+
+#ifdef THERMALACCOMODATION
+  MULTIFLUID(ThermalAccomodation(0.0));
+#endif  
       if (ThereArePlanets)
 	WritePlanetSystemFile(TimeStep, NO);
       
