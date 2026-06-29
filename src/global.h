@@ -298,6 +298,7 @@ real OMEGAFRAME0;
 int Fscan;
 
 int NTABLE = 32;
+int NDUST;
 
 long VtkPosition = 0; 
 
@@ -435,6 +436,7 @@ void (*ThermalAccomodation_Sumrho)(real);
 void (*ThermalAccomodation_Sumpressure)(real);
 void (*ThermalAccomodation_UpdateEnergy)(real);
 void (*ThermalRelaxation)(real);
+void (*CoolingTime)(real,real,real,real,int);
 
 void (*Floor)();
 

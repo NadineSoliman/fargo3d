@@ -184,6 +184,10 @@ void split(Grid *g) {
   Gridd.bc_right = ((J == Ncpu_x-1)  ? 1 : 0);
   Gridd.bc_left  = ((J == 0)         ? 1 : 0);
 
+  
+  if(NFLUIDS>1) NDUST = NFLUIDS-1;
+  else NDUST = NMIX;
+  
 #ifdef GPU
 
   DevMalloc(&Xmin_d,sizeof(real)*(Nx+2*NGHX+1));
@@ -204,12 +208,14 @@ void split(Grid *g) {
   DevMalloc(&InvVj_d,sizeof(real)*(Ny+2*NGHY));
 
   DevMalloc(&Alpha_d,sizeof(real)*NFLUIDS*NFLUIDS);
-  DevMalloc(&Dsharp_d,sizeof(real)*(NFLUIDS-1)*NTABLE);
+
+  DevMalloc(&Dsharp_d,sizeof(real)*NDUST*NTABLE);
   DevMalloc(&TempTable_d,sizeof(real)*NTABLE);
 #endif  
 
   //We allocate and initialize the memory of the collision matrix
   Alpha = (real*) calloc(NFLUIDS*NFLUIDS,sizeof(real));
-  Dsharp = (real*) calloc((NFLUIDS-1)*NTABLE,sizeof(real));
+  
+  Dsharp = (real*) calloc(NDUST*NTABLE,sizeof(real));
   TempTable = (real*) calloc(NTABLE,sizeof(real));
 }

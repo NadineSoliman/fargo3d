@@ -1,7 +1,7 @@
 #include "fargo3d.h"
 #define TUNITS ((G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
 
-void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid);
+void BuildMultiFluidCoolingTable(real *dust_sizes, real rhosolid);
 real Interpolate_FT(real T, real *T_tab, real *FT_tab, int n_tab, int ndust);
 
 // --- TEMPERATURE PROVIDER FUNCTIONS ---
@@ -82,40 +82,36 @@ void _CondInit(int id) {
     real *e = Energy->field_cpu;
     real *gas_energy = Fluids[0]->Energy->field_cpu;
     real *gas_dens = Fluids[0]->Density->field_cpu;
-    real *betarad = Betarad->field_cpu;
 
     real omega, r, r3, soundspeed;
-    real stokes_plus[NFLUIDS];
-    real stokes[NFLUIDS - 1];
-    real epsilons[NFLUIDS - 1];
+    real stokes_plus[NDUST+1];
+    real stokes[NDUST];
+    real epsilons[NDUST];
     real smax = TSMAX;
     real smin = TSMIN;
     real cv = R_MU / (GAMMA - 1.0);
     real cdust = CPDG * cv;
     real denom = 0.0;
-    real ds = (log(smax) - log(smin)) / (NFLUIDS - 1);
+    real ds = (log(smax) - log(smin)) / (NDUST);
 
     // 1. Calculate size distribution and Stokes numbers
-    for (int n = 0; n < NFLUIDS; n++) stokes_plus[n] = smin * exp(ds * n);
+    for (int n = 0; n < NDUST+1; n++) stokes_plus[n] = smin * exp(ds * n);
 
     real slope = 4.0 - SQ;
-    for (int n = 0; n < NFLUIDS - 1; n++) {
+    for (int n = 0; n < NDUST; n++) {
         if (slope != 0.0) {
             epsilons[n] = (pow(stokes_plus[n+1], slope) - pow(stokes_plus[n], slope)) * (EPSILON / (pow(smax, slope) - pow(smin, slope)));
         } else {
             epsilons[n] = log(stokes_plus[n+1] / stokes_plus[n]) * (EPSILON / log(smax / smin));
         }
         stokes[n] = sqrt(stokes_plus[n] * stokes_plus[n+1]);
-        if (NFLUIDS == 2) {
-            stokes[n] = TSMAX;
-            epsilons[n] = EPSILON;
-        }
+       
         denom += epsilons[n] / (stokes[n]);
     }
 
 // 2. Build the multi-fluid cooling table if we are in a gas-dust setup
 #ifdef DSHARP
-    if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, NFLUIDS-1, RHOSOLID);
+    if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, RHOSOLID);
 #endif
 
 #ifdef DRAGFORCE
@@ -197,6 +193,7 @@ void _CondInit(int id) {
 }
 
 void CondInit() {
+  
     // 1. Initialize Gas
     Fluids[0] = CreateFluid("gas", GAS);
     SelectFluid(0);

@@ -311,10 +311,7 @@ if (*SPACING=='N'){
   MULTIFLUID(FillGhosts(PrimitiveVariables()));
 
 #ifdef THERMALACCOMODATION
-        MULTIFLUID(ThermalAccomodation_Coeff(0.0));
-#endif
-#ifdef THERMALRELAXATION
-  MULTIFLUID(ThermalRelaxation(0.0)); 
+  MULTIFLUID(ThermalAccomodation(0.0));
 #endif  
 
   

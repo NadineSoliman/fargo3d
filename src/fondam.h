@@ -64,6 +64,7 @@ code.
 
 // Cosmological microwave background's temperature
 #define TCMB    (2.73*(G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
+#define TUNITS ((G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
 
 #define KELVIN    ((G*MSTAR/R0/R_MU)/(G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
 

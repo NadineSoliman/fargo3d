@@ -179,13 +179,12 @@ real GetKappaNearest1D(real target_nu) {
     return kappa_1d_slice[nearest_nu_idx];
 }
 
-void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid) {
+void BuildMultiFluidCoolingTable(real *dust_sizes, real rhosolid) {
 
 
     //Load the raw opacity data from ASCII files
     ReadKappaASCII();
 
-    int N_DUST = num_fluids;
     
     
     // Setup T grid (shared by all fluids)
@@ -202,10 +201,10 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid
     real nu_max = nu_data[N_NU_DATA - 1];
     real dlog_nu = (log10(nu_max) - log10(nu_min)) / (N_INT - 1);
 
-    printf("Building cooling tables for %d dust fluids...\n", N_DUST);
+    printf("Building cooling tables for %d dust fluids...\n", NDUST);
 
     // --- LOOP OVER EACH DUST FLUID ---
-    for (int f = 0; f < NFLUIDS-1; f++) {
+    for (int f = 0; f < NDUST; f++) {
         real current_size = dust_sizes[f];
         
         // 1. Slice the 2D kappa array for THIS specific fluid's size
@@ -258,7 +257,7 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, int num_fluids, real rhosolid
     free(nu_data); free(s_data); free(kappa_2d);
 
 #ifdef GPU
-  DevMemcpyH2D(Dsharp_d,Dsharp,sizeof(real)*(NFLUIDS-1)*NTABLE);
+  DevMemcpyH2D(Dsharp_d,Dsharp,sizeof(real)*NDUST*NTABLE);
   DevMemcpyH2D(TempTable_d,TempTable,sizeof(real)*NTABLE);
 #endif
 }

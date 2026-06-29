@@ -205,7 +205,8 @@ ex void ThermalAccomodation_Sumrho_cpu(real);
 ex void ThermalAccomodation_Sumpressure_cpu(real);
 ex void ThermalAccomodation_UpdateEnergy_cpu(real);
 ex void ThermalRelaxation_cpu(real);
-
+ex void CoolingTime_cpu(real,real,real,real,int);
+  
 //usage.c Prototypes
 ex void PrintUsage (char *execname);
 
@@ -598,7 +599,7 @@ ex void ThermalAccomodation_Sumrho_gpu(real);
 ex void ThermalAccomodation_Sumpressure_gpu(real);
 ex void ThermalAccomodation_UpdateEnergy_gpu(real);
 ex void ThermalRelaxation_gpu(real);
-
+ex void CoolingTime_gpu(real,real,real,real,int);
 
 
 //DIFFUSION-----------------------------------------------
