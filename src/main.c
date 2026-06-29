@@ -311,7 +311,7 @@ if (*SPACING=='N'){
   MULTIFLUID(FillGhosts(PrimitiveVariables()));
 
 #ifdef THERMALACCOMODATION
-  MULTIFLUID(ThermalAccomodation(0.0));
+  // save coefficientes but not update energy MULTIFLUID(ThermalAccomodation(0.0));
 #endif  
 
   
