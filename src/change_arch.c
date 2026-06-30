@@ -149,7 +149,8 @@ void ChangeArch() {
   ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_cpu;
   ThermalRelaxation = ThermalRelaxation_cpu;
   CoolingTime = CoolingTime_cpu;
- 
+  RelaxAdia = RelaxAdia_cpu;
+
   VanLeerX_PPA_a    = VanLeerX_PPA_a_cpu;
   VanLeerX_PPA_b    = VanLeerX_PPA_b_cpu;
   VanLeerX_PPA_steep= VanLeerX_PPA_steep_cpu;
@@ -578,9 +579,11 @@ void ChangeArch() {
     ThermalAccomodation_UpdateEnergy = ThermalAccomodation_UpdateEnergy_gpu;
     ThermalRelaxation = ThermalRelaxation_gpu;
     CoolingTime = CoolingTime_gpu;
+    RelaxAdia = RelaxAdia_gpu;
 	  masterprint("thermalaccomodation runs on the GPU\n");
 	  masterprint("thermalrelaxation runs on GPU \n");
 	  masterprint("coolingtime runs on GPU \n");
+    masterprint("relaxadia runs on GPU \n");
 	}
       }
 if (strcmp(name, "computetotaldensity") == 0) {

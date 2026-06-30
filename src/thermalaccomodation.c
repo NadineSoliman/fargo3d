@@ -53,8 +53,10 @@ void ThermalAccomodation(real dt) {
         stokes[n] = sqrt(stokes_plus[n] * stokes_plus[n+1]);
     }
 
-    Reset_field(Fluids[0]->Betarad);
+    MULTIFLUID( if(Fluidtype==GAS) Reset_field(Betarad));
     for ( n = 0; n < NDUST; n++) MULTIFLUID(if(Fluidtype==GAS) CoolingTime(dt, R0_CGS/stokes[n], RHOSOLID*R0_CGS*R0_CGS*R0_CGS/MSTAR_CGS,  epsilons[n], n));
+    MULTIFLUID( if(Fluidtype == GAS) RelaxAdia(dt));
+
   }  
       
   //-------------------------------------------------------------------------------------

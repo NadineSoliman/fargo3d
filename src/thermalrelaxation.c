@@ -39,6 +39,10 @@ void ThermalRelaxation_cpu(real dt) {
   int fluidtype = Fluidtype;
   int ndust = FluidIndex-1;
   int ntab = NTABLE;
+  real dlog_T = (log10(TMAXTAB) - log10(TMINTAB)) / (NTABLE - 1);
+  real logT_min = log10(TMINTAB);
+  real tmintab = TMINTAB;
+  real tmaxtab = TMAXTAB;
 //<\EXTERNAL>
   
 //<INTERNAL>
@@ -60,6 +64,8 @@ void ThermalRelaxation_cpu(real dt) {
   real f0;
   real f1;
   real coolingfactor;
+  real inv_dlog_T;
+  real logT;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -94,32 +100,25 @@ void ThermalRelaxation_cpu(real dt) {
 #ifdef DSHARP
 	  
 	  tdust = tempdustn *TUNITS;
+    inv_dlog_T = 1.0 / dlog_T;
+	  
+    if (tdust <= tmintab) {
+      coolingfactor = dsharp[ndust * ntab + 0];
+    } else if (tdust >= tmaxtab) {
+      coolingfactor = dsharp[ndust * ntab + ntab - 1];
+    } 
+    else {
+      logT = log10(tdust);
+      left = (int)((logT - logT_min) * inv_dlog_T);
+      right = left + 1;
 
-	  if (tdust <= temptab[0]) coolingfactor = dsharp[ndust*ntab + 0];
-	  else if (tdust >= temptab[ntab - 1]) coolingfactor = dsharp[ndust*ntab + ntab - 1];
-	  else{
-	    //Binary search to find the correct temperature bin
-	    left = 0;
-	    right = ntab - 1;
-	    
-	    while (right - left > 1) {
-	      mid = left + (right - left) / 2;
-	      if (tdust >= temptab[mid]) {
-	  	left = mid;
-	      } else {
-	  	right = mid;
-	      }
-	    }
-	    
-	    // 3. Linear interpolation
-	    offset = ndust*ntab;
-	    t0 = temptab[left];
-	    t1 = temptab[right];
-	    f0 = dsharp[offset+left];
-	    f1 = dsharp[offset+right];
-	    
-	    coolingfactor = f0 + (f1 - f0) * (tdust - t0) / (t1 - t0);
-	    
+      // Linear interpolation
+      t0 = temptab[left];
+      t1 = temptab[right];
+      f0 = dsharp[ndust * ntab + left];
+      f1 = dsharp[ndust * ntab + right];
+
+      coolingfactor = f0 + (f1 - f0) * (tdust - t0) / (t1 - t0);
 	  }
 	  
 	  beta[ll] =  coolingfactor/pow(TUNITS,3.0);

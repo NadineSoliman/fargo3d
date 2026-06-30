@@ -36,6 +36,10 @@ void CoolingTime_cpu(real dt, real invparticlesize, real rhosolid, real eps, int
   real* dsharp  = dsharppointer;
   real cpdg = CPDG;
   int ntab = NTABLE;
+  real dlog_T = (log10(TMAXTAB) - log10(TMINTAB)) / (NTABLE - 1);
+  real logT_min = log10(TMINTAB);
+  real tmintab = TMINTAB;
+  real tmaxtab = TMAXTAB;
 //<\EXTERNAL>
   
 //<INTERNAL>
@@ -60,6 +64,8 @@ void CoolingTime_cpu(real dt, real invparticlesize, real rhosolid, real eps, int
   real betar;
   real alphar;
   real tempgas;
+  real inv_dlog_T;
+  real logT;
 //<\INTERNAL>
 
 //<CONSTANT>
@@ -94,33 +100,27 @@ void CoolingTime_cpu(real dt, real invparticlesize, real rhosolid, real eps, int
 	//radiative cooling
 
 #ifdef DSHARP
-	tdust = tempdustn *TUNITS;
-
-	if (tdust <= temptab[0]) coolingfactor = dsharp[nd*ntab + 0];
-	else if (tdust >= temptab[ntab - 1]) coolingfactor = dsharp[nd*ntab + ntab - 1];
-	else{
-	  //Binary search to find the correct temperature bin
-	  left = 0;
-	  right = ntab - 1;
+	
+	  tdust = tempdustn *TUNITS;
+    inv_dlog_T = 1.0 / dlog_T;
 	  
-	    while (right - left > 1) {
-	      mid = left + (right - left) / 2;
-	      if (tdust >= temptab[mid]) {
-	  	left = mid;
-	      } else {
-	  	right = mid;
-	      }
-	    }
-	    
-	    // 3. Linear interpolation
-	    offset = nd*ntab;
-	    t0 = temptab[left];
-	    t1 = temptab[right];
-	    f0 = dsharp[offset+left];
-	    f1 = dsharp[offset+right];
-	    
-	    coolingfactor = f0 + (f1 - f0) * (tdust - t0) / (t1 - t0);
-	    
+    if (tdust <= tmintab) {
+      coolingfactor = dsharp[nd * ntab + 0];
+    } else if (tdust >= tmaxtab) {
+      coolingfactor = dsharp[nd * ntab + ntab - 1];
+    } 
+    else {
+      logT = log10(tdust);
+      left = (int)((logT - logT_min) * inv_dlog_T);
+      right = left + 1;
+     
+      // Linear interpolation
+      t0 = temptab[left];
+      t1 = temptab[right];
+      f0 = dsharp[nd * ntab + left];
+      f1 = dsharp[nd * ntab + right];
+
+      coolingfactor = f0 + (f1 - f0) * (tdust - t0) / (t1 - t0);
 	  }
 	  
 	  betar =  coolingfactor/pow(TUNITS,3.0);

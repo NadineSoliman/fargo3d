@@ -1,8 +1,6 @@
 #include "fargo3d.h"
-#define TUNITS ((G_CGS*MSTAR_CGS/R0_CGS/R_MU_CGS))
 
 void BuildMultiFluidCoolingTable(real *dust_sizes, real rhosolid);
-real Interpolate_FT(real T, real *T_tab, real *FT_tab, int n_tab, int ndust);
 
 // --- TEMPERATURE PROVIDER FUNCTIONS ---
 
@@ -111,7 +109,7 @@ void _CondInit(int id) {
 
 // 2. Build the multi-fluid cooling table if we are in a gas-dust setup
 #ifdef DSHARP
-    if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, RHOSOLID);
+        if(Fluidtype == GAS) BuildMultiFluidCoolingTable(stokes, RHOSOLID);
 #endif
 
 #ifdef DRAGFORCE

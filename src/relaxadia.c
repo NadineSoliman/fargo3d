@@ -12,6 +12,7 @@ void RelaxAdia_cpu (real dt) {
 //<USER_DEFINED>
   INPUT(Energy);
   INPUT(Density);
+  INPUT(Betarad);
   INPUT2D(Energy0);
   INPUT2D(Density0);
   OUTPUT(Energy);
@@ -22,13 +23,13 @@ void RelaxAdia_cpu (real dt) {
   real* rho   = Density->field_cpu;
   real* e0     = Energy0->field_cpu;
   real* rho0   = Density0->field_cpu;
+  real* beta  = Betarad->field_cpu;
   int pitch2d = Pitch2D;
   int pitch  = Pitch_cpu;
   int stride = Stride_cpu;
   int size_x = XIP; 
   int size_y = Ny+2*NGHY-1;
   int size_z = Nz+2*NGHZ-1;
-  real beta = EBETA;
 //<\EXTERNAL>
 
 //<INTERNAL>
@@ -48,25 +49,12 @@ void RelaxAdia_cpu (real dt) {
   real omega;
   real temp;
   real temp0;
-  real tau;
-  real soundspeed;
-  real scaleheight;
   real trelax;
   //<\INTERNAL>
   
 //<CONSTANT>
-// real NU(1);
 // real GAMMA(1);
-// real ALPHA(1);
-// real Sxj(Ny+2*NGHY);
-// real Syj(Ny+2*NGHY);
-// real Szj(Ny+2*NGHY);
-// real Sxk(Nz+2*NGHZ);
-// real Syk(Nz+2*NGHZ);
-// real Szk(Nz+2*NGHZ);
 // real ymin(Ny+2*NGHY+1);
-// real zmin(Nz+2*NGHZ+1);
-// real InvVj(Ny+2*NGHY);
 //<\CONSTANT>
 
 
@@ -92,11 +80,13 @@ void RelaxAdia_cpu (real dt) {
 #ifdef CYLINDRICAL
   omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
 #endif
-	//equilibrium (initial) temperature
-	temp0 = (GAMMA-1.0)*e0[l2D]/(rho0[l2D]*R_MU);
-	// 	
+#ifdef SPHERICAL
+  omega = sqrt(G*MSTAR/ymed(j)/ymed(j)/ymed(j));
+#endif
 
-	trelax = beta/omega;
+	temp0 = (GAMMA-1.0)*e0[l2D]/(rho0[l2D]*R_MU);
+	
+	trelax = beta[ll]/omega;
 	temp   = ( (GAMMA-1.0)*e[ll]/(rho[ll]*R_MU)  + temp0*dt/trelax)/(1.+dt/trelax);
 
 	e[ll]  = rho[ll]*temp*R_MU/(GAMMA-1);

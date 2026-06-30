@@ -188,10 +188,9 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, real rhosolid) {
     
     
     // Setup T grid (shared by all fluids)
-    real T_min = 8.0, T_max = 1700.0;
-    real dlog_T = (log10(T_max) - log10(T_min)) / (NTABLE - 1);
+    real dlog_T = (log10(TMAXTAB) - log10(TMINTAB)) / (NTABLE - 1);
     for (int i = 0; i < NTABLE; i++) {
-        TempTable[i] = pow(10.0, log10(T_min) + i * dlog_T);
+        TempTable[i] = pow(10.0, log10(TMINTAB) + i * dlog_T);
     }
 
 
@@ -209,7 +208,7 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, real rhosolid) {
         
         // 1. Slice the 2D kappa array for THIS specific fluid's size
         CreateKappaSlice(current_size); 
-	SaveKappaSliceToASCII(f,current_size);
+	    SaveKappaSliceToASCII(f,current_size);
 	
         // Calculate the native logarithmic step size from your data file
         // We use fabs() to ensure it's positive regardless of sort order
@@ -250,11 +249,8 @@ void BuildMultiFluidCoolingTable(real *dust_sizes, real rhosolid) {
             Dsharp[table_index] = 4.0 * pow(T, 3) * Qave + pow(T, 4) * dQ_dT;
         }
 
-        free(kappa_1d_slice); 
     }
 
-    // Cleanup massive raw opacity arrays
-    free(nu_data); free(s_data); free(kappa_2d);
 
 #ifdef GPU
   DevMemcpyH2D(Dsharp_d,Dsharp,sizeof(real)*NDUST*NTABLE);

@@ -297,7 +297,7 @@ real OMEGAFRAME0;
 
 int Fscan;
 
-int NTABLE = 32;
+int NTABLE = 64;
 int NDUST;
 
 long VtkPosition = 0; 
