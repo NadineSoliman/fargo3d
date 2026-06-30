@@ -86,8 +86,7 @@ void RelaxAdia_cpu (real dt) {
 
 	temp0 = (GAMMA-1.0)*e0[l2D]/(rho0[l2D]*R_MU);
 	
-	trelax = beta[ll];
-	temp   = ( (GAMMA-1.0)*e[ll]/(rho[ll]*R_MU)  + temp0*dt/trelax)/(1.+dt/trelax);
+	temp   = ( (GAMMA-1.0)*e[ll]/(rho[ll]*R_MU)  + temp0*dt*beta[ll])/(1.+dt*beta[ll]);
 
 	e[ll]  = rho[ll]*temp*R_MU/(GAMMA-1);
 	
